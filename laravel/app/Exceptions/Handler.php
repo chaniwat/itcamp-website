@@ -5,6 +5,8 @@ namespace App\Exceptions;
 use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -39,27 +41,51 @@ class Handler extends ExceptionHandler
      * Render an exception into an HTTP response.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \Exception  $exception
+     * @param  \Exception  $e
      * @return \Illuminate\Http\Response
      */
-    public function render($request, Exception $exception)
+    public function render($request, Exception $e)
     {
-        return parent::render($request, $exception);
+        if($request->is("backend/*")) {
+            return $this->backendHandler($request, $e);
+        } else {
+            return $this->frontendHandler($request, $e);
+        }
     }
 
     /**
-     * Convert an authentication exception into an unauthenticated response.
+     * Handle the backend scope error
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Illuminate\Auth\AuthenticationException  $exception
+     * @param $request
+     * @param Exception $e
      * @return \Illuminate\Http\Response
      */
-    protected function unauthenticated($request, AuthenticationException $exception)
-    {
-        if ($request->expectsJson()) {
-            return response()->json(['error' => 'Unauthenticated.'], 401);
+    private function frontendHandler($request, Exception $e) {
+        config()->set('auth.defaults.guard', 'web');
+
+        return parent::render($request, $e);
+    }
+
+    /**
+     * Handle the backend scope error
+     *
+     * @param $request
+     * @param Exception $e
+     * @return \Illuminate\Http\Response
+     */
+    private function backendHandler($request, Exception $e) {
+        config()->set('auth.defaults.guard', 'backend');
+
+        if(!$request->is("backend/auth/*")) {
+            if(!Auth::guard('backend')->check()) {
+                return redirect()->route('backend.view.login');
+            } else {
+                if($e instanceof NotFoundHttpException) {
+                    return response()->view("backend.error.404", [], 404);
+                }
+            }
         }
 
-        return redirect()->guest('login');
+        return parent::render($request, $e);
     }
 }
