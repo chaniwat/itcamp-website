@@ -46,6 +46,8 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
+        // TODO refactor this
+
         if($request->is("backend/*")) {
             return $this->backendHandler($request, $e);
         } else {

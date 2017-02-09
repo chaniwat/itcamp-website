@@ -77,6 +77,9 @@ class CodeHelperService
     }
 
     public function makeAlertStatus() {
+
+        // TODO Move to blade component
+
         if(session('status')) {
             $status = session('status');
             return /** @lang HTML */

@@ -5,6 +5,8 @@ namespace App\Services;
 class StringHelperService
 {
 
+    // TODO move to resources/lang/th
+
     public function convertApplicantDetailKeyToName($s) {
         switch ($s) {
             case "a_congenitaldisease": return "โรคประจำตัว แพ้ยา";
