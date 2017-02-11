@@ -1,0 +1,7 @@
+{
+  "lists": [
+    {"key": "1", "text": "first"},
+    {"key": "2", "text": "second"},
+    {"key": "3", "text": "third"}
+  ]
+}
