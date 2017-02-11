@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Services\AuthenticateService;
+use App\Services\ValidatorService;
 use App\Services\View\PathHelperService;
 use App\Services\View\StatusViewService;
 use App\Services\View\ViewHelperInterface;
@@ -32,6 +33,8 @@ class AppServiceProvider extends ServiceProvider
     {
         // Authenticate Service
         $this->app->bind('app.authenticateService', AuthenticateService::class);
+        // Validator Service
+        $this->app->bind('app.validatorService', ValidatorService::class);
 
         // View helper dependencies
         $this->app->bind('app.view.statusViewService', StatusViewService::class);
