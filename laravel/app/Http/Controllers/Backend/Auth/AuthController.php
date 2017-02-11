@@ -2,19 +2,28 @@
 
 namespace App\Http\Controllers\Backend\Auth;
 
+use App\Services\AuthenticateService;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
 
-    // TODO Move to APIs (for future using)
+    /**
+     * Auth instance.
+     * Backend guard
+     */
+    protected $auth;
+
+    public function __construct(AuthenticateService $authService)
+    {
+        $this->auth = $authService->backend;
+    }
 
     public function login(Request $request) {
-        if(Auth::guard('backend')->attempt(['username' => $request->input('username'), 'password' => $request->input('password'), 'type' => 'STAFF'])) {
+        if($this->auth->login($request->input('username'), $request->input('password'))) {
             return redirect()->intended('backend');
         }
 
@@ -22,8 +31,7 @@ class AuthController extends Controller
     }
 
     public function logout() {
-        if(Auth::guard('backend')->check()) {
-            Auth::guard('backend')->logout();
+        if($this->auth->logout()) {
             return redirect()->route('view.backend.login')->with('status', 'logout_successful');
         }
 

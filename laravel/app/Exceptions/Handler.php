@@ -46,48 +46,44 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
-        // TODO refactor this
-
-        if($request->is("backend/*")) {
-            return $this->backendHandler($request, $e);
-        } else {
-            return $this->frontendHandler($request, $e);
+        if($e instanceof NotFoundHttpException)
+        {
+            return $this->NotFoundExceptionHandler($request, $e);
         }
-    }
-
-    /**
-     * Handle the backend scope error
-     *
-     * @param $request
-     * @param Exception $e
-     * @return \Illuminate\Http\Response
-     */
-    private function frontendHandler($request, Exception $e) {
-        config()->set('auth.defaults.guard', 'web');
 
         return parent::render($request, $e);
     }
 
     /**
-     * Handle the backend scope error
-     *
-     * @param $request
-     * @param Exception $e
+     * Handle the HTTP 404 (Not found)
+     * @param \Illuminate\Http\Request $request
+     * @param NotFoundHttpException $e
      * @return \Illuminate\Http\Response
      */
-    private function backendHandler($request, Exception $e) {
-        config()->set('auth.defaults.guard', 'backend');
+    protected function NotFoundExceptionHandler($request, NotFoundHttpException $e)
+    {
+        // Skipped the assets
+        if(!$request->is("assets/*")) {
+            if($request->is("backend/*")) {
+                // Backend handle
+                config()->set('auth.defaults.guard', 'backend');
 
-        if(!$request->is("backend/auth/*")) {
-            if(!Auth::guard('backend')->check()) {
-                return redirect()->route('backend.view.login');
-            } else {
-                if($e instanceof NotFoundHttpException) {
-                    return response()->view("backend.error.404", [], 404);
+                if(!$request->is("backend/auth/*")) {
+                    if(!Auth::guard('backend')->check()) {
+                        return redirect()->route('backend.view.login');
+                    } else {
+                        if($e instanceof NotFoundHttpException) {
+                            return response()->view("backend.error.404", [], 404);
+                        }
+                    }
                 }
+            } else {
+                // Frontend handle
+                config()->set('auth.defaults.guard', 'web');
             }
         }
 
         return parent::render($request, $e);
     }
+
 }
