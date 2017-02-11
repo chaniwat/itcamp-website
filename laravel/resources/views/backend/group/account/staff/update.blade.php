@@ -78,8 +78,11 @@
                 <div class="form-group">
                     <label for="inputPassword" class="col-sm-2 control-label">Password</label>
 
-                    <div class="col-sm-10">
+                    <div class="col-sm-8">
                         <input type="password" class="form-control" id="inputPassword" name="password" placeholder="Password">
+                    </div>
+                    <div class="col-sm-2">
+                        <button type="button" class="btn btn-primary btn-block" id="generate-password">Generate</button>
                     </div>
                 </div>
                 <div class="form-group">
@@ -98,4 +101,16 @@
         </form>
     </div>
 
+@endsection
+
+@section('script')
+    <script type="text/javascript">
+      $("#generate-password").click(function() {
+        var randPassword = randomString(12);
+        $("#inputPassword").attr('type', 'text');
+        $("#inputCPassword").attr('readonly', 'readonly');
+        $("#inputPassword").val(randPassword);
+        $("#inputCPassword").val(randPassword);
+      });
+    </script>
 @endsection

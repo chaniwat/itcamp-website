@@ -64,6 +64,8 @@
         <script src="{{ asset('assets/backend/plugins/jQuery/jquery-2.2.3.min.js') }}"></script>
         <!-- Bootstrap 3.3.6 -->
         <script src="{{ asset('assets/backend/bootstrap/js/bootstrap.min.js') }}"></script>
+        <!-- Utility -->
+        <script src="{{ asset('assets/backend/js/utility.js') }}"></script>
         <!-- FastClick -->
         <script src="{{ asset('assets/backend/plugins/fastclick/fastclick.js') }}"></script>
         <!-- addition script for each pages -->
