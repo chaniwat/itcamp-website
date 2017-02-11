@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\View;
 
-class CodeHelperService
+class StatusViewService
 {
 
-    private $setting_title = [
+    private $setting_alertTitle = [
         'info' => 'Info!',
         'success' => 'Success!',
         'danger' => 'Alert!',
@@ -52,15 +52,15 @@ class CodeHelperService
         'logout_successful' => 'info', // logout successful
     ];
 
-    public function convertToTitle($code) {
+    private function convertToAlertTitle($code) {
         if(array_key_exists($code, $this->codeLevelTranslate)) {
-            return $this->setting_title[$this->codeLevelTranslate[$code]];
+            return $this->setting_alertTitle[$this->codeLevelTranslate[$code]];
         }
 
-        return $this->setting_title['info'];
+        return $this->setting_alertTitle['info'];
     }
 
-    public function convertToAlertClass($code) {
+    private function convertToAlertClass($code) {
         if(array_key_exists($code, $this->codeLevelTranslate)) {
             return $this->setting_alertClass[$this->codeLevelTranslate[$code]];
         }
@@ -68,7 +68,7 @@ class CodeHelperService
         return $this->setting_alertClass['info'];
     }
 
-    public function convertToIconClass($code) {
+    private function convertToIconClass($code) {
         if(array_key_exists($code, $this->codeLevelTranslate)) {
             return $this->setting_iconClass[$this->codeLevelTranslate[$code]];
         }
@@ -76,18 +76,23 @@ class CodeHelperService
         return $this->setting_iconClass['info'];
     }
 
-    public function makeAlertStatus() {
-
-        // TODO Move to blade component
-
+    /**
+     * Make alert if have status (in session)
+     * @param $blade blade component to show alert
+     * @return mixed
+     */
+    public function makeAlertStatus($blade) {
         if(session('status')) {
             $status = session('status');
-            return /** @lang HTML */
-                '<div class="alert '.$this->convertToAlertClass($status).' alert-dismissible" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4><i class="icon fa '.$this->convertToIconClass($status).'"></i> '.$this->convertToTitle($status).'!</h4>
-                    '.__('code.'.session('status')).'
-                </div>';
+
+            $alert = [
+                'class' => $this->convertToAlertClass($status),
+                'icon' => $this->convertToIconClass($status),
+                'title' => $this->convertToAlertTitle($status),
+                'message' => __('code.'.$status)
+            ];
+
+            return view($blade)->with(['alert' => $alert]);
         }
 
         return "";

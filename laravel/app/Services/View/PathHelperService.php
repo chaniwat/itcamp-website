@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\View;
 
 use Illuminate\Support\Facades\Request;
 

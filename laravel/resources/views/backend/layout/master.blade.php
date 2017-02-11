@@ -48,6 +48,8 @@
 
                 <!-- Main content -->
                 <section class="content">
+                    {!! $viewHelper->makeAlertStatus('backend.component.alert') !!}
+
                     @yield('content')
                 </section>
                 <!-- /.content -->

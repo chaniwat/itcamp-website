@@ -12,8 +12,8 @@ class AuthController extends Controller
 {
 
     /**
-     * Auth instance.
-     * Backend guard
+     * AuthenticateService instance.
+     * Backend Guard
      */
     protected $auth;
 

@@ -1,5 +1,3 @@
-@inject('codeHelper', 'App\Services\CodeHelperService')
-
 @extends('backend.layout.master')
 
 @section('content-header')
@@ -7,8 +5,6 @@
 @endsection
 
 @section('content')
-
-    {!! $codeHelper->makeAlertStatus() !!}
 
     <div class="row">
         <div class="col-md-12">
