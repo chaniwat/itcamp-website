@@ -50,6 +50,7 @@ class StatusViewService
         'form_invalid_file_type' => 'danger', // invalid file type
         'login_failed' => 'danger', // login failed
         'logout_successful' => 'info', // logout successful
+        'username_already_used' => 'warning', // username already used
     ];
 
     private function convertToAlertTitle($code) {

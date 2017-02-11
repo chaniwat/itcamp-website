@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Services\AccountService;
 use App\Services\AuthenticateService;
 use App\Services\ValidatorService;
 use App\Services\View\PathHelperService;
@@ -31,6 +32,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        // Account Service
+        $this->app->bind('app.accountService', AccountService::class);
         // Authenticate Service
         $this->app->bind('app.authenticateService', AuthenticateService::class);
         // Validator Service

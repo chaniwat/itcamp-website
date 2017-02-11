@@ -24,4 +24,5 @@ return [
     'form_invalid_file_type' => 'รูปแบบไฟล์ผิดพลาด', // invalid file type
     'login_failed' => 'เข้าสู่ระบบล้มเหลว', // login failed
     'logout_successful' => 'ออกจากระบบสำเร็จ', // logout successful
+    'username_already_used' => 'ยูสเซอร์เนมนี้ถูกใช้แล้ว', // username already used
 ];

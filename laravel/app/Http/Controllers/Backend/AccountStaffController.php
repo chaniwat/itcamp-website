@@ -3,14 +3,30 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Section;
+use App\Services\AccountService;
+use App\Services\ValidatorService;
 use App\Staff;
-use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Hash;
 
 class AccountStaffController extends Controller
 {
+
+    /**
+     * Account Service instance
+     */
+    private $account;
+
+    /**
+     * Validator Service instance
+     */
+    private $validator;
+
+    public function __construct(AccountService $accountService, ValidatorService $validatorService)
+    {
+        $this->validator = $validatorService;
+        $this->account = $accountService;
+    }
 
     /**
      * Create new staff account
@@ -19,27 +35,30 @@ class AccountStaffController extends Controller
      */
     public function createStaff(Request $request) {
 
-        // TODO Check by Validator (Request)
+        $rules = [
+            'username' => 'required|unique:users,username',
+            'password' => 'required|confirmed',
+            'password_confirmation' => 'required',
+            'name' => 'required'
+        ];
+        $this->validator->validate($request, $rules);
 
-        if(!$request->has(['username', 'password', 'cpassword', 'name'])) {
+        if($this->validator->containError('validation.required')) {
             return redirect()->back()->with('status', 'form_empty_field')->withInput($request->all());
-        } else if($request->input('password') != $request->input('cpassword')) {
+        } else if($this->validator->containError('validation.confirmed')) {
             return redirect()->back()->with('status', 'confirm_password_not_match')->withInput($request->all());
-        } else if(User::where('username', $request->input('username'))->first() != null) {
+        } else if($this->validator->containError('validation.unique')) {
             return redirect()->back()->with('status', 'username_already_used')->withInput($request->all());
         }
 
-        // Create new User and Staff into DB
-        $staff = new Staff();
-        $staff->user()->associate(User::create([
-            'username' => $request->input('username'),
-            'password' => Hash::make($request->input('password')),
-            'type' => 'STAFF'
-        ]));
-
-        // Update staff account
-        $this->structStaff($request, $staff);
-        $staff->save();
+        $this->account->createStaff(
+            $request->input('username'),
+            $request->input('password'),
+            $request->input('name'),
+            $request->input('section'),
+            $request->input('head'),
+            $request->input('admin')
+        );
 
         return redirect()->route('view.backend.account.staff')->with('status', 'backend_add_account_success');
     }
@@ -52,33 +71,24 @@ class AccountStaffController extends Controller
      */
     public function updateStaff(Request $request, $id) {
 
-        // TODO Check by Validator (Request)
+        $rules = [
+            'name' => 'required'
+        ];
+        $this->validator->validate($request, $rules);
 
-        if(!$request->has(['name'])) {
+        if($this->validator->containError('validation.required')) {
             return redirect()->back()->with('status', 'form_empty_field')->withInput($request->all());
         }
 
-        // Find old staff account
-        $staff = Staff::find($id);
-
-        // Update staff account
-        $this->structStaff($request, $staff);
-        $staff->save();
+        $this->account->updateStaff(
+            $id,
+            $request->input('name'),
+            $request->input('section'),
+            $request->input('head'),
+            $request->input('admin')
+        );
 
         return redirect()->back()->with('status', 'backend_update_account_complete');
-    }
-
-    /**
-     * Struct the staff account from input
-     * @param Request $request
-     * @param Staff $staff
-     */
-    protected function structStaff(Request $request, Staff $staff)
-    {
-        $staff->section()->associate(Section::find($request->input('section')));
-        $staff->name = $request->input('name');
-        $staff->is_head = !!$request->input('head');
-        $staff->is_admin = !!$request->input('admin');
     }
 
     /**
@@ -89,17 +99,19 @@ class AccountStaffController extends Controller
      */
     public function updateStaffPassword(Request $request, $id) {
 
-        // TODO Check by Validator (Request)
+        $rules = [
+            'password' => 'required|confirmed',
+            'password_confirmation' => 'required'
+        ];
+        $this->validator->validate($request, $rules);
 
-        if(!$request->has(['password', 'cpassword'])) {
+        if($this->validator->containError('validation.required')) {
             return redirect()->back()->with('status', 'form_empty_field');
-        } else if($request->input('password') != $request->input('cpassword')) {
+        } else if($this->validator->containError('validation.confirmed')) {
             return redirect()->back()->with('status', 'confirm_password_not_match');
         }
 
-        $staff = Staff::find($id);
-        $staff->user->password = Hash::make($request->input('password'));
-        $staff->user->save();
+        $this->account->updateStaffPassword($id, $request->input('password'));
 
         return redirect()->back()->with('status', 'backend_update_account_password_complete');
     }
@@ -109,7 +121,7 @@ class AccountStaffController extends Controller
      * @return $this
      */
     public function showStaff() {
-        return view('backend.group.account.staff.index')->with('users', User::where('type', 'STAFF')->get());
+        return view('backend.group.account.staff.index')->with('staffs', Staff::all());
     }
 
     /**
