@@ -1,5 +1,3 @@
-@inject('stringHelper', 'App\Services\StringHelperService')
-
 <header class="main-header">
 
     {{-- Logo --}}

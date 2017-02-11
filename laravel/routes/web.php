@@ -71,7 +71,15 @@ Route::group(['prefix' => 'backend', 'namespace' => 'Backend'], function () {
             });
 
             Route::group(['prefix' => 'staff'], function () {
-                Route::get('/', function () { abort(404); })->name('view.backend.account.staff');
+
+                Route::get('/', 'AccountStaffController@showStaff')->name('view.backend.account.staff');
+                Route::get('add', 'AccountStaffController@showCreateStaff')->name('view.backend.account.staff.create');
+                Route::get('edit/{id}', 'AccountStaffController@showUpdateStaff')->name('view.backend.account.staff.update');
+
+                Route::post('add', 'AccountStaffController@createStaff')->name('backend.account.staff.create');
+                Route::post('edit/{id}', 'AccountStaffController@updateStaff')->name('backend.account.staff.update');
+                Route::post('edit/{id}/password', 'AccountStaffController@updateStaffPassword')->name('backend.account.staff.update.password');
+
             });
 
         });
