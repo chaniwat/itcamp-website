@@ -89,7 +89,7 @@ class StatusViewService
                 'class' => $this->convertToAlertClass($status),
                 'icon' => $this->convertToIconClass($status),
                 'title' => $this->convertToAlertTitle($status),
-                'message' => __('code.'.$status)
+                'message' => __('alert_status.'.$status)
             ];
 
             return view($blade)->with(['alert' => $alert]);
