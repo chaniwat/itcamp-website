@@ -12,6 +12,8 @@ use App\Http\Controllers\Controller;
 class AccountStaffController extends Controller
 {
 
+    // TODO Check policies (Gate Policy)
+
     /**
      * Account Service instance
      */

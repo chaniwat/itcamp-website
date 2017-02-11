@@ -60,7 +60,15 @@ Route::group(['prefix' => 'backend', 'namespace' => 'Backend'], function () {
         });
 
         Route::group(['prefix' => 'question'], function () {
-            Route::get('/', function () { abort(404); })->name('view.backend.question');
+
+            Route::get('/', 'QuestionController@viewQuestion')->name('view.backend.question');
+            Route::get('create', 'QuestionController@viewCreateQuestion')->name('view.backend.question.create');
+            Route::get('{id}/update', 'QuestionController@viewUpdateQuestion')->name('view.backend.question.update');
+
+            Route::post('create', 'QuestionController@createQuestion')->name('backend.question.create');
+            Route::post('{id}/update', 'QuestionController@updateQuestion')->name('backend.question.update');
+            Route::post('{id}/delete', 'QuestionController@deleteQuestion')->name('backend.question.delete');
+
         });
 
         Route::group(['prefix' => 'account', 'middleware' => 'admin.backend'], function() {
@@ -73,12 +81,12 @@ Route::group(['prefix' => 'backend', 'namespace' => 'Backend'], function () {
             Route::group(['prefix' => 'staff'], function () {
 
                 Route::get('/', 'AccountStaffController@showStaff')->name('view.backend.account.staff');
-                Route::get('add', 'AccountStaffController@showCreateStaff')->name('view.backend.account.staff.create');
-                Route::get('edit/{id}', 'AccountStaffController@showUpdateStaff')->name('view.backend.account.staff.update');
+                Route::get('create', 'AccountStaffController@showCreateStaff')->name('view.backend.account.staff.create');
+                Route::get('{id}/update', 'AccountStaffController@showUpdateStaff')->name('view.backend.account.staff.update');
 
                 Route::post('add', 'AccountStaffController@createStaff')->name('backend.account.staff.create');
-                Route::post('edit/{id}', 'AccountStaffController@updateStaff')->name('backend.account.staff.update');
-                Route::post('edit/{id}/password', 'AccountStaffController@updateStaffPassword')->name('backend.account.staff.update.password');
+                Route::post('{id}/update', 'AccountStaffController@updateStaff')->name('backend.account.staff.update');
+                Route::post('{id}/update/password', 'AccountStaffController@updateStaffPassword')->name('backend.account.staff.update.password');
 
             });
 
