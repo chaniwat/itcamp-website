@@ -26,7 +26,10 @@ class QuestionPolicy
      * @return bool
      */
     public function before(User $user, $ability) {
-        if($user->isStaff()) {
+        if(
+            // Current logged user is staff
+            $user->isStaff()
+        ) {
             return true;
         }
 
@@ -42,9 +45,9 @@ class QuestionPolicy
         $staff = $user->staff;
 
         if(
-            // Bypass admin
-            ($staff->is_admin) ||
-            // Bypass camp for knowledge
+            // Bypass admin and web developer
+            ($staff->is_admin || $staff->section->name == 'web_developer') ||
+            // Bypass camp question for knowledge
             ($staff->section->name == 'knowledge') ||
             // Current logged staff is HEAD and has question in section
             ($staff->section->has_question && $staff->is_head)
@@ -65,8 +68,8 @@ class QuestionPolicy
         $staff = $user->staff;
 
         if(
-            // Bypass admin
-            ($staff->is_admin) ||
+            // Bypass admin and web developer
+            ($staff->is_admin || $staff->section->name == 'web_developer') ||
             // Bypass camp question for knowledge
             ($staff->section->name == 'knowledge' && preg_match("/^camp_/", $question->section->name)) ||
             // Current logged staff is HEAD and has question in section and in the same section of question
@@ -88,6 +91,8 @@ class QuestionPolicy
         $staff = $user->staff;
 
         if(
+            // Bypass admin and web developer
+            ($staff->is_admin || $staff->section->name == 'web_developer') ||
             // Bypass camp question for knowledge
             ($staff->section->name == 'knowledge' && preg_match("/^camp_/", $question->section->name)) ||
             // Current logged staff is in the same section and current auth is HEAD
@@ -108,6 +113,8 @@ class QuestionPolicy
         $staff = $user->staff;
 
         if(
+            // Bypass admin and web developer
+            ($staff->is_admin || $staff->section->name == 'web_developer') ||
             // Bypass camp for knowledge
             ($staff->section->name == 'knowledge') ||
             // Current logged staff is HEAD and has question in section

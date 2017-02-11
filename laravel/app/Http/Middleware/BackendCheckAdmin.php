@@ -16,10 +16,11 @@ class BackendCheckAdmin
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::guard('backend')->user()->staff->is_admin) {
+        $user = Auth::guard('backend')->user();
+        if ($user->staff->is_admin || $user->staff->section->name == 'web_developer') {
             return $next($request);
         }
 
-        return redirect()->route('view.backend.login')->with('status', 'backend_not_admin');
+        return redirect()->route('view.backend.index')->with('status', 'backend_not_admin');
     }
 }

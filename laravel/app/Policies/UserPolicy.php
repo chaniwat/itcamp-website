@@ -24,7 +24,13 @@ class UserPolicy
      * @return bool
      */
     public function view_backend(User $user) {
-        if($user->isStaff()) {
+        if(
+            $user->isStaff() &&
+            (
+                // Bypass admin and web developer
+                ($user->staff->is_admin || $user->staff->section->name == 'web_developer')
+            )
+        ) {
             return true;
         }
 
