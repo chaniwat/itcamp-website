@@ -18,12 +18,16 @@ class UserPolicy
         //
     }
 
-    // TODO comment method (what is it?)
-
-    public function manage(User $user) {
-        if($user->staff && $user->staff->is_admin) {
+    /**
+     * Can logged user view account management (ex. view)
+     * @param User $user
+     * @return bool
+     */
+    public function view_backend(User $user) {
+        if($user->isStaff()) {
             return true;
         }
+
         return false;
     }
 }

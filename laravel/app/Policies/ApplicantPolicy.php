@@ -18,11 +18,13 @@ class ApplicantPolicy
         //
     }
 
-    // TODO comment method (what is it?)
-
+    /**
+     * Determined if logged user can pass to check policies (before check all policies)
+     * @param $user
+     * @param $ability
+     * @return bool
+     */
     public function before($user, $ability) {
-        if($user->staff && $user->staff->is_admin) {
-            return true;
-        }
+        return true;
     }
 }
