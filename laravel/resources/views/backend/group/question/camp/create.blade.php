@@ -8,7 +8,7 @@
         <div class="box-header with-border">
             <h3 class="box-title">ฟอร์มเพิ่มบัญชีใหม่สำหรับ Staff</h3>
         </div>
-        <form class="form-horizontal" action="{{ route("backend.question.create") }}" method="post">
+        <form class="form-horizontal" action="{{ route("backend.question.camp.create") }}" method="post">
             {{ csrf_field() }}
 
             <div class="box-body">
@@ -86,7 +86,7 @@
             </div>
 
             <div class="box-footer">
-                <a href="{{ route("view.backend.question") }}" class="btn btn-default">ยกเลิกการสร้าง</a>
+                <a href="{{ route("view.backend.question.camp") }}" class="btn btn-default">ยกเลิกการสร้าง</a>
                 <button type="submit" class="btn btn-info pull-right">สร้างคำถามใหม่</button>
             </div>
         </form>

@@ -12,12 +12,14 @@
             </li>
             <li class="{{ $viewHelper->isActivePath(["backend/applicant", "backend/applicant/*"]) }}"><a href="{{ route('view.backend.applicants') }}"><i class="fa fa-book"></i> <span>ตรวจใบสมัคร</span></a></li>
             <li class="{{ $viewHelper->isActivePath(["backend/answer", "backend/answer/*"]) }}"><a href="{{ route('view.backend.answers') }}"><i class="fa fa-book"></i> <span>ตรวจคำตอบ</span></a></li>
+            {{-- TODO Policy check (GATE) --}}
+            <li class="{{ $viewHelper->isActivePath(["backend/question/applicant", "backend/question/applicant/*"]) }}"><a href="{{ route('view.backend.question.applicant') }}"><i class="fa fa-book"></i> <span>ดูคำถามผู้สมัคร</span></a></li>
             @can('view', \App\Question::class)
-                <li class="{{ $viewHelper->isActivePath(["backend/question", "backend/question/*"]) }}"><a href="{{ route('view.backend.question') }}"><i class="fa fa-book"></i> <span>ดูคำถาม</span></a></li>
+                <li class="{{ $viewHelper->isActivePath(["backend/question/camp", "backend/question/camp/*"]) }}"><a href="{{ route('view.backend.question.camp') }}"><i class="fa fa-book"></i> <span>ดูคำถามค่าย</span></a></li>
             @endcan
             @can('view_backend', \App\User::class)
                 <li class="treeview {{ $viewHelper->isActivePath(["backend/account/*"]) }}">
-                    <a href="{{ route('view.backend.question') }}"><i class="fa fa-book"></i> <span>จัดการบัญชีผู้ใช้</span> <i class="fa fa-angle-left pull-right"></i></a>
+                    <a href="#"><i class="fa fa-book"></i> <span>จัดการบัญชีผู้ใช้</span> <i class="fa fa-angle-left pull-right"></i></a>
                     <ul class="treeview-menu">
                         <li class="{{ $viewHelper->isActivePath(["backend/account/applicant", "backend/account/applicant/*"]) }}"><a href="{{ route('view.backend.account.applicant') }}"><i class="fa fa-book"></i> <span>บัญชีผู้ใช้ Applicant</span></a></li>
                         <li class="{{ $viewHelper->isActivePath(["backend/account/staff", "backend/account/staff/*"]) }}"><a href="{{ route('view.backend.account.staff') }}"><i class="fa fa-book"></i> <span>บัญชีผู้ใช้ Staff</span></a></li>

@@ -8,7 +8,7 @@
         <div class="box-header with-border">
             <h3 class="box-title">ฟอร์มบัญชีผู้ใช้สำหรับ Staff</h3>
         </div>
-        <form class="form-horizontal" action="{{ route("backend.question.update", ['id' => $data['question']->id]) }}" method="post">
+        <form class="form-horizontal" action="{{ route("backend.question.camp.update", ['id' => $data['question']->id]) }}" method="post">
             {{ csrf_field() }}
 
             <div class="box-body">
@@ -86,7 +86,7 @@
 
 
             <div class="box-footer">
-                <a href="{{ route("view.backend.question") }}" class="btn btn-default">ยกเลิกการแก้ไข</a>
+                <a href="{{ route("view.backend.question.camp") }}" class="btn btn-default">ยกเลิกการแก้ไข</a>
                 <div class="btn-group pull-right" role="group">
                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDeleteModal">ลบคำถามนี้</button>
                     <button type="submit" class="btn btn-info">บันทึกการแก้ไข</button>
@@ -108,7 +108,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">ไม่</button>
-                    <a href="{{ route('backend.question.delete', ['id' => $data['question']->id]) }}" class="btn btn-danger">ลบคำถามนี้</a>
+                    <a href="{{ route('backend.question.camp.delete', ['id' => $data['question']->id]) }}" class="btn btn-danger">ลบคำถามนี้</a>
                 </div>
             </div>
         </div>

@@ -5,6 +5,8 @@ namespace App\Services;
 class FormService
 {
 
+    // TODO Check format validator algorithm (setting, value json format)(testing)
+
     private $acceptField = ['TEXT', 'TEXTAREA', 'PASSWORD', 'EMAIL', 'NUMBER', 'DATE', 'RADIO', 'CHECKBOX', 'SELECT', 'SELECT_MULTIPLE', 'FILE'];
 
     private $acceptFileTypeSetting = ['picture', 'document', 'any'];

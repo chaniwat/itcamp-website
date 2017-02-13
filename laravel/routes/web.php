@@ -61,13 +61,19 @@ Route::group(['prefix' => 'backend', 'namespace' => 'Backend'], function () {
 
         Route::group(['prefix' => 'question'], function () {
 
-            Route::get('/', 'QuestionController@showViewQuestion')->name('view.backend.question');
-            Route::get('create', 'QuestionController@showViewCreateQuestion')->name('view.backend.question.create');
-            Route::get('{id}/update', 'QuestionController@showViewUpdateQuestion')->name('view.backend.question.update');
+            Route::group(['prefix' => 'applicant'], function () {
+                Route::get('/', function () { abort(404); })->name('view.backend.question.applicant');
+            });
 
-            Route::post('create', 'QuestionController@createQuestion')->name('backend.question.create');
-            Route::post('{id}/update', 'QuestionController@updateQuestion')->name('backend.question.update');
-            Route::get('{id}/delete', 'QuestionController@deleteQuestion')->name('backend.question.delete');
+            Route::group(['prefix' => 'camp'], function () {
+                Route::get('/', 'CampQuestionController@showViewQuestion')->name('view.backend.question.camp');
+                Route::get('create', 'CampQuestionController@showViewCreateQuestion')->name('view.backend.question.camp.create');
+                Route::get('{id}/update', 'CampQuestionController@showViewUpdateQuestion')->name('view.backend.question.camp.update');
+
+                Route::post('create', 'CampQuestionController@createQuestion')->name('backend.question.camp.create');
+                Route::post('{id}/update', 'CampQuestionController@updateQuestion')->name('backend.question.camp.update');
+                Route::get('{id}/delete', 'CampQuestionController@deleteQuestion')->name('backend.question.camp.delete');
+            });
 
         });
 
@@ -79,7 +85,6 @@ Route::group(['prefix' => 'backend', 'namespace' => 'Backend'], function () {
             });
 
             Route::group(['prefix' => 'staff'], function () {
-
                 Route::get('/', 'AccountStaffController@showStaff')->name('view.backend.account.staff');
                 Route::get('create', 'AccountStaffController@showCreateStaff')->name('view.backend.account.staff.create');
                 Route::get('{id}/update', 'AccountStaffController@showUpdateStaff')->name('view.backend.account.staff.update');
@@ -87,7 +92,6 @@ Route::group(['prefix' => 'backend', 'namespace' => 'Backend'], function () {
                 Route::post('add', 'AccountStaffController@createStaff')->name('backend.account.staff.create');
                 Route::post('{id}/update', 'AccountStaffController@updateStaff')->name('backend.account.staff.update');
                 Route::post('{id}/update/password', 'AccountStaffController@updateStaffPassword')->name('backend.account.staff.update.password');
-
             });
 
         });

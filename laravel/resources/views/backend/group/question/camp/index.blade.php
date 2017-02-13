@@ -18,7 +18,7 @@
         </div>
         <div class="box-body">
             @if(Gate::allows('create', \App\Question::class))
-                <a href="{{ route('view.backend.question.create') }}" class="btn btn-success"><i class="fa fa-plus-circle" aria-hidden="true"></i> เพิ่มคำถามใหม่</a>
+                <a href="{{ route('view.backend.question.camp.create') }}" class="btn btn-success"><i class="fa fa-plus-circle" aria-hidden="true"></i> เพิ่มคำถามใหม่</a>
             @else
                 <button type="button" class="btn btn-default" disabled><i class="fa fa-plus-circle" aria-hidden="true"></i> เพิ่มคำถามใหม่</button>
             @endif
@@ -46,7 +46,7 @@
                             <td>@lang('section.'.$question->section->name)</td>
                             <td>
                                 @if(Gate::allows('update', $question))
-                                    <a href="{{ route('view.backend.question.update', ['id' => $question->id]) }}" class="btn btn-info btn-flat btn-sm"><i class="fa fa-wrench" aria-hidden="true"></i> แก้ไข</a>
+                                    <a href="{{ route('view.backend.question.camp.update', ['id' => $question->id]) }}" class="btn btn-info btn-flat btn-sm"><i class="fa fa-wrench" aria-hidden="true"></i> แก้ไข</a>
                                 @else
                                     <button type="button" class="btn btn-default btn-flat btn-sm" disabled><i class="fa fa-wrench" aria-hidden="true"></i> แก้ไข</button>
                                 @endif

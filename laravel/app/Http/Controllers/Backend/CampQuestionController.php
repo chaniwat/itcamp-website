@@ -14,7 +14,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
-class QuestionController extends Controller
+class CampQuestionController extends Controller
 {
 
     /**
@@ -47,7 +47,7 @@ class QuestionController extends Controller
     public function createQuestion(Request $request) {
         // Policies Check
         if (Gate::denies('create', Question::class)) {
-            return redirect()->route('view.backend.question')->with('status', 'backend_not_enough_permission_to_create_question');
+            return redirect()->route('view.backend.question.camp')->with('status', 'backend_not_enough_permission_to_create_question');
         }
 
         // Validation inputs
@@ -84,7 +84,7 @@ class QuestionController extends Controller
             return back()->with('status', $error)->withInput($request->all());
         }
 
-        return redirect()->route('view.backend.question')->with('status', 'backend_add_question_success');
+        return redirect()->route('view.backend.question.camp')->with('status', 'backend_add_question_success');
     }
 
     /**
@@ -102,7 +102,7 @@ class QuestionController extends Controller
 
         // Policies Check
         if(Gate::denies('update', $question)) {
-            return redirect()->route('view.backend.question')->with('status', 'backend_not_enough_permission_to_edit_question');
+            return redirect()->route('view.backend.question.camp')->with('status', 'backend_not_enough_permission_to_edit_question');
         }
 
         // Validation inputs
@@ -150,17 +150,17 @@ class QuestionController extends Controller
         // Find question
         $question = Question::find($id);
         if (!$question) {
-            return redirect()->route('view.backend.question')->with('status', 'backend_question_not_found');
+            return redirect()->route('view.backend.question.camp')->with('status', 'backend_question_not_found');
         }
 
         // Policies Check
         if(Gate::denies('update', $question)) {
-            return redirect()->route('view.backend.question')->with('status', 'backend_not_enough_permission_to_remove_question');
+            return redirect()->route('view.backend.question.camp')->with('status', 'backend_not_enough_permission_to_remove_question');
         }
 
         $this->question->deleteQuestion($id);
 
-        return redirect()->route('view.backend.question')->with('status', 'backend_remove_question_success');
+        return redirect()->route('view.backend.question.camp')->with('status', 'backend_remove_question_success');
     }
 
     /**
@@ -168,7 +168,7 @@ class QuestionController extends Controller
      * @return $this
      */
     public function showViewQuestion() {
-        return view('backend.group.question.index')->with('questions', Question::orderBy('priority', 'desc')->get());
+        return view('backend.group.question.camp.index')->with('questions', Question::orderBy('priority', 'desc')->get());
     }
 
     /**
@@ -177,7 +177,7 @@ class QuestionController extends Controller
      */
     public function showViewCreateQuestion() {
         if (Gate::denies('create', Question::class)) {
-            return redirect()->route('view.backend.question')->with('status', 'backend_not_enough_permission_to_create_question');
+            return redirect()->route('view.backend.question.camp')->with('status', 'backend_not_enough_permission_to_create_question');
         }
 
         $data = [
@@ -185,7 +185,7 @@ class QuestionController extends Controller
             'sections' => $this->getAvailableSection()
         ];
 
-        return view('backend.group.question.create')->with('data', $data);
+        return view('backend.group.question.camp.create')->with('data', $data);
     }
 
     /**
@@ -197,9 +197,9 @@ class QuestionController extends Controller
         $question = Question::find($id);
 
         if($question == null) {
-            return redirect()->route('view.backend.question')->with('status', 'backend_question_not_found');
+            return redirect()->route('view.backend.question.camp')->with('status', 'backend_question_not_found');
         } else if (Gate::denies('update', $question)) {
-            return redirect()->route('view.backend.question')->with('status', 'backend_not_enough_permission_to_edit_question');
+            return redirect()->route('view.backend.question.camp')->with('status', 'backend_not_enough_permission_to_edit_question');
         }
 
         $data = [
@@ -208,7 +208,7 @@ class QuestionController extends Controller
             'sections' => $this->getAvailableSection()
         ];
 
-        return view('backend.group.question.update')->with('data', $data);
+        return view('backend.group.question.camp.update')->with('data', $data);
     }
 
     /**
