@@ -1,0 +1,51 @@
+$bg-navy-active: #001a35;
+
+/*
+* Addition box style
+*/
+.box-solid {
+  &.box-bg-navy {
+    border: 1px solid $bg-navy-active;
+
+    > .box-header {
+      color: #fff;
+      background: $bg-navy-active;
+      background-color: $bg-navy-active;
+    }
+  }
+}
+
+/*
+* Addition 15 columns grid
+*/
+.row {
+  @media (min-width: 1200px) {
+    .col-15-lg-3 {
+      position: relative;
+      min-height: 1px;
+      padding-left: 15px;
+      padding-right: 15px;
+      float: left;
+      width: 20%;
+    }
+  }
+}
+
+/*
+* Addition progress-bar
+*/
+.progress-bar {
+  &.progress-bar-fCamp {
+    font-size: 14px;
+    font-weight: bold;
+    overflow: hidden;
+  }
+}
+
+/*
+* Navbar custom style
+*/
+
+.navbar-nav > .user-menu > .dropdown-menu > li.user-header > img {
+  background-color: white;
+}

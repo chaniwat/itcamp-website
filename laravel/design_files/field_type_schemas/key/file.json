@@ -1,0 +1,4 @@
+{
+  "directory": "path/to/folder/to/keep/files",
+  "acceptTypes": "File_Types" // File_Types : picture, document, any
+}
