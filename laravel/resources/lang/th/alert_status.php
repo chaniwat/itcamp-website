@@ -10,6 +10,7 @@ return [
     'backend_not_enough_permission_to_create_question' => 'คุณไม่สามารถตั้งคำถามใหม่่ได้', // not enough permission to create question
     'backend_not_enough_permission_to_edit_question' => 'คุณไม่สามารถแก้ไขคำถามนี้ได้', // not enough permission to edit question
     'backend_not_enough_permission_to_remove_question' => 'คุณไม่สามารถลบคำถามนี้ได้', // not enough permission to remove question
+    'backend_question_id_already_used' => 'field_id ของคำถามนี้ถูกใช้แล้ว', // field_id already used
     'backend_question_not_found' => 'ไม่มีคำถามที่ระบุ', // question not found
     'backend_remove_question_success' => 'ลบคำถามสำเร็จ', // remove question
     'backend_update_account_complete' => 'แก้ไขบัญชี้สำเร็จ', // update staff account

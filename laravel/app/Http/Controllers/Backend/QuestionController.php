@@ -16,8 +16,6 @@ use Illuminate\Support\Facades\Gate;
 
 class QuestionController extends Controller
 {
-    // TODO Move to QuestionService (For future use (APIs))
-    // TODO Check policies (GATE)
 
     /**
      * Validator Service instance
@@ -47,10 +45,26 @@ class QuestionController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      */
     public function createQuestion(Request $request) {
+        // Policies Check
         if (Gate::denies('create', Question::class)) {
             return redirect()->route('view.backend.question')->with('status', 'backend_not_enough_permission_to_create_question');
         }
 
+        // Validation inputs
+        $rules = [
+            'question' => 'required',
+            'field_id' => 'required|unique:questions,id',
+            'field_setting' => 'required'
+        ];
+        $this->validator->validate($request, $rules);
+
+        if($this->validator->containError('validation.required')) {
+            return redirect()->back()->with('status', 'form_empty_field')->withInput($request->all());
+        } else if($this->validator->containError('validation.unique')) {
+            return redirect()->back()->with('status', 'backend_question_id_already_used')->withInput($request->all());
+        }
+
+        // Create question w/ error checking
         $error = null;
         try
         {
@@ -80,18 +94,49 @@ class QuestionController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      */
     public function updateQuestion(Request $request, $id) {
+        // Find question
         $question = Question::find($id);
-
-        if($question == null) {
-            return redirect()->route('view.backend.question')->with('status', 'backend_question_not_found');
-        } else if(Gate::denies('update', $question)) {
-            return redirect()->route('view.backend.question')->with('status', 'backend_not_enough_permission_to_edit_question');
-        } else if($result = $this->checkBadQuestionDetail($request, ['question', 'field_setting'])) {
-            return back()->with('status', $result)->withInput($request->all());
+        if (!$question) {
+            return redirect()->back()->with('status', 'backend_question_not_found')->withInput($request->all());
         }
 
-        $this->structQuestion($question, $request);
-        $question->save();
+        // Policies Check
+        if(Gate::denies('update', $question)) {
+            return redirect()->route('view.backend.question')->with('status', 'backend_not_enough_permission_to_edit_question');
+        }
+
+        // Validation inputs
+        $rules = [
+            'question' => 'required',
+            'field_setting' => 'required'
+        ];
+        $this->validator->validate($request, $rules);
+
+        if($this->validator->containError('validation.required')) {
+            return redirect()->back()->with('status', 'form_empty_field')->withInput($request->all());
+        } else if($this->validator->containError('validation.exists')) {
+            return redirect()->back()->with('status', 'backend_question_not_found')->withInput($request->all());
+        }
+
+        // Create question w/ error checking
+        $error = null;
+        try
+        {
+            $this->question->updateQuestion($id, $request->all());
+        }
+        catch (FieldTypeNotAcceptException $ex)
+        {
+            $error = 'backend_form_field_type_not_accept';
+        }
+        catch (InvalidFieldFormatException $ex)
+        {
+            $error = 'backend_incorrect_format_in_field_value';
+        }
+
+        if ($error)
+        {
+            return back()->with('status', $error)->withInput($request->all());
+        }
 
         return back()->with('status', 'backend_update_question_success');
     }
@@ -102,26 +147,35 @@ class QuestionController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      */
     public function deleteQuestion($id) {
+        // Find question
         $question = Question::find($id);
-
-        if($question == null) {
+        if (!$question) {
             return redirect()->route('view.backend.question')->with('status', 'backend_question_not_found');
-        } else if(Gate::denies('update', $question)) {
+        }
+
+        // Policies Check
+        if(Gate::denies('update', $question)) {
             return redirect()->route('view.backend.question')->with('status', 'backend_not_enough_permission_to_remove_question');
         }
 
-        Question::destroy($id);
+        $this->question->deleteQuestion($id);
 
         return redirect()->route('view.backend.question')->with('status', 'backend_remove_question_success');
     }
 
-    public function viewQuestion() {
-        // TODO Pagination
-
+    /**
+     * Show view all question
+     * @return $this
+     */
+    public function showViewQuestion() {
         return view('backend.group.question.index')->with('questions', Question::orderBy('priority', 'desc')->get());
     }
 
-    public function viewCreateQuestion() {
+    /**
+     * Show view create question
+     * @return \Illuminate\Http\Response
+     */
+    public function showViewCreateQuestion() {
         if (Gate::denies('create', Question::class)) {
             return redirect()->route('view.backend.question')->with('status', 'backend_not_enough_permission_to_create_question');
         }
@@ -134,7 +188,12 @@ class QuestionController extends Controller
         return view('backend.group.question.create')->with('data', $data);
     }
 
-    public function viewUpdateQuestion($id) {
+    /**
+     * Show view update question
+     * @param $id
+     * @return \Illuminate\Http\Response
+     */
+    public function showViewUpdateQuestion($id) {
         $question = Question::find($id);
 
         if($question == null) {
@@ -152,7 +211,12 @@ class QuestionController extends Controller
         return view('backend.group.question.update')->with('data', $data);
     }
 
+    /**
+     * Get the available section selection of current logged user (Policies)
+     * @return mixed
+     */
     private function getAvailableSection() {
+        // TODO [OPTIONAL] change this in future :S
         if(Auth::guard('backend')->user()->staff->is_admin) {
             return Section::all();
         } else if(Auth::guard('backend')->user()->staff->section->name == 'knowledge') {

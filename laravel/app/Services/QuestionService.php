@@ -52,6 +52,46 @@ class QuestionService
     }
 
     /**
+     * Update the question
+     * @param $field_id
+     * @param string|array $question_or_array
+     * @param $description
+     * @param $section
+     * @param $priority
+     * @param $field_type
+     * @param $field_setting
+     * @return Question
+     * @throws FieldTypeNotAcceptException If field type is invalid or not accept
+     * @throws InvalidFieldFormatException If field setting is on invalid format to its type format
+     */
+    public function updateQuestion($field_id, $question_or_array, $description = null, $section = null, $priority = null, $field_type = null, $field_setting = null)
+    {
+        $object = Question::find($field_id);
+
+        if (is_array($question_or_array))
+        {
+            $this->structQuestion($object, $question_or_array);
+        }
+        else
+        {
+            $this->structQuestion($object, $question_or_array, $description, $section, $priority, $field_type, $field_setting);
+        }
+
+        $object->save();
+
+        return $object;
+    }
+
+    /**
+     * Delete the question
+     * @param $field_id
+     */
+    public function deleteQuestion($field_id)
+    {
+        Question::destroy($field_id);
+    }
+
+    /**
      * Struct a question
      * @param Question $object
      * @param string|array $question_or_array

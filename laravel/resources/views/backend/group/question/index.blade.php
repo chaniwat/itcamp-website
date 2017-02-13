@@ -41,7 +41,7 @@
                     @foreach($questions as $question)
                         <tr>
                             <td>{{ $question->priority }}</td>
-                            <td>{{ $question->field_id }}</td>
+                            <td>{{ $question->id }}</td>
                             <td>{{ $question->question }}</td>
                             <td>@lang('section.'.$question->section->name)</td>
                             <td>

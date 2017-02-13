@@ -61,13 +61,13 @@ Route::group(['prefix' => 'backend', 'namespace' => 'Backend'], function () {
 
         Route::group(['prefix' => 'question'], function () {
 
-            Route::get('/', 'QuestionController@viewQuestion')->name('view.backend.question');
-            Route::get('create', 'QuestionController@viewCreateQuestion')->name('view.backend.question.create');
-            Route::get('{id}/update', 'QuestionController@viewUpdateQuestion')->name('view.backend.question.update');
+            Route::get('/', 'QuestionController@showViewQuestion')->name('view.backend.question');
+            Route::get('create', 'QuestionController@showViewCreateQuestion')->name('view.backend.question.create');
+            Route::get('{id}/update', 'QuestionController@showViewUpdateQuestion')->name('view.backend.question.update');
 
             Route::post('create', 'QuestionController@createQuestion')->name('backend.question.create');
             Route::post('{id}/update', 'QuestionController@updateQuestion')->name('backend.question.update');
-            Route::post('{id}/delete', 'QuestionController@deleteQuestion')->name('backend.question.delete');
+            Route::get('{id}/delete', 'QuestionController@deleteQuestion')->name('backend.question.delete');
 
         });
 

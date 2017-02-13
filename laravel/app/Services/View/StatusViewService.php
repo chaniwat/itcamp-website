@@ -36,6 +36,7 @@ class StatusViewService
         'backend_not_enough_permission_to_create_question' => 'warning', // not enough permission to create question
         'backend_not_enough_permission_to_edit_question' => 'warning', // not enough permission to edit question
         'backend_not_enough_permission_to_remove_question' => 'warning', // not enough permission to remove question
+        'backend_question_id_already_used' => 'warning', // field_id already used
         'backend_question_not_found' => 'warning', // question not found
         'backend_remove_question_success' => 'success', // remove question
         'backend_update_account_complete' => 'success', // update staff account
