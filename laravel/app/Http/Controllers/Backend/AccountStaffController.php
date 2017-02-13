@@ -15,14 +15,14 @@ class AccountStaffController extends Controller
     // TODO Check policies (Gate Policy)
 
     /**
-     * Account Service instance
-     */
-    private $account;
-
-    /**
      * Validator Service instance
      */
     private $validator;
+
+    /**
+     * Account Service instance
+     */
+    private $account;
 
     public function __construct(AccountService $accountService, ValidatorService $validatorService)
     {

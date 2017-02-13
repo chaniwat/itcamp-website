@@ -40,10 +40,10 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="inputId" class="col-sm-2 control-label">ID</label>
+                    <label for="inputFieldId" class="col-sm-2 control-label">Field ID</label>
 
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="inputId" name="id" placeholder="ID" value="{{ old('id') }}">
+                        <input type="text" class="form-control" id="inputFieldId" name="field_id" placeholder="Field ID" value="{{ old('field_id') }}">
                         <p class="help-block" style="margin-bottom: 0;">
                             ถ้าจะเว้นวรรคให้ใช้ "_" (underscore) แทน<br />
                             <span class="text-red">**Field ID แก้ไขไม่ได้ (โปรดตรวจสอบก่อนทำการบันทึก) | เป็นไปได้ถามฝ่ายเว็บก่อนว่าตั้งยังไง</span>
@@ -54,7 +54,7 @@
                     <label for="inputPriority" class="col-sm-2 control-label">Priority</label>
 
                     <div class="col-sm-10">
-                        <input type="number" class="form-control" id="inputPriority" name="priority" placeholder="Priority" value="{{ old('priority') ? "'".old('priority')."'" : "0" }}">
+                        <input type="number" class="form-control" id="inputPriority" name="priority" placeholder="Priority" value="{{ old('priority') ? old('priority') : "0" }}">
                         <p class="help-block" style="margin-bottom: 0;">
                             ลำดับความสำคัญในการขึ้นก่อน - หลัง (เลขยิ่งมาก ยิ่งมีความสำคัญสูง - ขึ้นก่อน)
                         </p>

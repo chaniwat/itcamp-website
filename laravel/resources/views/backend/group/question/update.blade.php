@@ -40,10 +40,10 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="inputId" class="col-sm-2 control-label">ID</label>
+                    <label for="inputFieldId" class="col-sm-2 control-label">ID</label>
 
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="inputId" name="id" placeholder="ID" value="{{ $data['question']->id }}" disabled>
+                        <input type="text" class="form-control" id="inputFieldId" name="field_id" placeholder="Field ID" value="{{ $data['question']->id }}" disabled>
                         <p class="help-block" style="margin-bottom: 0;">
                             <span class="text-red">**Field ID แก้ไขไม่ได้ (ถ้าจำเป็นต้องแก้บอกฝ่ายเว็บ)</span>
                         </p>

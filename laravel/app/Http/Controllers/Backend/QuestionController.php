@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Exceptions\FieldTypeNotAcceptException;
+use App\Exceptions\InvalidFieldFormatException;
 use App\Question;
 use App\Section;
-use App\Utility\FormUtility;
+use App\Services\FormService;
+use App\Services\QuestionService;
+use App\Services\ValidatorService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -12,7 +16,30 @@ use Illuminate\Support\Facades\Gate;
 
 class QuestionController extends Controller
 {
-    //
+    // TODO Move to QuestionService (For future use (APIs))
+    // TODO Check policies (GATE)
+
+    /**
+     * Validator Service instance
+     */
+    private $validator;
+
+    /**
+     * Question Service instance
+     */
+    private $question;
+
+    /**
+     * Form Service instance
+     */
+    private $formService;
+
+    public function __construct(QuestionService $questionService, ValidatorService $validatorService, FormService $formService)
+    {
+        $this->validator = $validatorService;
+        $this->formService = $formService;
+        $this->question = $questionService;
+    }
 
     /**
      * Create new Question
@@ -22,14 +49,26 @@ class QuestionController extends Controller
     public function createQuestion(Request $request) {
         if (Gate::denies('create', Question::class)) {
             return redirect()->route('view.backend.question')->with('status', 'backend_not_enough_permission_to_create_question');
-        } else if($result = $this->checkBadQuestionDetail($request, ['question', 'id', 'field_setting'])) {
-            return back()->with('status', $result)->withInput($request->all());
         }
 
-        $question = new Question();
-        $question->id = $request->input('id');
-        $this->structQuestion($question, $request);
-        $question->save();
+        $error = null;
+        try
+        {
+            $this->question->createQuestion($request->all());
+        }
+        catch (FieldTypeNotAcceptException $ex)
+        {
+            $error = 'backend_form_field_type_not_accept';
+        }
+        catch (InvalidFieldFormatException $ex)
+        {
+            $error = 'backend_incorrect_format_in_field_value';
+        }
+
+        if ($error)
+        {
+            return back()->with('status', $error)->withInput($request->all());
+        }
 
         return redirect()->route('view.backend.question')->with('status', 'backend_add_question_success');
     }
@@ -55,26 +94,6 @@ class QuestionController extends Controller
         $question->save();
 
         return back()->with('status', 'backend_update_question_success');
-    }
-
-    /**
-     * Check for any bad logic for Question
-     * @param Request $request
-     * @param $requireFields
-     * @return bool|string
-     */
-    private function checkBadQuestionDetail(Request $request, $requireFields) {
-        $section = Section::find($request->input('section'));
-        if (!$request->has($requireFields)) {
-            return 'form_empty_field';
-        } else if(!$section->has_question) {
-            return 'backend_camp_not_have_question';
-        } else if(!in_array($request->input('field_type'), FormUtility::acceptField)) {
-            return 'backend_form_field_type_not_accept';
-        } else if(!FormUtility::checkSettingTypeFormat($request->input('field_type'), $request->input('field_value'))) {
-            return 'backend_incorrect_format_in_field_value';
-        }
-        return false;
     }
 
     /**
@@ -108,7 +127,7 @@ class QuestionController extends Controller
         }
 
         $data = [
-            'field_types' => FormUtility::acceptField,
+            'field_types' => $this->formService->getAllAvailableFieldType(),
             'sections' => $this->getAvailableSection()
         ];
 
@@ -126,7 +145,7 @@ class QuestionController extends Controller
 
         $data = [
             'question' => $question,
-            'field_types' => FormUtility::acceptField,
+            'field_types' => $this->formService->getAllAvailableFieldType(),
             'sections' => $this->getAvailableSection()
         ];
 
@@ -141,15 +160,6 @@ class QuestionController extends Controller
         } else {
             return [Auth::guard('backend')->user()->staff->section];
         }
-    }
-
-    private function structQuestion(Question $question, Request $request) {
-        $question->question = $request->input('question');
-        $question->description = $request->input('description');
-        $question->section()->associate(Section::find($request->input('section')));
-        $question->priority = $request->input('priority');
-        $question->field_type = $request->input('field_type');
-        $question->field_setting = $request->input('setting');
     }
 
 }
