@@ -8,7 +8,7 @@
         <div class="box-header with-border">
             <h3 class="box-title">ฟอร์มบัญชีผู้ใช้สำหรับ Staff</h3>
         </div>
-        <form class="form-horizontal" action="{{ route("backend.question.camp.update", ['id' => $data['question']->id]) }}" method="post">
+        <form class="form-horizontal" action="{{ route("backend.question.applicant.update", ['id' => $data['question']->id]) }}" method="post">
             {{ csrf_field() }}
 
             <div class="box-body">
@@ -27,35 +27,12 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="inputSection" class="col-sm-2 control-label">ของฝ่าย</label>
-
-                    <div class="col-sm-10">
-                        <select class="form-control" id="inputSection" name="section">
-                            @foreach($data['sections'] as $section)
-                                @if($section->has_question)
-                                    <option value="{{ $section->id }}" {{ $data['question']->section->id == $section->id ? "selected" : "" }}>@lang('section.'.$section->name)</option>
-                                @endif
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
                     <label for="inputFieldId" class="col-sm-2 control-label">Field ID</label>
 
                     <div class="col-sm-10">
                         <input type="text" class="form-control" id="inputFieldId" name="field_id" placeholder="Field ID" value="{{ $data['question']->id }}" disabled>
                         <p class="help-block" style="margin-bottom: 0;">
                             <span class="text-red">**Field ID แก้ไขไม่ได้ (ถ้าจำเป็นต้องแก้บอกฝ่ายเว็บ)</span>
-                        </p>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="inputPriority" class="col-sm-2 control-label">Priority</label>
-
-                    <div class="col-sm-10">
-                        <input type="number" class="form-control" id="inputPriority" name="priority" placeholder="Priority" value="{{ $data['question']->priority }}">
-                        <p class="help-block" style="margin-bottom: 0;">
-                            ลำดับความสำคัญในการขึ้นก่อน - หลัง (เลขยิ่งมาก ยิ่งมีความสำคัญสูง - ขึ้นก่อน)
                         </p>
                     </div>
                 </div>
@@ -86,7 +63,7 @@
 
 
             <div class="box-footer">
-                <a href="{{ route("view.backend.question.camp") }}" class="btn btn-default">ยกเลิกการแก้ไข</a>
+                <a href="{{ route("view.backend.question.applicant") }}" class="btn btn-default">ยกเลิกการแก้ไข</a>
                 <div class="btn-group pull-right" role="group">
                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDeleteModal">ลบคำถามนี้</button>
                     <button type="submit" class="btn btn-info">บันทึกการแก้ไข</button>
@@ -108,7 +85,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">ไม่</button>
-                    <a href="{{ route('backend.question.camp.delete', ['id' => $data['question']->id]) }}" class="btn btn-danger">ลบคำถามนี้</a>
+                    <a href="{{ route('backend.question.applicant.delete', ['id' => $data['question']->id]) }}" class="btn btn-danger">ลบคำถามนี้</a>
                 </div>
             </div>
         </div>

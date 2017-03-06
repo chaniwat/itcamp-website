@@ -114,8 +114,6 @@ class CampQuestionController extends Controller
 
         if($this->validator->containError('validation.required')) {
             return redirect()->back()->with('status', 'form_empty_field')->withInput($request->all());
-        } else if($this->validator->containError('validation.exists')) {
-            return redirect()->back()->with('status', 'backend_question_not_found')->withInput($request->all());
         }
 
         // Create question w/ error checking

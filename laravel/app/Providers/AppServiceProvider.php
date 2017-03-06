@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Services\AccountService;
+use App\Services\ApplicantQuestionService;
 use App\Services\AuthenticateService;
 use App\Services\FormService;
 use App\Services\QuestionService;
@@ -36,6 +37,8 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind('app.accountService', AccountService::class);
         // Authenticate Service
         $this->app->bind('app.authenticateService', AuthenticateService::class);
+        // Applicant Question Service
+        $this->app->bind('app.applicantQuestionService', ApplicantQuestionService::class);
         // Question Service
         $this->app->bind('app.questionService', QuestionService::class);
 

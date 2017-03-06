@@ -62,7 +62,13 @@ Route::group(['prefix' => 'backend', 'namespace' => 'Backend'], function () {
         Route::group(['prefix' => 'question'], function () {
 
             Route::group(['prefix' => 'applicant'], function () {
-                Route::get('/', function () { abort(404); })->name('view.backend.question.applicant');
+                Route::get('/', 'ApplicantQuestionController@showViewQuestion')->name('view.backend.question.applicant');
+                Route::get('create', 'ApplicantQuestionController@showViewCreateQuestion')->name('view.backend.question.applicant.create');
+                Route::get('{id}/update', 'ApplicantQuestionController@showViewUpdateQuestion')->name('view.backend.question.applicant.update');
+
+                Route::post('create', 'ApplicantQuestionController@createQuestion')->name('backend.question.applicant.create');
+                Route::post('{id}/update', 'ApplicantQuestionController@updateQuestion')->name('backend.question.applicant.update');
+                Route::get('{id}/delete', 'ApplicantQuestionController@deleteQuestion')->name('backend.question.applicant.delete');
             });
 
             Route::group(['prefix' => 'camp'], function () {

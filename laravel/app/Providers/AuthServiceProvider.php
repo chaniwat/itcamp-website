@@ -2,11 +2,13 @@
 
 namespace App\Providers;
 
+use App\ApplicantDetailKey;
+use App\Policies\ApplicantQuestionPolicy;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 use App\Policies\ApplicantPolicy;
-use App\Policies\QuestionPolicy;
+use App\Policies\CampQuestionPolicy;
 use App\Policies\UserPolicy;
 use App\Applicant;
 use App\Question;
@@ -22,7 +24,8 @@ class AuthServiceProvider extends ServiceProvider
     protected $policies = [
         'App\Model' => 'App\Policies\ModelPolicy',
         Applicant::class => ApplicantPolicy::class,
-        Question::class => QuestionPolicy::class,
+        ApplicantDetailKey::class => ApplicantQuestionPolicy::class,
+        Question::class => CampQuestionPolicy::class,
         User::class => UserPolicy::class,
     ];
 

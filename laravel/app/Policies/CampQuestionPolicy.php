@@ -6,7 +6,7 @@ use App\Question;
 use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class QuestionPolicy
+class CampQuestionPolicy
 {
     use HandlesAuthorization;
 
@@ -125,4 +125,5 @@ class QuestionPolicy
 
         return false;
     }
+
 }
