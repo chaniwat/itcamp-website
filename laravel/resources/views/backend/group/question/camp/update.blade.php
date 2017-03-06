@@ -6,7 +6,7 @@
 
     <div class="box box-primary">
         <div class="box-header with-border">
-            <h3 class="box-title">ฟอร์มบัญชีผู้ใช้สำหรับ Staff</h3>
+            <h3 class="box-title">ฟอร์มคำถามค่าย</h3>
         </div>
         <form class="form-horizontal" action="{{ route("backend.question.camp.update", ['id' => $data['question']->id]) }}" method="post">
             {{ csrf_field() }}

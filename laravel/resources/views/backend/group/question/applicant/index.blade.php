@@ -1,6 +1,8 @@
 @extends('backend.layout.master')
 
-@section('content-header', 'จัดการคำถาม')
+@section('content-header')
+    จัดการคำถาม <small>คำถามผู้สมัคร</small>
+@endsection
 
 @section('style')
     <style>

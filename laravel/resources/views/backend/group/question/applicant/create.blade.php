@@ -6,7 +6,7 @@
 
     <div class="box box-success">
         <div class="box-header with-border">
-            <h3 class="box-title">ฟอร์มเพิ่มบัญชีใหม่สำหรับ Staff</h3>
+            <h3 class="box-title">ฟอร์มเพิ่มคำถามผู้สมัคร</h3>
         </div>
         <form class="form-horizontal" action="{{ route("backend.question.applicant.create") }}" method="post">
             {{ csrf_field() }}

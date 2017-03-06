@@ -15,10 +15,6 @@ use Illuminate\Support\Facades\Gate;
 class ApplicantQuestionController extends Controller
 {
 
-    // TODO Translate backend_not_enough_permission_to_create_applicant_question, backend_not_enough_permission_to_edit_applicant_question
-    // TODO Translate backend_add_applicant_question_success, backend_applicant_question_not_found, backend_applicant_question_id_already_used
-    // TODO Translate backend_update_applicant_question_success
-
     /**
      * Validator Service instance
      */

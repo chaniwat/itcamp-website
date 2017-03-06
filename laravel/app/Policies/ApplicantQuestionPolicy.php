@@ -10,8 +10,6 @@ class ApplicantQuestionPolicy
 {
     use HandlesAuthorization;
 
-    // TODO Add view (access) policy to admin (web_dev) or head_camp only
-
     /**
      * Create a new policy instance.
      *
