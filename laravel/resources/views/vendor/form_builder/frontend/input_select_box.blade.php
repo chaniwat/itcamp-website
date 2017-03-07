@@ -1,3 +1,4 @@
+{{-- FIXME change structure for form-horizontal (bt.v4) --}}
 <label class="control-label">{{ $title }}@if($require)<span class="text-danger">*</span>@endif</label>
 <fieldset id="{{ $id }}">
     @foreach($lists as $list)
