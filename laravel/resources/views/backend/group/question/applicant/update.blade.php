@@ -37,6 +37,17 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <label for="inputFieldClass" class="col-sm-2 control-label">Field Class</label>
+
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="inputFieldClass" name="field_class" placeholder="Field Class" value="{{ $data['question']->field_class }}">
+                        <p class="help-block" style="margin-bottom: 0;">
+                            ถ้าจะเว้นวรรคให้ใช้ "_" (underscore) แทน<br />
+                            <span class="text-orange">สำหรับการดีไซน์ | เป็นไปได้ถามฝ่ายเว็บก่อนว่าตั้งยังไง (หรือให้ฝ่ายเว็บจัดการกำหนดเอง)</span>
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group">
                     <label for="inputFieldType" class="col-sm-2 control-label">Field Type</label>
 
                     <div class="col-sm-10">
@@ -45,6 +56,11 @@
                                 <option value="{{ $fieldType }}" {{ $data['question']->field_type == $fieldType ? "selected" : "" }}>{{ $fieldType }}</option>
                             @endforeach
                         </select>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" id="other" name="other" {{ $data['question']->other ? 'checked' : '' }}> มีช่องอื่นๆ (สำหรับ SELECT, CHECKBOX, RADIO เท่านั้น)
+                            </label>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group">

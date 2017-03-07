@@ -23,12 +23,14 @@ class ApplicantQuestionService
      * @param $question
      * @param $description
      * @param $field_type
+     * @param $field_class
      * @param $field_setting
+     * @param $other
      * @return Question
      * @throws FieldTypeNotAcceptException If field type is invalid or not accept
      * @throws InvalidFieldFormatException If field setting is on invalid format to its type format
      */
-    public function createQuestion($field_id_or_array, $question = null, $description = null, $field_type = null, $field_setting = null)
+    public function createQuestion($field_id_or_array, $question = null, $description = null, $field_type = null, $field_class = null, $field_setting = null, $other = null)
     {
         $object = new ApplicantDetailKey();
 
@@ -40,10 +42,19 @@ class ApplicantQuestionService
         else
         {
             $object->id = $field_id_or_array;
-            $this->structQuestion($object, $question, $description, $field_type, $field_setting);
+            $this->structQuestion($object, $question, $description, $field_type, $field_class, $field_setting, $other);
         }
 
         $object->save();
+
+        if ($object->other)
+        {
+            $otherObject = $object->replicate();
+            $otherObject->id .= "_other";
+            $otherObject->other = false;
+            $otherObject->parent()->associate($object);
+            $otherObject->save();
+        }
 
         return $object;
     }
@@ -54,12 +65,14 @@ class ApplicantQuestionService
      * @param string|array $question_or_array
      * @param $description
      * @param $field_type
+     * @param $field_class
      * @param $field_setting
+     * @param $other
      * @return Question
      * @throws FieldTypeNotAcceptException If field type is invalid or not accept
      * @throws InvalidFieldFormatException If field setting is on invalid format to its type format
      */
-    public function updateQuestion($field_id, $question_or_array, $description = null, $field_type = null, $field_setting = null)
+    public function updateQuestion($field_id, $question_or_array, $description = null, $field_type = null, $field_class = null, $field_setting = null, $other = null)
     {
         $object = ApplicantDetailKey::find($field_id);
 
@@ -69,7 +82,7 @@ class ApplicantQuestionService
         }
         else
         {
-            $this->structQuestion($object, $question_or_array, $description, $field_type, $field_setting);
+            $this->structQuestion($object, $question_or_array, $description, $field_type, $field_class, $field_setting, $other);
         }
 
         $object->save();
@@ -93,11 +106,14 @@ class ApplicantQuestionService
      * @param string|array $question_or_array
      * @param $description
      * @param $field_type
+     * @param $field_class
      * @param $field_setting
+     * @param $other
      * @throws FieldTypeNotAcceptException If field type is invalid or not accept
      * @throws InvalidFieldFormatException If field setting is on invalid format to its type format
      */
-    private function structQuestion(ApplicantDetailKey $object, $question_or_array, $description = null, $field_type = null, $field_setting = null) {
+    private function structQuestion(ApplicantDetailKey $object, $question_or_array, $description = null, $field_type = null, $field_class = null, $field_setting = null, $other = null)
+    {
         if (is_array($question_or_array))
         {
             // Validate field setting
@@ -106,7 +122,9 @@ class ApplicantQuestionService
             $object->question = $question_or_array['question'];
             $object->description = $question_or_array['description'];
             $object->field_type = $question_or_array['field_type'];
+            $object->field_class = $question_or_array['field_class'];
             $object->field_setting = $question_or_array['field_setting'];
+            $object->other = isset($question_or_array['other']) && ($question_or_array['other'] == 'on' || $question_or_array['other'] == true);
         }
         else
         {
@@ -116,7 +134,9 @@ class ApplicantQuestionService
             $object->question = $question_or_array;
             $object->description = $description;
             $object->field_type = $field_type;
+            $object->field_class = $field_class;
             $object->field_setting = $field_setting;
+            $object->other = $other === 'on' || $other === true;
         }
     }
 

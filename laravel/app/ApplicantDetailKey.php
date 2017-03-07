@@ -24,4 +24,8 @@ class ApplicantDetailKey extends Model
      * @var array
      */
     protected $hidden = [];
+
+    public function parent() {
+        return $this->belongsTo('App\ApplicantDetailKey');
+    }
 }

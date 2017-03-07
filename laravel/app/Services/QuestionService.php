@@ -52,21 +52,9 @@ class QuestionService
 
         if ($object->other)
         {
-            $otherObject = new Question();
-
-            if (is_array($field_id_or_array))
-            {
-                $otherObject->id = $field_id_or_array['field_id']."_other";
-                $field_id_or_array['other'] = false;
-
-                $this->structQuestion($otherObject, $field_id_or_array);
-            }
-            else
-            {
-                $otherObject->id = $field_id_or_array."_other";
-                $this->structQuestion($otherObject, $question, $description, $section, $priority, $field_type, $field_class, $field_setting, false);
-            }
-
+            $otherObject = $object->replicate();
+            $otherObject->id .= "_other";
+            $otherObject->other = false;
             $otherObject->parent()->associate($object);
             $otherObject->save();
         }
@@ -144,7 +132,7 @@ class QuestionService
             $object->field_type = $question_or_array['field_type'];
             $object->field_class = $question_or_array['field_class'];
             $object->field_setting = $question_or_array['field_setting'];
-            $object->other = $question_or_array['other'] == 'on' ? true : false;
+            $object->other = isset($question_or_array['other']) && $question_or_array['other'] == 'on' ? true : false;
         }
         else
         {
@@ -158,7 +146,7 @@ class QuestionService
             $object->field_type = $field_type;
             $object->field_class = $field_class;
             $object->field_setting = $field_setting;
-            $object->other = $other == 'on' ? true : false;
+            $object->other = $other == 'on' || $other === true ? true : false;
         }
     }
 
