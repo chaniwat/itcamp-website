@@ -17,6 +17,15 @@ Route::group(['namespace' => 'Frontend'], function () {
 
     Route::get('/', 'HomeController@index')->name('view.frontend.index');
 
+    #region register
+
+    Route::group(['prefix' => 'register'], function () {
+       Route::get('/', 'RegisterController@showRegister')->name('view.frontend.register');
+       Route::post('/', 'RegisterController@register')->name('frontend.register');
+    });
+
+    #endregion
+
 });
 
 #endregion
@@ -61,7 +70,7 @@ Route::group(['prefix' => 'backend', 'namespace' => 'Backend'], function () {
 
         Route::group(['prefix' => 'question'], function () {
 
-            Route::group(['prefix' => 'applicant'], function () {
+            Route::group(['prefix' => 'applicant', 'middleware' => 'admin.backend'], function () {
                 Route::get('/', 'ApplicantQuestionController@showViewQuestion')->name('view.backend.question.applicant');
                 Route::get('create', 'ApplicantQuestionController@showViewCreateQuestion')->name('view.backend.question.applicant.create');
                 Route::get('{id}/update', 'ApplicantQuestionController@showViewUpdateQuestion')->name('view.backend.question.applicant.update');

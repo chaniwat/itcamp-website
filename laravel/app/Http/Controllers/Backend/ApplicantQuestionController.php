@@ -144,6 +144,8 @@ class ApplicantQuestionController extends Controller
      */
     public function deleteQuestion($id) {
         // CANNOT DELETE THIS ;w;
+
+        return response(403);
     }
 
     /**

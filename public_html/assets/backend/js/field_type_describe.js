@@ -1,7 +1,8 @@
-function initFieldTypeSettingDescribe(fieldType, fieldValue, describeField) {
+function initFieldTypeSettingDescribe(fieldType, fieldValue, describeField, otherField) {
     this.fieldType = fieldType;
     this.fieldValue = fieldValue;
     this.describeField = describeField;
+    this.otherField = otherField;
 
     this.declarePattern = function (type) {
         switch (type) {
@@ -41,6 +42,13 @@ function initFieldTypeSettingDescribe(fieldType, fieldValue, describeField) {
         var type = this.fieldType.val();
         this.describeField.html("รูปแบบการตั้งค่า:\n"+this.declarePattern(type)+"\n\nตัวอย่าง:\n"+this.declareExample(type));
         if(this.fieldValue) this.fieldValue.html(this.declareExample(type));
+
+        if(type == "CHECKBOX" || type == "RADIO" || type == "SELECT") {
+            this.otherField.removeAttr('disabled');
+        } else {
+            this.otherField.removeAttr('checked');
+            this.otherField.attr('disabled', true);
+        }
     }.bind(this);
 
     fieldType.change(describeExample);

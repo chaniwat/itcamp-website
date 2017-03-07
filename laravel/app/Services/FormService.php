@@ -66,8 +66,8 @@ class FormService
     private function checkListSettingFormat($arrayObject) {
         if(sizeof($arrayObject) == 1 && array_key_exists("lists", $arrayObject) && gettype($arrayObject['lists']) == 'array') {
             foreach($arrayObject['lists'] as $option) {
-                if(!(sizeof($option) == 2 && array_key_exists("key", $option) && gettype($option['key']) == 'array'
-                    && array_key_exists("text", $option) && gettype($option['text']) == 'array')) {
+                if(!(sizeof($option) == 2 && array_key_exists("key", $option) && gettype($option['key']) == 'string'
+                    && array_key_exists("text", $option) && gettype($option['text']) == 'string')) {
                     return false;
                 }
             }

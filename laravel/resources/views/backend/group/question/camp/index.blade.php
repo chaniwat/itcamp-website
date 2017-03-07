@@ -19,11 +19,123 @@
             <h3 class="box-title">กล่องควบคุม</h3>
         </div>
         <div class="box-body">
-            @if(Gate::allows('create', \App\Question::class))
-                <a href="{{ route('view.backend.question.camp.create') }}" class="btn btn-success"><i class="fa fa-plus-circle" aria-hidden="true"></i> เพิ่มคำถามใหม่</a>
-            @else
-                <button type="button" class="btn btn-default" disabled><i class="fa fa-plus-circle" aria-hidden="true"></i> เพิ่มคำถามใหม่</button>
-            @endif
+            <div class="row">
+                <div class="col-xs-12">
+                    <!-- small box -->
+                    <div class="small-box bg-aqua">
+                        <div class="inner">
+                            <h3>{{ $questions->count() }}</h3>
+
+                            <p>จำนวนคำถามทั้งหมด</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-android-document"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-6">
+                    <!-- small box -->
+                    <div class="small-box bg-red">
+                        <div class="inner">
+                            <h3>{{ $questions->where('section_id', '2')->count() }}</h3>
+
+                            <p>จำนวนคำถามประธานค่าย</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-android-list"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-6">
+                    <!-- small box -->
+                    <div class="small-box bg-green">
+                        <div class="inner">
+                            <h3>{{ $questions->where('section_id', '3')->count() }}</h3>
+
+                            <p>จำนวนคำถามสันทนาการ</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-ios-body"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-15-lg-3 col-xs-12">
+                    <!-- small box -->
+                    <div class="small-box bg-blue">
+                        <div class="inner">
+                            <h3>{{ $questions->where('section_id', '5')->count() }}</h3>
+
+                            <p>Appersky</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-social-codepen"></i>
+                        </div>
+                    </div>
+                </div>
+                <!-- ./col -->
+                <div class="col-15-lg-3 col-xs-12">
+                    <!-- small box -->
+                    <div class="small-box" style="background-color: #d35400; color: white;">
+                        <div class="inner">
+                            <h3>{{ $questions->where('section_id', '6')->count() }}</h3>
+
+                            <p>Gamesoft</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-ios-football"></i>
+                        </div>
+                    </div>
+                </div>
+                <!-- ./col -->
+                <div class="col-15-lg-3 col-xs-12">
+                    <!-- small box -->
+                    <div class="small-box bg-purple">
+                        <div class="inner">
+                            <h3>{{ $questions->where('section_id', '7')->count() }}</h3>
+
+                            <p>Network Defender</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-wifi"></i>
+                        </div>
+                    </div>
+                </div>
+                <!-- ./col -->
+                <div class="col-15-lg-3 col-xs-12">
+                    <!-- small box -->
+                    <div class="small-box bg-teal">
+                        <div class="inner">
+                            <h3>{{ $questions->where('section_id', '8')->count() }}</h3>
+
+                            <p>IoTech</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-outlet"></i>
+                        </div>
+                    </div>
+                </div>
+                <!-- ./col -->
+                <div class="col-15-lg-3 col-xs-12">
+                    <!-- small box -->
+                    <div class="small-box bg-maroon">
+                        <div class="inner">
+                            <h3>{{ $questions->where('section_id', '9')->count() }}</h3>
+
+                            <p>Data Cyber</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-cube"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    @if(Gate::allows('create', \App\Question::class))
+                        <a href="{{ route('view.backend.question.camp.create') }}" class="btn btn-success"><i class="fa fa-plus-circle" aria-hidden="true"></i> เพิ่มคำถามใหม่</a>
+                    @else
+                        <button type="button" class="btn btn-default" disabled><i class="fa fa-plus-circle" aria-hidden="true"></i> เพิ่มคำถามใหม่</button>
+                    @endif
+                </div>
+            </div>
         </div>
     </div>
 

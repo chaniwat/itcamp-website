@@ -26,12 +26,14 @@ class QuestionService
      * @param $section
      * @param $priority
      * @param $field_type
+     * @param $field_class
      * @param $field_setting
+     * @param $other
      * @return Question
      * @throws FieldTypeNotAcceptException If field type is invalid or not accept
      * @throws InvalidFieldFormatException If field setting is on invalid format to its type format
      */
-    public function createQuestion($field_id_or_array, $question = null, $description = null, $section = null, $priority = null, $field_type = null, $field_setting = null)
+    public function createQuestion($field_id_or_array, $question = null, $description = null, $section = null, $priority = null, $field_type = null, $field_class = null, $field_setting = null, $other = null)
     {
         $object = new Question();
 
@@ -43,10 +45,31 @@ class QuestionService
         else
         {
             $object->id = $field_id_or_array;
-            $this->structQuestion($object, $question, $description, $section, $priority, $field_type, $field_setting);
+            $this->structQuestion($object, $question, $description, $section, $priority, $field_type, $field_class, $field_setting, $other);
         }
 
         $object->save();
+
+        if ($object->other)
+        {
+            $otherObject = new Question();
+
+            if (is_array($field_id_or_array))
+            {
+                $otherObject->id = $field_id_or_array['field_id']."_other";
+                $field_id_or_array['other'] = false;
+
+                $this->structQuestion($otherObject, $field_id_or_array);
+            }
+            else
+            {
+                $otherObject->id = $field_id_or_array."_other";
+                $this->structQuestion($otherObject, $question, $description, $section, $priority, $field_type, $field_class, $field_setting, false);
+            }
+
+            $otherObject->parent()->associate($object);
+            $otherObject->save();
+        }
 
         return $object;
     }
@@ -59,12 +82,14 @@ class QuestionService
      * @param $section
      * @param $priority
      * @param $field_type
+     * @param $field_class
      * @param $field_setting
+     * @param $other
      * @return Question
      * @throws FieldTypeNotAcceptException If field type is invalid or not accept
      * @throws InvalidFieldFormatException If field setting is on invalid format to its type format
      */
-    public function updateQuestion($field_id, $question_or_array, $description = null, $section = null, $priority = null, $field_type = null, $field_setting = null)
+    public function updateQuestion($field_id, $question_or_array, $description = null, $section = null, $priority = null, $field_type = null, $field_class = null, $field_setting = null, $other = null)
     {
         $object = Question::find($field_id);
 
@@ -74,7 +99,7 @@ class QuestionService
         }
         else
         {
-            $this->structQuestion($object, $question_or_array, $description, $section, $priority, $field_type, $field_setting);
+            $this->structQuestion($object, $question_or_array, $description, $section, $priority, $field_type, $field_class, $field_setting, $other);
         }
 
         $object->save();
@@ -99,11 +124,14 @@ class QuestionService
      * @param $section
      * @param $priority
      * @param $field_type
+     * @param $field_class
      * @param $field_setting
+     * @param $other
      * @throws FieldTypeNotAcceptException If field type is invalid or not accept
      * @throws InvalidFieldFormatException If field setting is on invalid format to its type format
      */
-    private function structQuestion(Question $object, $question_or_array, $description = null, $section = null, $priority = null, $field_type = null, $field_setting = null) {
+    private function structQuestion(Question $object, $question_or_array, $description = null, $section = null, $priority = null, $field_type = null, $field_class = null, $field_setting = null, $other = null)
+    {
         if (is_array($question_or_array))
         {
             // Validate field setting
@@ -114,7 +142,9 @@ class QuestionService
             $object->section()->associate(Section::find($question_or_array['section']));
             $object->priority = $question_or_array['priority'];
             $object->field_type = $question_or_array['field_type'];
+            $object->field_class = $question_or_array['field_class'];
             $object->field_setting = $question_or_array['field_setting'];
+            $object->other = $question_or_array['other'] == 'on' ? true : false;
         }
         else
         {
@@ -126,7 +156,9 @@ class QuestionService
             $object->section()->associate(Section::find($section));
             $object->priority = $priority;
             $object->field_type = $field_type;
+            $object->field_class = $field_class;
             $object->field_setting = $field_setting;
+            $object->other = $other == 'on' ? true : false;
         }
     }
 

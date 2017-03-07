@@ -28,4 +28,8 @@ class Question extends Model
     public function section() {
         return $this->belongsTo('App\Section');
     }
+
+    public function parent() {
+        return $this->belongsTo('App\Question');
+    }
 }

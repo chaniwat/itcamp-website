@@ -1,0 +1,2 @@
+<label class="control-label" for="{{ $id }}">{{ $title }}@if($require)<span class="text-danger">*</span>@endif</label>
+<input type="{{ $type }}" name="{{ $id }}" id="{{ $id }}" {{ $require ? 'required' : '' }}>

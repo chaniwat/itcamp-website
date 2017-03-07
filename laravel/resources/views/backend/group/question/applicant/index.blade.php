@@ -19,11 +19,28 @@
             <h3 class="box-title">กล่องควบคุม</h3>
         </div>
         <div class="box-body">
-            @if(Gate::allows('create', \App\ApplicantDetailKey::class))
-                <a href="{{ route('view.backend.question.applicant.create') }}" class="btn btn-success"><i class="fa fa-plus-circle" aria-hidden="true"></i> เพิ่มคำถามใหม่</a>
-            @else
-                <button type="button" class="btn btn-default" disabled><i class="fa fa-plus-circle" aria-hidden="true"></i> เพิ่มคำถามใหม่</button>
-            @endif
+            <div class="row">
+                <div class="col-xs-12">
+                    <!-- small box -->
+                    <div class="small-box bg-aqua">
+                        <div class="inner">
+                            <h3>{{ $questions->count() }}</h3>
+
+                            <p>จำนวนคำถามทั้งหมด</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-android-document"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    @if(Gate::allows('create', \App\ApplicantDetailKey::class))
+                        <a href="{{ route('view.backend.question.applicant.create') }}" class="btn btn-success"><i class="fa fa-plus-circle" aria-hidden="true"></i> เพิ่มคำถามใหม่</a>
+                    @else
+                        <button type="button" class="btn btn-default" disabled><i class="fa fa-plus-circle" aria-hidden="true"></i> เพิ่มคำถามใหม่</button>
+                    @endif
+                </div>
+            </div>
         </div>
     </div>
 
