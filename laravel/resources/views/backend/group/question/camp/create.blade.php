@@ -66,7 +66,6 @@
                     <div class="col-sm-10">
                         <input type="text" class="form-control" id="inputFieldClass" name="field_class" placeholder="Field Class" value="{{ old('field_class') }}">
                         <p class="help-block" style="margin-bottom: 0;">
-                            ถ้าจะเว้นวรรคให้ใช้ "_" (underscore) แทน<br />
                             <span class="text-orange">สำหรับการดีไซน์ | เป็นไปได้ถามฝ่ายเว็บก่อนว่าตั้งยังไง (หรือให้ฝ่ายเว็บจัดการกำหนดเอง)</span>
                         </p>
                     </div>

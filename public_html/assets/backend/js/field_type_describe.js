@@ -54,5 +54,5 @@ function initFieldTypeSettingDescribe(fieldType, fieldValue, describeField, othe
     fieldType.change(describeExample);
     fieldType.trigger('change');
 
-    if(fieldValue.data('default')) this.fieldValue.html(fieldValue.data('default').replace(/'/g, ""));
+    if(fieldValue && fieldValue.data('default')) this.fieldValue.html(fieldValue.data('default').replace(/'/g, ""));
 }

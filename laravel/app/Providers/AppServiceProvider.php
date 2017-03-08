@@ -4,10 +4,12 @@ namespace App\Providers;
 
 use App\Services\AccountService;
 use App\Services\ApplicantQuestionService;
+use App\Services\ApplicantService;
 use App\Services\AuthenticateService;
 use App\Services\FormService;
 use App\Services\QuestionService;
 use App\Services\ValidatorService;
+use App\Services\View\FormBuilderService;
 use App\Services\View\PathHelperService;
 use App\Services\View\StatusViewService;
 use App\Services\View\ViewHelperInterface;
@@ -37,6 +39,8 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind('app.accountService', AccountService::class);
         // Authenticate Service
         $this->app->bind('app.authenticateService', AuthenticateService::class);
+        // Applicant Service
+        $this->app->bind('app.applicantService', ApplicantService::class);
         // Applicant Question Service
         $this->app->bind('app.applicantQuestionService', ApplicantQuestionService::class);
         // Question Service
@@ -47,10 +51,9 @@ class AppServiceProvider extends ServiceProvider
         // View helper dependencies
         $this->app->bind('app.view.statusViewService', StatusViewService::class);
         $this->app->bind('app.view.pathHelperService', PathHelperService::class);
+        $this->app->bind('app.view.formBuilderService', FormBuilderService::class);
         // View helper service
         $this->app->bind('app.view.viewHelperService', ViewHelperService::class, ViewHelperInterface::class);
-
-        // TODO FormUtilityService for generate form (helper register form)
     }
 
     /**

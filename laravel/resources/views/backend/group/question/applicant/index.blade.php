@@ -50,6 +50,7 @@
             <table class="table table-bordered">
                 <thead>
                 <tr>
+                    <th width="70">Priority</th>
                     <th>ID</th>
                     <th>คำถาม</th>
                     <th width="80">แก้ไข</th>
@@ -58,6 +59,7 @@
                 <tbody>
                     @foreach($questions as $question)
                         <tr>
+                            <td>{{ $question->priority }}</td>
                             <td>{{ $question->id }}</td>
                             <td>{{ $question->question }}</td>
                             <td>

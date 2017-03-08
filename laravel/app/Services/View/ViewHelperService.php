@@ -10,13 +10,16 @@ class ViewHelperService implements ViewHelperInterface
      */
     private $status;
     private $path;
+    private $formBuilder;
 
     public function __construct(
         StatusViewService $statusViewService,
-        PathHelperService $pathHelperService)
-    {
+        PathHelperService $pathHelperService,
+        FormBuilderService $formBuilderService
+    ) {
         $this->status = $statusViewService;
         $this->path = $pathHelperService;
+        $this->formBuilder = $formBuilderService;
     }
 
     public function makeAlertStatus($blade)
@@ -27,6 +30,11 @@ class ViewHelperService implements ViewHelperInterface
     public function isActivePath($paths)
     {
         return $this->path->isActivePath($paths);
+    }
+
+    public function formBuilder()
+    {
+        return $this->formBuilder;
     }
 
 }

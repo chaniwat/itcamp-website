@@ -20,8 +20,9 @@ Route::group(['namespace' => 'Frontend'], function () {
     #region register
 
     Route::group(['prefix' => 'register'], function () {
-       Route::get('/', 'RegisterController@showRegister')->name('view.frontend.register');
-       Route::post('/', 'RegisterController@register')->name('frontend.register');
+        Route::get('/complete', 'RegisterController@showComplete')->name('view.frontend.register.complete');
+        Route::get('/{camp}', 'RegisterController@showRegister')->name('view.frontend.register');
+        Route::post('/{camp}', 'RegisterController@register')->name('frontend.register');
     });
 
     #endregion
@@ -61,7 +62,10 @@ Route::group(['prefix' => 'backend', 'namespace' => 'Backend'], function () {
         });
 
         Route::group(['prefix' => 'applicant'], function() {
-            Route::get('/', function () { abort(404); })->name('view.backend.applicants');
+
+            Route::get('/', 'ApplicantController@showApplicants')->name('view.backend.applicants');
+            Route::get('/{id}', 'ApplicantController@showApplicantDetail')->name('view.backend.applicants.detail');
+
         });
 
         Route::group(['prefix' => 'answer'], function() {

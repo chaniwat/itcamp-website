@@ -8,7 +8,6 @@ class FormService
     // TODO Check format validator algorithm (setting, value json format)(testing)
 
     private $acceptField = ['TEXT', 'TEXTAREA', 'PASSWORD', 'EMAIL', 'NUMBER', 'DATE', 'RADIO', 'CHECKBOX', 'SELECT', 'SELECT_MULTIPLE', 'FILE'];
-
     private $acceptFileTypeSetting = ['picture', 'document', 'any'];
     private $fileType = [
         "picture" => ["image/jpeg", "image/gif", "image/png"],
@@ -135,7 +134,7 @@ class FormService
     #region value field
 
     /**
-     * For EMAIL, NUMBER, PASSWORD, TEXT, TEXTAREA value field
+     * For DATE value field
      * @param array $arrayObject
      * @return bool
      */
@@ -237,8 +236,6 @@ class FormService
         }
     }
 
-    #endregion
-
     /**
      * Construct a field value to json (see in design schema value files)
      * @param $type
@@ -250,6 +247,10 @@ class FormService
 
         if(in_array($type, ['EMAIL', 'FILE', 'NUMBER', 'PASSWORD', 'TEXT', 'TEXTAREA'])) {
             $json = '{"value": "'.$value.'"}';
+        } else if(in_array($type, ['DATE'])) {
+            $valueSplit = explode('-', $value);
+
+            $json = '{"value": "'.$valueSplit[1].'/'.$valueSplit[2].'/'.$valueSplit[0].'"}';
         } else if(in_array($type, ['RADIO', 'SELECT'])) {
             $json = '{"value": "'.$value.'"}';
         } else if(in_array($type, ['CHECKBOX', 'SELECT_MULTIPLE'])) {
@@ -269,5 +270,7 @@ class FormService
 
         return $json;
     }
+
+    #endregion
 
 }

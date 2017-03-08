@@ -50,23 +50,22 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="inputFieldClass" class="col-sm-2 control-label">Field Class</label>
-
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="inputFieldClass" name="field_class" placeholder="Field Class" value="{{ $data['question']->field_class }}">
-                        <p class="help-block" style="margin-bottom: 0;">
-                            ถ้าจะเว้นวรรคให้ใช้ "_" (underscore) แทน<br />
-                            <span class="text-orange">สำหรับการดีไซน์ | เป็นไปได้ถามฝ่ายเว็บก่อนว่าตั้งยังไง (หรือให้ฝ่ายเว็บจัดการกำหนดเอง)</span>
-                        </p>
-                    </div>
-                </div>
-                <div class="form-group">
                     <label for="inputPriority" class="col-sm-2 control-label">Priority</label>
 
                     <div class="col-sm-10">
                         <input type="number" class="form-control" id="inputPriority" name="priority" placeholder="Priority" value="{{ $data['question']->priority }}">
                         <p class="help-block" style="margin-bottom: 0;">
                             ลำดับความสำคัญในการขึ้นก่อน - หลัง (เลขยิ่งมาก ยิ่งมีความสำคัญสูง - ขึ้นก่อน)
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputFieldClass" class="col-sm-2 control-label">Field Class</label>
+
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="inputFieldClass" name="field_class" placeholder="Field Class" value="{{ $data['question']->field_class }}">
+                        <p class="help-block" style="margin-bottom: 0;">
+                            <span class="text-orange">สำหรับการดีไซน์ | เป็นไปได้ถามฝ่ายเว็บก่อนว่าตั้งยังไง (หรือให้ฝ่ายเว็บจัดการกำหนดเอง)</span>
                         </p>
                     </div>
                 </div>

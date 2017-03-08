@@ -153,7 +153,7 @@ class ApplicantQuestionController extends Controller
      * @return $this
      */
     public function showViewQuestion() {
-        return view('backend.group.question.applicant.index')->with('questions', ApplicantDetailKey::orderBy('id')->get());
+        return view('backend.group.question.applicant.index')->with('questions', ApplicantDetailKey::orderBy('priority', 'desc')->get());
     }
 
     /**
