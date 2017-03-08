@@ -134,7 +134,7 @@ class ApplicantQuestionController extends Controller
             return back()->with('status', $error)->withInput($request->all());
         }
 
-        return back()->with('status', 'backend_update_applicant_question_success');
+        return redirect()->route('view.backend.question.applicant')->with('status', 'backend_update_applicant_question_success');
     }
 
     /**

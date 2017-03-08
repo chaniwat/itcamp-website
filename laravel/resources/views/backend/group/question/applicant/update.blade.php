@@ -52,6 +52,7 @@
                     <div class="col-sm-10">
                         <input type="text" class="form-control" id="inputFieldClass" name="field_class" placeholder="Field Class" value="{{ $data['question']->field_class }}">
                         <p class="help-block" style="margin-bottom: 0;">
+                            'hide-title' => ซ่อนคำถาม | 'show-description' => แสดงคำอธิบายเพิ่มเติม<br />
                             <span class="text-orange">สำหรับการดีไซน์ | เป็นไปได้ถามฝ่ายเว็บก่อนว่าตั้งยังไง (หรือให้ฝ่ายเว็บจัดการกำหนดเอง)</span>
                         </p>
                     </div>

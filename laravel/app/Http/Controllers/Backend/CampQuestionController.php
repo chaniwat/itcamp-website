@@ -136,7 +136,7 @@ class CampQuestionController extends Controller
             return back()->with('status', $error)->withInput($request->all());
         }
 
-        return back()->with('status', 'backend_update_question_success');
+        return redirect()->route('view.backend.question.camp')->with('status', 'backend_update_question_success');
     }
 
     /**

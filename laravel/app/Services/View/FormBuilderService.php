@@ -27,9 +27,9 @@ class FormBuilderService
             'field_type' => strtolower($question->field_type),
             'field_class' => $question->field_class,
             'title' => $question->question,
-            'description' => $question->description,
+            'description' => in_array('show-description', explode(' ', $question->field_class)) ? $question->description : '',
             'require' => $question->require,
-            'hideTitle' => $hideTitle,
+            'hideTitle' => in_array('hide-title', explode(' ', $question->field_class)),
         ];
 
         if(in_array($question->field_type, ['CHECKBOX', 'RADIO', 'SELECT', 'SELECT_MULTIPLE'])) {

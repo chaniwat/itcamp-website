@@ -2,9 +2,9 @@
 
 // Translate camp key to camp name (en)
 return [
-    "camp_app" => "Appersky",
-    "camp_game" => "Gameroft",
-    "camp_network" => "Network Defender",
-    "camp_iot" => "Iotech",
-    "camp_datasci" => "Data Cyber",
+    "camp_app" => "AppVira",
+    "camp_game" => "GamePersky",
+    "camp_network" => "NetworkTon",
+    "camp_iot" => "IOTSecure",
+    "camp_datasci" => "DataScan",
 ];
