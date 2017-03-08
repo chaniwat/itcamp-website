@@ -54,6 +54,7 @@ class QuestionService
         {
             $otherObject = $object->replicate();
             $otherObject->id .= "_other";
+            $otherObject->field_type = "TEXT";
             $otherObject->other = false;
             $otherObject->parent()->associate($object);
             $otherObject->save();
