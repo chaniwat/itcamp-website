@@ -248,9 +248,7 @@ class FormService
         if(in_array($type, ['EMAIL', 'FILE', 'NUMBER', 'PASSWORD', 'TEXT', 'TEXTAREA'])) {
             $json = '{"value": "'.$value.'"}';
         } else if(in_array($type, ['DATE'])) {
-            $valueSplit = explode('-', $value);
-
-            $json = '{"value": "'.$valueSplit[1].'/'.$valueSplit[2].'/'.$valueSplit[0].'"}';
+            $json = '{"value": "'.$value.'"}';
         } else if(in_array($type, ['RADIO', 'SELECT'])) {
             $json = '{"value": "'.$value.'"}';
         } else if(in_array($type, ['CHECKBOX', 'SELECT_MULTIPLE'])) {

@@ -100,6 +100,7 @@ class ApplicantService
                 $array = [];
 
                 $array["applicant_id"] = $applicant->id;
+//                $array["applicant_id"] = 1;
                 $array[$qKey] = $key;
                 $array["answer"] = $this->form->constructValueTypeFormat($field_type, $value);
 

@@ -1,5 +1,5 @@
 <fieldset class="form-group {{ $field_class }}">
-    <legend>{{ $title }}</legend>
+    <legend>@if(!$hideTitle){{ $title }}<span class="text-danger">@if($require)*@endif</span>@else&nbsp;@endif</legend>
     @foreach($lists as $item)
         <div class="form-check">
             <label class="form-check-label">
@@ -8,5 +8,5 @@
             </label>
         </div>
     @endforeach
-    <small class="form-text text-muted">{{ $description }}</small>
+    <small class="form-text text-muted">{!! $description !!}</small>
 </fieldset>

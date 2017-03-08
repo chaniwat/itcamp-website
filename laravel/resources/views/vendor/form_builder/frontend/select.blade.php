@@ -7,5 +7,5 @@
             <option value="{{ $item['key'] }}">{{ $item['text'] }}</option>
         @endforeach
     </select>
-    <small class="form-text text-muted">{{ $description }}</small>
+    <small class="form-text text-muted">{!! $description !!}</small>
 </div>
