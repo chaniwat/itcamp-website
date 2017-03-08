@@ -30,6 +30,7 @@ class CreateApplicantsTable extends Migration
             $table->unsignedInteger('user_id')->nullable();
             $table->unsignedInteger('camp_id');
             $table->enum('state', ['PENDING', 'CHECKED', 'COMPLETE', 'SELECT', 'RESERVE', 'FAIL', 'REJECT'])->default('PENDING');
+            $table->timestamps();
 
             $table->foreign('user_id')
                 ->references('id')->on('users')
