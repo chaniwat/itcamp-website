@@ -21,12 +21,7 @@
                             <!-- small box -->
                             <div class="small-box bg-blue">
                                 <div class="inner">
-                                    <?php
-                                        $rNumReg = 0;
-                                        $rNumApp = rand(1, 500);
-                                        $rNumReg += $rNumApp;
-                                    ?>
-                                    <h3>{{ $rNumApp }} / 30</h3>
+                                    <h3>{{ $count['app']['total'] }} / 30</h3>
 
                                     <p>Appersky</p>
                                 </div>
@@ -35,8 +30,8 @@
                                 </div>
                                 <div class="small-box-footer" style="padding: 0; border-top: 5px solid whitesmoke;">
                                     <div class="progress progress-ms bg-gray active" style="margin-bottom: 0;">
-                                        <div class="progress-bar progress-bar-striped bg-blue progress-bar-fCamp" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: {{ sprintf("%.2f", (($rNumApp / 30) * 100) > 100 ? 100 : ($rNumApp / 30) * 100) }}%;">
-                                            <span class="progress-bar-text">{{ sprintf("%.2f", ($rNumApp / 30) * 100) }}%</span>
+                                        <div class="progress-bar progress-bar-striped bg-blue progress-bar-fCamp" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: {{ sprintf("%.2f", (($count['app']['total'] / 30) * 100) > 100 ? 100 : ($count['app']['total'] / 30) * 100) }}%;">
+                                            <span class="progress-bar-text">{{ sprintf("%.2f", ($count['app']['total'] / 30) * 100) }}%</span>
                                         </div>
                                     </div>
                                 </div>
@@ -47,11 +42,7 @@
                             <!-- small box -->
                             <div class="small-box" style="background-color: #d35400; color: white;">
                                 <div class="inner">
-                                    <?php
-                                        $rNumGame = rand(1, 500);
-                                        $rNumReg += $rNumGame;
-                                    ?>
-                                    <h3>{{ $rNumGame }} / 30</h3>
+                                    <h3>{{ $count['game']['total'] }} / 30</h3>
 
                                     <p>Gamesoft</p>
                                 </div>
@@ -60,8 +51,8 @@
                                 </div>
                                 <div class="small-box-footer" style="padding: 0; border-top: 5px solid whitesmoke;">
                                     <div class="progress progress-ms bg-gray active" style="margin-bottom: 0;">
-                                        <div class="progress-bar progress-bar-striped progress-bar-fCamp" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: {{ sprintf("%.2f", (($rNumGame / 30) * 100) > 100 ? 100 : ($rNumGame / 30) * 100) }}%; background-color: #d35400;">
-                                            <span class="progress-bar-text">{{ sprintf("%.2f", ($rNumGame / 30) * 100) }}%</span>
+                                        <div class="progress-bar progress-bar-striped progress-bar-fCamp" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: {{ sprintf("%.2f", (($count['game']['total'] / 30) * 100) > 100 ? 100 : ($count['game']['total'] / 30) * 100) }}%; background-color: #d35400;">
+                                            <span class="progress-bar-text">{{ sprintf("%.2f", ($count['game']['total'] / 30) * 100) }}%</span>
                                         </div>
                                     </div>
                                 </div>
@@ -72,11 +63,7 @@
                             <!-- small box -->
                             <div class="small-box bg-purple">
                                 <div class="inner">
-                                    <?php
-                                        $rNumNW = rand(1, 500);
-                                        $rNumReg += $rNumNW;
-                                    ?>
-                                    <h3>{{ $rNumNW }} / 30</h3>
+                                    <h3>{{ $count['network']['total'] }} / 30</h3>
 
                                     <p>Network Defender</p>
                                 </div>
@@ -85,8 +72,8 @@
                                 </div>
                                 <div class="small-box-footer" style="padding: 0; border-top: 5px solid whitesmoke;">
                                     <div class="progress progress-ms bg-gray active" style="margin-bottom: 0;">
-                                        <div class="progress-bar progress-bar-striped bg-purple progress-bar-fCamp" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: {{ sprintf("%.2f", (($rNumNW / 30) * 100) > 100 ? 100 : ($rNumNW / 30) * 100) }}%;">
-                                            <span class="progress-bar-text">{{ sprintf("%.2f", ($rNumNW / 30) * 100) }}%</span>
+                                        <div class="progress-bar progress-bar-striped bg-purple progress-bar-fCamp" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: {{ sprintf("%.2f", (($count['network']['total'] / 30) * 100) > 100 ? 100 : ($count['network']['total'] / 30) * 100) }}%;">
+                                            <span class="progress-bar-text">{{ sprintf("%.2f", ($count['network']['total'] / 30) * 100) }}%</span>
                                         </div>
                                     </div>
                                 </div>
@@ -97,11 +84,7 @@
                             <!-- small box -->
                             <div class="small-box bg-teal">
                                 <div class="inner">
-                                    <?php
-                                        $rNumIot = rand(1, 500);
-                                        $rNumReg += $rNumIot;
-                                    ?>
-                                    <h3>{{ $rNumIot }} / 30</h3>
+                                    <h3>{{ $count['iot']['total'] }} / 30</h3>
 
                                     <p>IoTech</p>
                                 </div>
@@ -110,8 +93,8 @@
                                 </div>
                                 <div class="small-box-footer" style="padding: 0; border-top: 5px solid whitesmoke;">
                                     <div class="progress progress-ms bg-gray active" style="margin-bottom: 0;">
-                                        <div class="progress-bar progress-bar-striped bg-teal progress-bar-fCamp" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: {{ sprintf("%.2f", (($rNumIot / 30) * 100) > 100 ? 100 : ($rNumIot / 30) * 100) }}%;">
-                                            <span class="progress-bar-text">{{ sprintf("%.2f", ($rNumIot / 30) * 100) }}%</span>
+                                        <div class="progress-bar progress-bar-striped bg-teal progress-bar-fCamp" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: {{ sprintf("%.2f", (($count['iot']['total'] / 30) * 100) > 100 ? 100 : ($count['iot']['total'] / 30) * 100) }}%;">
+                                            <span class="progress-bar-text">{{ sprintf("%.2f", ($count['iot']['total'] / 30) * 100) }}%</span>
                                         </div>
                                     </div>
                                 </div>
@@ -122,11 +105,7 @@
                             <!-- small box -->
                             <div class="small-box bg-maroon">
                                 <div class="inner">
-                                    <?php
-                                        $rNumDataSci = rand(1, 500);
-                                        $rNumReg += $rNumDataSci;
-                                    ?>
-                                    <h3>{{ $rNumDataSci }} / 30</h3>
+                                    <h3>{{ $count['datasci']['total'] }} / 30</h3>
 
                                     <p>Data Cyber</p>
                                 </div>
@@ -135,8 +114,8 @@
                                 </div>
                                 <div class="small-box-footer" style="padding: 0; border-top: 5px solid whitesmoke;">
                                     <div class="progress progress-ms bg-gray active" style="margin-bottom: 0;">
-                                        <div class="progress-bar progress-bar-striped bg-maroon progress-bar-fCamp" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: {{ sprintf("%.2f", (($rNumDataSci / 30) * 100) > 100 ? 100 : ($rNumDataSci / 30) * 100) }}%;">
-                                            <span class="progress-bar-text">{{ sprintf("%.2f", ($rNumDataSci / 30) * 100) }}%</span>
+                                        <div class="progress-bar progress-bar-striped bg-maroon progress-bar-fCamp" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: {{ sprintf("%.2f", (($count['datasci']['total'] / 30) * 100) > 100 ? 100 : ($count['datasci']['total'] / 30) * 100) }}%;">
+                                            <span class="progress-bar-text">{{ sprintf("%.2f", ($count['datasci']['total'] / 30) * 100) }}%</span>
                                         </div>
                                     </div>
                                 </div>
@@ -147,15 +126,7 @@
                             <!-- small box -->
                             <div class="small-box" style="background-color: #2c3e50; color: white;">
                                 <div class="inner">
-                                    <?php
-                                        $rNumPassApp = rand(round($rNumApp / 2), $rNumApp);
-                                        $rNumPassGame = rand(round($rNumGame / 2), $rNumGame);
-                                        $rNumPassNW = rand(round($rNumNW / 2), $rNumNW);
-                                        $rNumPassIot = rand(round($rNumIot / 2), $rNumIot);
-                                        $rNumPassDataSci = rand(round($rNumDataSci / 2), $rNumDataSci);
-                                        $rNumBase = $rNumPassApp + $rNumPassGame + $rNumPassNW + $rNumPassIot + $rNumPassDataSci;
-                                    ?>
-                                    <h3>{{ $rNumBase }} / {{ $rNumReg }}</h3>
+                                    <h3>{{ $count['checked'] }} / {{ $count['total'] }}</h3>
 
                                     <p>จำนวนที่ตรวจใบสมัครแล้ว / จำนวนผู้สมัครทั้งหมด</p>
                                 </div>
@@ -164,8 +135,8 @@
                                 </div>
                                 <div class="small-box-footer" style="padding: 0; border-top: 5px solid whitesmoke;">
                                     <div class="progress progress-ms bg-gray active" style="margin-bottom: 0;">
-                                        <div class="progress-bar progress-bar-striped progress-bar-fCamp" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: {{ sprintf("%.2f", ($rNumBase / $rNumReg) * 100) }}%; background-color: #2c3e50;">
-                                            <span class="progress-bar-text">{{ sprintf("%.2f", ($rNumBase / $rNumReg) * 100) }}%</span>
+                                        <div class="progress-bar progress-bar-striped progress-bar-fCamp" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: {{ sprintf("%.2f", ($count['checked'] / $count['total']) * 100) }}%; background-color: #2c3e50;">
+                                            <span class="progress-bar-text">{{ sprintf("%.2f", ($count['checked'] / $count['total']) * 100) }}%</span>
                                         </div>
                                     </div>
                                 </div>
@@ -176,10 +147,7 @@
                             <!-- small box -->
                             <div class="small-box bg-green">
                                 <div class="inner">
-                                    <?php
-                                        $rNumPass = $rNumBase;
-                                    ?>
-                                    <h3>{{ $rNumPass }}</h3>
+                                    <h3>{{ $count['approve'] }}</h3>
 
                                     <p>จำนวนใบสมัครที่ผ่าน</p>
                                 </div>
@@ -208,15 +176,6 @@
                 <div class="box-body">
                     <div class="row">
                         <div class="col-lg-12">
-                            <?php
-                                $rNumAppBoy = rand(round($rNumApp / 2), $rNumApp);
-                                $rNumGameBoy = rand(round($rNumGame / 2), $rNumGame);
-                                $rNumNWBoy = rand(round($rNumNW / 2), $rNumNW);
-                                $rNumIotBoy = rand(round($rNumIot / 2), $rNumIot);
-                                $rNumDataSciBoy = rand(round($rNumDataSci / 2), $rNumDataSci);
-                                $rNumAllBoy = $rNumAppBoy + $rNumGameBoy + $rNumNWBoy + $rNumIotBoy + $rNumDataSciBoy;
-                            ?>
-
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
@@ -230,44 +189,44 @@
                                 <tbody>
                                     <tr>
                                         <td>Appersky</td>
-                                        <td>{{ $rNumAppBoy }}</td>
-                                        <td>{{ $rNumApp - $rNumAppBoy }}</td>
-                                        <td>{{ $rNumApp }}</td>
-                                        <td>{{ $rNumPassApp }}</td>
+                                        <td>{{ $count['app']['boy'] }}</td>
+                                        <td>{{ $count['app']['girl'] }}</td>
+                                        <td>{{ $count['app']['total'] }}</td>
+                                        <td>{{ $count['app']['approve'] }}</td>
                                     </tr>
                                     <tr>
                                         <td>Gamesoft</td>
-                                        <td>{{ $rNumGameBoy }}</td>
-                                        <td>{{ $rNumGame - $rNumGameBoy }}</td>
-                                        <td>{{ $rNumGame }}</td>
-                                        <td>{{ $rNumPassGame }}</td>
+                                        <td>{{ $count['game']['boy'] }}</td>
+                                        <td>{{ $count['game']['girl'] }}</td>
+                                        <td>{{ $count['game']['total'] }}</td>
+                                        <td>{{ $count['game']['approve'] }}</td>
                                     </tr>
                                     <tr>
                                         <td>Network Defender</td>
-                                        <td>{{ $rNumNWBoy }}</td>
-                                        <td>{{ $rNumNW - $rNumNWBoy }}</td>
-                                        <td>{{ $rNumNW }}</td>
-                                        <td>{{ $rNumPassNW }}</td>
+                                        <td>{{ $count['network']['boy'] }}</td>
+                                        <td>{{ $count['network']['girl'] }}</td>
+                                        <td>{{ $count['network']['total'] }}</td>
+                                        <td>{{ $count['network']['approve'] }}</td>
                                     </tr>
                                     <tr>
                                         <td>IoTech</td>
-                                        <td>{{ $rNumIotBoy }}</td>
-                                        <td>{{ $rNumIot - $rNumIotBoy }}</td>
-                                        <td>{{ $rNumIot }}</td>
-                                        <td>{{ $rNumPassIot }}</td>
+                                        <td>{{ $count['iot']['boy'] }}</td>
+                                        <td>{{ $count['iot']['girl'] }}</td>
+                                        <td>{{ $count['iot']['total'] }}</td>
+                                        <td>{{ $count['iot']['approve'] }}</td>
                                     </tr>
                                     <tr>
                                         <td>Data Cyber</td>
-                                        <td>{{ $rNumDataSciBoy }}</td>
-                                        <td>{{ $rNumDataSci - $rNumDataSciBoy }}</td>
-                                        <td>{{ $rNumDataSci }}</td>
-                                        <td>{{ $rNumPassDataSci }}</td>
+                                        <td>{{ $count['datasci']['boy'] }}</td>
+                                        <td>{{ $count['datasci']['girl'] }}</td>
+                                        <td>{{ $count['datasci']['total'] }}</td>
+                                        <td>{{ $count['datasci']['approve'] }}</td>
                                     </tr>
                                     <tr>
                                         <td align="right">รวม&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                                        <td>{{ $rNumAllBoy }}</td>
-                                        <td>{{ $rNumReg - $rNumAllBoy }}</td>
-                                        <td>{{ $rNumReg }}</td>
+                                        <td>{{ $count['boy'] }}</td>
+                                        <td>{{ $count['girl'] }}</td>
+                                        <td>{{ $count['total'] }}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -292,10 +251,7 @@
                             <!-- small box -->
                             <div class="small-box" style="background-color: #16a085; color: white; margin-bottom: 0;">
                                 <div class="inner">
-                                    <?php
-                                        $rNumCheckAll = rand(round($rNumBase / 1.5), $rNumBase);
-                                    ?>
-                                    <h3>{{ $rNumCheckAll }} / {{ $rNumPass }}</h3>
+                                    <h3>0 / {{ $count['approve'] }}</h3>
 
                                     <p>จำนวนที่ตรวจคำตอบแล้ว / จำนวนผู้สมัครที่ใบสมัครผ่าน</p>
                                     <h4><span class="label bg-black">ประธานค่าย</span></h4>
@@ -305,8 +261,8 @@
                                 </div>
                                 <div class="small-box-footer" style="padding: 0; border-top: 5px solid whitesmoke;">
                                     <div class="progress progress-ms bg-gray active" style="margin-bottom: 0;">
-                                        <div class="progress-bar progress-bar-striped progress-bar-fCamp" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: {{ sprintf("%.2f", ($rNumBase / $rNumReg) * 100) }}%; background-color: #16a085;">
-                                            <span class="progress-bar-text">{{ sprintf("%.2f", ($rNumBase / $rNumReg) * 100) }}%</span>
+                                        <div class="progress-bar progress-bar-striped progress-bar-fCamp" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: {{ sprintf("%.2f", 0 * 100) }}%; background-color: #16a085;">
+                                            <span class="progress-bar-text">{{ sprintf("%.2f", 0 * 100) }}%</span>
                                         </div>
                                     </div>
                                 </div>
