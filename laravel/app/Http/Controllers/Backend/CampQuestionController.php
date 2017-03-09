@@ -68,7 +68,7 @@ class CampQuestionController extends Controller
         $error = null;
         try
         {
-            $this->question->createQuestion($request->all());
+            $this->question->createCampQuestion($request->all());
         }
         catch (FieldTypeNotAcceptException $ex)
         {
@@ -120,7 +120,7 @@ class CampQuestionController extends Controller
         $error = null;
         try
         {
-            $this->question->updateQuestion($id, $request->all());
+            $this->question->updateCampQuestion($id, $request->all());
         }
         catch (FieldTypeNotAcceptException $ex)
         {
@@ -156,7 +156,7 @@ class CampQuestionController extends Controller
             return redirect()->route('view.backend.question.camp')->with('status', 'backend_not_enough_permission_to_remove_question');
         }
 
-        $this->question->deleteQuestion($id);
+        $this->question->deleteCampQuestion($id);
 
         return redirect()->route('view.backend.question.camp')->with('status', 'backend_remove_question_success');
     }
@@ -214,7 +214,6 @@ class CampQuestionController extends Controller
      * @return mixed
      */
     private function getAvailableSection() {
-        // TODO [OPTIONAL] change this in future :S
         if(Auth::guard('backend')->user()->staff->is_admin) {
             return Section::all();
         } else if(Auth::guard('backend')->user()->staff->section->name == 'knowledge') {

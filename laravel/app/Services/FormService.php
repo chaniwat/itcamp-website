@@ -4,9 +4,6 @@ namespace App\Services;
 
 class FormService
 {
-
-    // TODO Check format validator algorithm (setting, value json format)(testing)
-
     private $acceptField = ['TEXT', 'TEXTAREA', 'PASSWORD', 'EMAIL', 'NUMBER', 'DATE', 'RADIO', 'CHECKBOX', 'SELECT', 'SELECT_MULTIPLE', 'FILE'];
     private $acceptFileTypeSetting = ['picture', 'document', 'any'];
     private $fileType = [
@@ -139,10 +136,8 @@ class FormService
      * @return bool
      */
     private function checkDateValueFormat($arrayObject) {
-        if(sizeof($arrayObject) == 2 && array_key_exists("date", $arrayObject) && gettype($arrayObject["date"]) == "string"
-            && array_key_exists("time", $arrayObject) && gettype($arrayObject["time"]) == "string") {
-            if(preg_match("/^[0-9]{2}/[0-9]{2}/[0-9]{4}$/", $arrayObject['date']) && preg_match("/^[0-9]{2}:[0-9]{2}:[0-9]{2}$/", $arrayObject['time'])) {
-                // TODO check date and time value correction (now only check pattern)
+        if(sizeof($arrayObject) == 2 && array_key_exists("value", $arrayObject) && gettype($arrayObject["value"]) == "string") {
+            if(preg_match("/^[0-9]{2}/[0-9]{2}/[0-9]{4}$/", $arrayObject['value'])) {
                 return true;
             }
             return false;

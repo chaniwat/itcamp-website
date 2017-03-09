@@ -15,7 +15,6 @@
   <body>
 
     <!-- Navbar -->
-    <!-- TODO Finish the navbar -->
     <nav class="navbar fixed-top navbar-inverse bg-inverse">
       <div class="navbar-desktop hidden-sm-down">
         <div class="nav-left">
@@ -196,7 +195,6 @@
       </section>
 
       <!-- Gallery block -->
-      <!-- TODO Reduce pictures (make more responsive) -->
       <section class="section gallery-block" data-anchor="gallery-block">
         <div class="content">
           <h1>ภาพกิจกรรม</h1>

@@ -32,12 +32,12 @@
                         <th>ชื่อ - นามสกุล</th>
                         <th>ค่าย</th>
                         <th>สถานะการสมัคร</th>
+                        <th>วันที่สมัคร</th>
                         <th width="80">แก้ไข</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($applicants as $applicant)
-                        {{-- TODO add created_at (regis time) / updated_at columns --}}
                         <?php
 
                         $p_name = null;
@@ -59,6 +59,7 @@
                             <td>{{ ($p_name != 'อื่นๆ' ? $p_name : '').$f_name." ".$l_name }}</td>
                             <td>@lang("camp.".$applicant->camp->name)</td>
                             <td>{{ $applicant->state }}</td>
+                            <td>{{ $applicant->created_at }}</td>
                             <td><a href="{{ route('view.backend.applicants.detail', ['id' => $applicant->id]) }}" class="btn btn-info btn-flat btn-sm"><i class="fa fa-wrench" aria-hidden="true"></i> แก้ไข</a>
                             </td>
                         </tr>

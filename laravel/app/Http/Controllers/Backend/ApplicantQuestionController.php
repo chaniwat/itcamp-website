@@ -7,6 +7,7 @@ use App\Exceptions\FieldTypeNotAcceptException;
 use App\Exceptions\InvalidFieldFormatException;
 use App\Services\ApplicantQuestionService;
 use App\Services\FormService;
+use App\Services\QuestionService;
 use App\Services\ValidatorService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -23,16 +24,16 @@ class ApplicantQuestionController extends Controller
     /**
      * Applicant question Service instance
      */
-    private $applicantQuestion;
+    private $question;
 
     /**
      * Form Service instance
      */
     private $formService;
 
-    public function __construct(ApplicantQuestionService $applicantQuestionService, ValidatorService $validatorService, FormService $formService)
+    public function __construct(QuestionService $questionService, ValidatorService $validatorService, FormService $formService)
     {
-        $this->applicantQuestion = $applicantQuestionService;
+        $this->question = $questionService;
         $this->validator = $validatorService;
         $this->formService = $formService;
     }
@@ -66,7 +67,7 @@ class ApplicantQuestionController extends Controller
         $error = null;
         try
         {
-            $this->applicantQuestion->createQuestion($request->all());
+            $this->question->createApplicantQuestion($request->all());
         }
         catch (FieldTypeNotAcceptException $ex)
         {
@@ -118,7 +119,7 @@ class ApplicantQuestionController extends Controller
         $error = null;
         try
         {
-            $this->applicantQuestion->updateQuestion($id, $request->all());
+            $this->question->updateApplicantQuestion($id, $request->all());
         }
         catch (FieldTypeNotAcceptException $ex)
         {
@@ -143,9 +144,20 @@ class ApplicantQuestionController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      */
     public function deleteQuestion($id) {
-        // CANNOT DELETE THIS ;w;
+        // Find question
+        $question = ApplicantDetailKey::find($id);
+        if (!$question) {
+            return redirect()->route('view.backend.question.applicant')->with('status', 'backend_applicant_question_not_found');
+        }
 
-        return response(403);
+        // Policies Check
+        if(Gate::denies('delete', $question)) {
+            return redirect()->route('view.backend.question.applicant')->with('status', 'backend_not_enough_permission_to_remove_applicant_question');
+        }
+
+        $this->question->deleteapplicantQuestion($id);
+
+        return redirect()->route('view.backend.question.applicant')->with('status', 'backend_remove_applicant_question_success');
     }
 
     /**

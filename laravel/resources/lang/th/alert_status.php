@@ -12,11 +12,13 @@ return [
     'backend_not_admin' => 'คุณไม่ได้เป็นผู้ดูแลระบบ (แอดมิน)', // not a admin (for backend staff)
     'backend_not_enough_permission_to_create_applicant_question' => 'คุณไม่สามารถตั้งคำถามผู้สมัครใหม่่ได้', // not enough permission to create applicant question
     'backend_not_enough_permission_to_edit_applicant_question' => 'คุณไม่สามารถแก้ไขคำถามผู้สมัครนี้ได้', // not enough permission to edit applicant question
+    'backend_not_enough_permission_to_remove_applicant_question' => 'คุณไม่สามารถลบคำถามผู้สมัครนี้ได้', // not enough permission to remove applicant question
     'backend_not_enough_permission_to_create_question' => 'คุณไม่สามารถตั้งคำถามค่ายใหม่่ได้', // not enough permission to create camp question
     'backend_not_enough_permission_to_edit_question' => 'คุณไม่สามารถแก้ไขคำถามค่ายนี้ได้', // not enough permission to edit camp question
     'backend_not_enough_permission_to_remove_question' => 'คุณไม่สามารถลบคำถามค่ายนี้ได้', // not enough permission to remove camp question
     'backend_question_id_already_used' => 'field_id ของคำถามค่ายนี้ถูกใช้แล้ว', // field_id already used
     'backend_question_not_found' => 'ไม่มีคำถามค่ายที่ระบุ', // camp question not found
+    'backend_remove_applicant_question_success' => 'ลบคำถามผู้สมัครสำเร็จ', // remove applicant question
     'backend_remove_question_success' => 'ลบคำถามค่ายสำเร็จ', // remove camp question
     'backend_update_account_complete' => 'แก้ไขบัญชี้สำเร็จ', // update staff account
     'backend_update_account_password_complete' => 'อัพเดทพาสเวิร์คของบัญชีสำเร็จ', // update staff account's password

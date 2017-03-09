@@ -19,7 +19,6 @@
             <h3 class="box-title">กล่องควบคุม</h3>
         </div>
         <div class="box-body">
-            {{-- FIXME Change this for easier overview looks --}}
             <div class="row">
                 <div class="col-xs-12">
                     <!-- small box -->

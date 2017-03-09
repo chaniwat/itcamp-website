@@ -19,9 +19,8 @@
             <h3 class="box-title">กล่องควบคุม</h3>
         </div>
         <div class="box-body">
-            {{-- FIXME Change this for easier overview looks --}}
             <div class="row">
-                <div class="col-xs-12">
+                <div class="col-xs-4">
                     <!-- small box -->
                     <div class="small-box bg-aqua">
                         <div class="inner">
@@ -34,7 +33,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xs-6">
+                <div class="col-xs-4">
                     <!-- small box -->
                     <div class="small-box bg-red">
                         <div class="inner">
@@ -47,7 +46,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xs-6">
+                <div class="col-xs-4">
                     <!-- small box -->
                     <div class="small-box bg-green">
                         <div class="inner">
@@ -148,7 +147,7 @@
                     <th width="70">Priority</th>
                     <th>ID</th>
                     <th>คำถาม</th>
-                    <th>ของฝ่าย</th>
+                    <th width="150">ของฝ่าย</th>
                     <th width="80">แก้ไข</th>
                 </tr>
                 </thead>

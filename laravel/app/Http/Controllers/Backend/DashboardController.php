@@ -222,7 +222,7 @@ class DashboardController extends Controller
 
     public function showOverviewDashboard() {
         /*
-         * TODO Overview dashboard
+         * Overview dashboard
          * count selected & reserve applicant's (each camp), count shirt size
          * count confirm applicant
          */

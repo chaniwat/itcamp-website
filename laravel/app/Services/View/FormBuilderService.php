@@ -17,10 +17,8 @@ class FormBuilderService
      * @param Question|ApplicantDetailKey $question Input field
      * @return mixed
      */
-    public function buildInputField($question)
+    public function buildFrontInputField($question)
     {
-        // FIXME Rename function
-
         $data = [
             'field_id' => $question->id,
             'field_type' => strtolower($question->field_type),

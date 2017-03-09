@@ -60,10 +60,18 @@ class ApplicantQuestionPolicy
     }
 
     /**
-     * Can question be updated by logged user
+     * Can applicant question be updated by logged user
      * @return bool
      */
     public function update() {
+        return true;
+    }
+
+    /**
+     * Can applicant question be deleted by logged user
+     * @return bool
+     */
+    public function delete() {
         return true;
     }
 

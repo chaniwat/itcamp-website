@@ -20,8 +20,6 @@
 </head>
 
 <body>
-    {{-- TODO Design form bootstrap.v4 --}}
-
     <div class="container register-from">
         <header>
             <div class="text-center">
@@ -40,31 +38,31 @@
                 <h3>ข้อมูลส่วนตัว</h3>
                 <div class="row">
                     @foreach($applicantQuestions->where('priority', '<=', '1000')->where('priority', '>=', '992') as $question)
-                        {!! $viewHelper->formBuilder()->buildInputField($question) !!}
+                        {!! $viewHelper->formBuilder()->buildFrontInputField($question) !!}
                     @endforeach
                 </div>
                 <h3>ที่อยู่ปัจจุบันที่สามารถติดต่อได้</h3>
                 <div class="row">
                     @foreach($applicantQuestions->where('priority', '<=', '950')->where('priority', '>=', '917') as $question)
-                        {!! $viewHelper->formBuilder()->buildInputField($question) !!}
+                        {!! $viewHelper->formBuilder()->buildFrontInputField($question) !!}
                     @endforeach
                 </div>
                 <h3>ข้อมูลผู้ปกครอง</h3>
                 <div class="row">
                     @foreach($applicantQuestions->where('priority', '<=', '800')->where('priority', '>=', '789') as $question)
-                        {!! $viewHelper->formBuilder()->buildInputField($question) !!}
+                        {!! $viewHelper->formBuilder()->buildFrontInputField($question) !!}
                     @endforeach
                 </div>
                 <h3>ข้อมูลการศึกษา</h3>
                 <div class="row">
                     @foreach($applicantQuestions->where('priority', '<=', '850')->where('priority', '>=', '846') as $question)
-                        {!! $viewHelper->formBuilder()->buildInputField($question) !!}
+                        {!! $viewHelper->formBuilder()->buildFrontInputField($question) !!}
                     @endforeach
                 </div>
                 <h3>ข้อมูลอื่นๆ</h3>
                 <div class="row">
                     @foreach($applicantQuestions->where('priority', '<=', '680')->where('priority', '>=', '673') as $question)
-                        {!! $viewHelper->formBuilder()->buildInputField($question) !!}
+                        {!! $viewHelper->formBuilder()->buildFrontInputField($question) !!}
                     @endforeach
                 </div>
                 <div style="margin-top: 1rem;"></div>
@@ -73,13 +71,13 @@
                 <h3>คำถามทั่วไป</h3>
                 <div class="row">
                     @foreach($campQuestions->where('priority', '<=', '1000')->where('priority', '>=', '499') as $question)
-                        {!! $viewHelper->formBuilder()->buildInputField($question) !!}
+                        {!! $viewHelper->formBuilder()->buildFrontInputField($question) !!}
                     @endforeach
                 </div>
                 <h3>คำถามค่ายย่อย "@lang("camp.".$camp)"</h3>
                 <div class="row">
                     @foreach($campQuestions->where('priority', '<', '499') as $question)
-                        {!! $viewHelper->formBuilder()->buildInputField($question) !!}
+                        {!! $viewHelper->formBuilder()->buildFrontInputField($question) !!}
                     @endforeach
                 </div>
                 <hr />

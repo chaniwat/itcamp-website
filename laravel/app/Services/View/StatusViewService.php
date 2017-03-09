@@ -38,11 +38,13 @@ class StatusViewService
         'backend_not_admin' => 'danger', // not a admin (for backend staff)
         'backend_not_enough_permission_to_create_applicant_question' => 'warning', // not enough permission to create applicant question
         'backend_not_enough_permission_to_edit_applicant_question' => 'warning', // not enough permission to edit applicant question
+        'backend_not_enough_permission_to_remove_applicant_question' => 'warning', // not enough permission to remove applicant question
         'backend_not_enough_permission_to_create_question' => 'warning', // not enough permission to create camp question
         'backend_not_enough_permission_to_edit_question' => 'warning', // not enough permission to edit camp question
         'backend_not_enough_permission_to_remove_question' => 'warning', // not enough permission to remove camp question
         'backend_question_id_already_used' => 'warning', // camp question field_id already used
         'backend_question_not_found' => 'warning', // camp question not found
+        'backend_remove_applicant_question_success' => 'success', // remove applicant question
         'backend_remove_question_success' => 'success', // remove camp question
         'backend_update_account_complete' => 'success', // update staff account
         'backend_update_account_password_complete' => 'success', // update staff account's password

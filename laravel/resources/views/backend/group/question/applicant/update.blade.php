@@ -91,7 +91,10 @@
             <div class="box-footer">
                 <a href="{{ route("view.backend.question.applicant") }}" class="btn btn-default">ยกเลิกการแก้ไข</a>
                 <div class="btn-group pull-right" role="group">
-                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDeleteModal" disabled>ลบคำถามนี้</button>
+                    <?php
+                        $canDelete = !in_array($data['question']->id, \App\Services\QuestionService::CRITICAL_APPLICANT_FIELD);
+                    ?>
+                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDeleteModal" {{ $canDelete ? '' : 'disabled' }}>ลบคำถามนี้</button>
                     <button type="submit" class="btn btn-info">บันทึกการแก้ไข</button>
                 </div>
             </div>
