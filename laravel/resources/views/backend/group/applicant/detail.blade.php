@@ -9,15 +9,19 @@
         td {
             vertical-align: middle !important;
         }
-
-        .row {
-            margin-left: 0;
-            margin-right: 0;
-        }
     </style>
 @endsection
 
 @section('content')
+
+    <div class="box box-solid box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">กล่องควบคุม</h3>
+        </div>
+        <div class="box-body">
+
+        </div>
+    </div>
 
     <div class="box box-primary">
         <form>

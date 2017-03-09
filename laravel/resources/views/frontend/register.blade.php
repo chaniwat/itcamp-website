@@ -33,6 +33,8 @@
             <form action="{{ route('frontend.register', ['camp' => $camp]) }}" method="POST" enctype="multipart/form-data">
                 {{ csrf_field() }}
 
+                {{-- TODO JS control other field, custom validating --}}
+
                 <h2>ส่วนที่ 1 : ข้อมูลทั่วของผู้สมัคร</h2>
                 <hr />
                 <h3>ข้อมูลส่วนตัว</h3>

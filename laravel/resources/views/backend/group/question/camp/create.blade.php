@@ -17,6 +17,11 @@
 
                     <div class="col-sm-10">
                         <input type="text" class="form-control" id="inputQuestion" name="question" placeholder="Question" value="{{ old('question') }}">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" id="require" name="require" {{ old('require') ? 'checked' : '' }}> จำเป็นต้องตอบคำถามนี้ (require)
+                            </label>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group">

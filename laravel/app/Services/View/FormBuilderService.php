@@ -33,6 +33,15 @@ class FormBuilderService
             $data['lists'] = json_decode($question->field_setting, True)['lists'];
         }
 
+        if($question->parent)
+        {
+            $data['parent_id'] = $question->parent->id;
+        }
+        else
+        {
+            $data['parent_id'] = null;
+        }
+
         return view(FormBuilderService::FRONTEND_TEMPLATE_DIR.strtolower($data['field_type']))->with($data);
     }
 
@@ -43,9 +52,10 @@ class FormBuilderService
             'field_type' => strtolower($question->field_type),
             'field_class' => $question->field_class,
             'title' => $question->question,
-            'description' => in_array('show-description', explode(' ', $question->field_class)) ? $question->description : '',
+//            'description' => in_array('show-description', explode(' ', $question->field_class)) ? $question->description : '',
+            'description' => '',
             'require' => $question->require,
-            'hideTitle' => in_array('hide-title', explode(' ', $question->field_class))
+            'hideTitle' => in_array('hide-title', explode(' ', $question->field_class)),
         ];
 
         if($answerKey = $answerer->applicantDetails->find($question->id))
@@ -61,7 +71,8 @@ class FormBuilderService
             }
         }
 
-        if(in_array($question->field_type, ['CHECKBOX', 'RADIO', 'SELECT', 'SELECT_MULTIPLE'])) {
+        if(in_array($question->field_type, ['CHECKBOX', 'RADIO', 'SELECT', 'SELECT_MULTIPLE']))
+        {
             $data['lists'] = json_decode($question->field_setting, True)['lists'];
         }
 

@@ -8,7 +8,7 @@ class FormService
     private $acceptFileTypeSetting = ['picture', 'document', 'any'];
     private $fileType = [
         "picture" => ["image/jpeg", "image/gif", "image/png"],
-        "document" => ["application/pdf"]
+        "document" => ["application/pdf", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"]
     ];
 
     /**

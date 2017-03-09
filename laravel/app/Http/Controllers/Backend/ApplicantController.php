@@ -12,7 +12,9 @@ class ApplicantController extends Controller
 
     public function showApplicants()
     {
-        return view('backend.group.applicant.index')->with('applicants', Applicant::all());
+        return view('backend.group.applicant.index')->with('applicants', Applicant::orderByRaw(
+            "FIELD(state, 'PENDING', 'CHECKED', 'COMPLETE', 'SELECT', 'RESERVE', 'FAIL', 'REJECT') ASC, id DESC"
+        )->get());
     }
 
     public function showApplicantDetail($id)

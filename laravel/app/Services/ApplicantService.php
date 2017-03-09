@@ -39,6 +39,10 @@ class ApplicantService
         $applicantDetailAnswers = $request->only($applicantDetailKeys);
         $questionAnswers = $request->only($questionKeys);
 
+        // Check file type first
+        $this->checkFile($request, $applicantDetailKeys, $applicantDetailAnswers);
+        $this->checkFile($request, $questionKeys, $questionAnswers);
+
         // Create Applicant
         $applicant = new Applicant();
         $applicant->camp()->associate($camp);
@@ -82,12 +86,13 @@ class ApplicantService
                 $filePath = null;
                 if($request->hasFile($key)) {
                     $file = $request->file($key);
+                    $jsonValue = json_decode($models->find($key)->field_setting, True);
 
-                    if(!$this->form->isFileMimeAccept('picture', $file->getMimeType())) {
+                    if(!$this->form->isFileMimeAccept($jsonValue['acceptTypes'], $file->getMimeType())) {
                         throw new \Exception('form_invalid_file_type');
                     }
 
-                    $destination = json_decode($models->find($key)->field_setting, True)['directory'];
+                    $destination = $jsonValue['directory'];
                     $filename = Carbon::now()->format('mdYHis').md5($file->getClientOriginalName()).".".$file->getClientOriginalExtension();
                     $file->move("storage/".$destination, $filename);
 
@@ -109,6 +114,29 @@ class ApplicantService
         }
 
         return $arrayValue;
+    }
+
+    private function checkFile(Request $request, $models, $answers)
+    {
+        foreach ($answers as $key => $value)
+        {
+            $field_type = $models->find($key)->field_type;
+
+            if ($field_type == 'FILE') {
+                /*
+                 * Upload file
+                 */
+                $filePath = null;
+                if ($request->hasFile($key)) {
+                    $file = $request->file($key);
+                    $jsonValue = json_decode($models->find($key)->field_setting, True);
+
+                    if (!$this->form->isFileMimeAccept($jsonValue['acceptTypes'], $file->getMimeType())) {
+                        throw new \Exception('form_invalid_file_type');
+                    }
+                }
+            }
+        }
     }
 
 }

@@ -12,6 +12,8 @@ class ApplicantFormSeeder extends Seeder
      */
     public function run()
     {
+        // FIXME Change to newer key (in db)
+
         DB::table('applicant_detail_keys')->insert([
 
             #region Applicant's Address

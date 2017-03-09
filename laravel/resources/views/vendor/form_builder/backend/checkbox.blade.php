@@ -3,7 +3,7 @@
     @foreach($lists as $item)
         <div class="form-check">
             <label class="form-check-label">
-                <input type="checkbox" class="form-check-input" id="{{ $field_id }}" name="{{ $field_id }}[]" value="{{ $item['key'] }}" {{ in_array($item['key'], $value) ? 'checked' : '' }}>
+                <input type="checkbox" class="form-check-input" id="{{ $field_id }}" name="{{ $field_id }}[]" value="{{ $item['key'] }}" {{ in_array($item['key'], $value) ? 'checked' : '' }} disabled>
                 {{ $item['text'] }}
             </label>
         </div>
