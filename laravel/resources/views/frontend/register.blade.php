@@ -63,7 +63,7 @@
                 </div>
                 <h3>ข้อมูลอื่นๆ</h3>
                 <div class="row">
-                    @foreach($applicantQuestions->where('priority', '<=', '680')->where('priority', '>=', '674') as $question)
+                    @foreach($applicantQuestions->where('priority', '<=', '680')->where('priority', '>=', '673') as $question)
                         {!! $viewHelper->formBuilder()->buildInputField($question) !!}
                     @endforeach
                 </div>

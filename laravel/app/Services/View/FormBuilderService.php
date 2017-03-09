@@ -40,12 +40,6 @@ class FormBuilderService
 
     public function buildBackendInputField($question, Applicant $answerer)
     {
-        $answerKey = $answerer->applicantDetails->find($question->id);
-        if(!$answerKey)
-        {
-            return null;
-        }
-
         $data = [
             'field_id' => $question->id,
             'field_type' => strtolower($question->field_type),
@@ -53,9 +47,21 @@ class FormBuilderService
             'title' => $question->question,
             'description' => in_array('show-description', explode(' ', $question->field_class)) ? $question->description : '',
             'require' => $question->require,
-            'hideTitle' => in_array('hide-title', explode(' ', $question->field_class)),
-            'value' => json_decode($answerKey->pivot->answer, True)['value']
+            'hideTitle' => in_array('hide-title', explode(' ', $question->field_class))
         ];
+
+        if($answerKey = $answerer->applicantDetails->find($question->id))
+        {
+            $data['value'] = json_decode($answerKey->pivot->answer, True)['value'];
+        }
+        else
+        {
+            if(in_array($question->field_type, ['CHECKBOX', 'SELECT_MULTIPLE'])) {
+                $data['value'] = [];
+            } else {
+                $data['value'] = '';
+            }
+        }
 
         if(in_array($question->field_type, ['CHECKBOX', 'RADIO', 'SELECT', 'SELECT_MULTIPLE'])) {
             $data['lists'] = json_decode($question->field_setting, True)['lists'];
