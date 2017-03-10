@@ -16,15 +16,16 @@
 Route::group(['namespace' => 'Frontend'], function () {
 
     Route::get('/', 'HomeController@index')->name('view.frontend.index');
+    Route::get('/landing', 'HomeController@showLanding')->name('view.frontend.landing');
 
     #region register
-
+    /*
     Route::group(['prefix' => 'register'], function () {
         Route::get('/complete', 'RegisterController@showComplete')->name('view.frontend.register.complete');
         Route::get('/{camp}', 'RegisterController@showRegister')->name('view.frontend.register');
         Route::post('/{camp}', 'RegisterController@register')->name('frontend.register');
     });
-
+    */
     #endregion
 
 });
@@ -32,7 +33,7 @@ Route::group(['namespace' => 'Frontend'], function () {
 #endregion
 
 #region Backend route
-
+/*
 Route::group(['prefix' => 'backend', 'namespace' => 'Backend'], function () {
 
     #region non-auth routes (logout, logout, etc)
@@ -120,5 +121,5 @@ Route::group(['prefix' => 'backend', 'namespace' => 'Backend'], function () {
     #endregion
 
 });
-
+*/
 #endregion

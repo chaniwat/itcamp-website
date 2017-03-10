@@ -62,8 +62,12 @@ class Handler extends ExceptionHandler
      */
     protected function NotFoundExceptionHandler($request, NotFoundHttpException $e)
     {
-        // Skipped the assets
+        // If not the assets, handles it (Bypass assets)
         if(!$request->is("assets/*")) {
+            // Redirect all route to frontend landing page
+            return redirect()->route('view.frontend.landing');
+
+            /*
             if($request->is("backend/*")) {
                 // Backend handle
                 config()->set('auth.defaults.guard', 'backend');
@@ -81,6 +85,7 @@ class Handler extends ExceptionHandler
                 // Frontend handle
                 config()->set('auth.defaults.guard', 'web');
             }
+            */
         }
 
         return parent::render($request, $e);

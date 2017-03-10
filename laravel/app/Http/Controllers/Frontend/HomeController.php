@@ -10,7 +10,15 @@ class HomeController extends Controller
 
     public function index()
     {
-        return view('frontend.index');
+//        return view('frontend.index');
+
+        // Redirect to landing page
+        return redirect()->route('view.frontend.landing');
+    }
+
+    public function showLanding()
+    {
+        return view('frontend.landing');
     }
 
 }
