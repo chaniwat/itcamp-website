@@ -5,7 +5,17 @@
   <meta id="Viewport" name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
   <meta name="theme-color" content="#292B2C">
 
-  <title>ITCAMP 13 | Landing Page</title>
+  <meta property="og:title" content="ITCAMP#13">
+  <meta property="og:description" content="Some Content here.">
+  <meta property="og:image" content="http://itcamp.in.th/13/assets/seo/itcamp13_thumbnail.png">
+  <meta property="og:url" content="http://itcamp.in.th/13/landing">
+
+  <meta name="twitter:title" content="ITCAMP#13">
+  <meta name="twitter:description" content="Some Content here.">
+  <meta name="twitter:image" content="http://itcamp.in.th/13/assets/seo/itcamp13_thumbnail.png">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <title>ITCAMP 13 | Coming Soon</title>
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="assets/frontend/css/jquery.fullpage.css">

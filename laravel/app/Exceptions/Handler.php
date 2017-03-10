@@ -64,17 +64,18 @@ class Handler extends ExceptionHandler
     {
         // If not the assets, handles it (Bypass assets)
         if(!$request->is("assets/*")) {
-            // Redirect all route to frontend landing page
-            return redirect()->route('view.frontend.landing');
+            if(!env('APP_OPEN')) {
+                // Redirect all route to frontend landing page
+                return redirect()->route('view.frontend.landing');
+            }
 
-            /*
             if($request->is("backend/*")) {
                 // Backend handle
                 config()->set('auth.defaults.guard', 'backend');
 
                 if(!$request->is("backend/auth/*")) {
-                    if(!Auth::guard('backend')->check()) {
-                        return redirect()->route('backend.view.login');
+                    if(!Auth::check()) {
+                        return redirect()->route('view.backend.login');
                     } else {
                         if($e instanceof NotFoundHttpException) {
                             return response()->view("backend.error.404", [], 404);
@@ -84,8 +85,10 @@ class Handler extends ExceptionHandler
             } else {
                 // Frontend handle
                 config()->set('auth.defaults.guard', 'web');
+
+                // Redirect all route to frontend index page
+                return redirect()->route('view.frontend.index');
             }
-            */
         }
 
         return parent::render($request, $e);
