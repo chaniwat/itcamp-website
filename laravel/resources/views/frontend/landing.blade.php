@@ -5,13 +5,16 @@
   <meta id="Viewport" name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
   <meta name="theme-color" content="#292B2C">
 
+  <link rel="icon" type="image/png" href="assets/frontend/favicon/favicon-32x32.png" sizes="32x32" />
+  <link rel="icon" type="image/png" href="assets/frontend/favicon/favicon-16x16.png" sizes="16x16" />
+
   <meta property="og:title" content="ITCAMP#13">
-  <meta property="og:description" content="Some Content here.">
+  <meta property="og:description" content="เตรียมพบกับค่าย ITCAMP ครั้งที่ 13 เร็วๆนี้ !!">
   <meta property="og:image" content="http://itcamp.in.th/13/assets/seo/itcamp13_thumbnail.png">
   <meta property="og:url" content="http://itcamp.in.th/13/landing">
 
   <meta name="twitter:title" content="ITCAMP#13">
-  <meta name="twitter:description" content="Some Content here.">
+  <meta name="twitter:description" content="เตรียมพบกับค่าย ITCAMP ครั้งที่ 13 เร็วๆนี้ !!">
   <meta name="twitter:image" content="http://itcamp.in.th/13/assets/seo/itcamp13_thumbnail.png">
   <meta name="twitter:card" content="summary_large_image">
 
