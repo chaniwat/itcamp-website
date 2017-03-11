@@ -10,7 +10,22 @@ class HomeController extends Controller
 
     public function index()
     {
-        return view('frontend.index');
+        if(env('APP_OPEN')) {
+            return view('frontend.index');
+        } else {
+            // Redirect to landing page
+            return redirect()->route('view.frontend.landing');
+        }
+    }
+
+    public function showLanding()
+    {
+        if(env('APP_OPEN')) {
+            // Redirect to index page
+            return redirect()->route('view.frontend.index');
+        } else {
+            return view('frontend.landing');
+        }
     }
 
 }
