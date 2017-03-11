@@ -1,0 +1,3 @@
+{
+  "value": ["a", "b", "c"] // Array(String) : keys that checked
+}

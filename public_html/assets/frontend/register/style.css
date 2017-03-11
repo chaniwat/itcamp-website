@@ -1,0 +1,75 @@
+html {
+    font-size: 20px;
+    min-width: 580px;
+}
+
+body {
+    height: auto;
+}
+
+.register-from {
+    background-color: white;
+    border-radius: 15px;
+    margin: 2rem auto;
+    padding: 25px;
+}
+
+header {
+    margin: 35px 0 50px;
+}
+
+header img {
+    margin-bottom: 18px;
+}
+
+h3 {
+    margin-bottom: 1rem;
+}
+
+.form-control {
+    font-family: 'ThaiSansNeue';
+    padding: 0.45rem 0.45rem;
+}
+
+.btn {
+    font-family: 'ThaiSansNeue';
+    font-size: 1.25rem;
+}
+
+select.form-control {
+    height: 45px !important;
+}
+
+.form-text {
+    font-size: 1rem ;
+}
+
+label {
+    font-size: 1.2rem;
+}
+
+input[type=file] {
+    font-size: 14px;
+}
+
+textarea {
+    resize: none;
+}
+
+.modal .btn {
+    padding: 6px 15px;
+}
+
+.datepicker-dropdown {
+    margin-top: 40px;
+}
+
+.datepicker-days, .datepicker-months, .datepicker-years, .datepicker-decades, .datepicker-centuries {
+    font-size: 22px;
+}
+
+/* Specific fixed */
+.a_confirmcurrentgrade label {
+    font-size: 1.5rem;
+}
+
