@@ -27,7 +27,7 @@
           <div class="nav-linker" data-target="camp-block">ค่ายย่อย</div>
         </div>
         <div class="logo">
-          <img src="/assets/frontend/images/logo.png" height="50" />
+          <img src="/assets/frontend/images/logo-only-text.png" height="35" />
         </div>
         <div class="nav-right">
           <div class="nav-linker" data-target="timeline-block">กำหนดการ</div>
