@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 34);
+/******/ 	return __webpack_require__(__webpack_require__.s = 35);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -10697,13 +10697,16 @@ class MainApp {
     this.initNavigation();
     this.initBlocks();
     this.initFullPageJS();
+
+    window.states = { currentSection: 1 };
   }
 
   initNavigation() {
     let navbar = $('nav.navbar');
+    let sidenav = $('nav.sidenav');
     let sidebar = $('nav.sidebar');
 
-    this.navigationBar = new __WEBPACK_IMPORTED_MODULE_0__navigation__["a" /* NavigationBar */](navbar);
+    this.navigation = new __WEBPACK_IMPORTED_MODULE_0__navigation__["a" /* Navigation */](navbar, sidenav);
     this.sideBar = new __WEBPACK_IMPORTED_MODULE_0__navigation__["b" /* SideBar */](sidebar);
   }
 
@@ -10715,16 +10718,30 @@ class MainApp {
   }
 
   initFullPageJS() {
-    let registerAfterRender = () => {
-      this.blocks.gallery.registerAfterRender();
+    let resizeHandler = () => {
+      let wWidth = window.innerWidth;
+      let wHeight = window.innerHeight;
 
+      // Call navigation resize
+      this.navigation.registerResize(wWidth, wHeight);
+
+      // ReBuild DOM when resize window
       // Because some of handler change the DOM structure
       // so its need to rebuild the fullpage
       $.fn.fullpage.reBuild();
     };
 
+    let registerAfterRender = () => {
+      this.blocks.gallery.registerAfterRender();
+
+      // Call resize for once for trigger anything that need dimension recalculate
+      resizeHandler();
+    };
+
     let registerOnLeave = (index, nextIndex, direction) => {
-      this.navigationBar.registerOnLeave(index, nextIndex, direction);
+      window.states.currentSection = nextIndex;
+
+      this.navigation.registerOnLeave(index, nextIndex, direction);
       this.sideBar.registerOnLeave(index, nextIndex, direction);
     };
 
@@ -10751,10 +10768,8 @@ class MainApp {
       });
     });
 
-    // ReBuild DOM when resize window
-    $(window).resize(() => {
-      $.fn.fullpage.reBuild();
-    });
+    // window is resize
+    $(window).resize(resizeHandler.bind(this));
   }
 
   setDebug(debugHelper) {
@@ -10762,7 +10777,7 @@ class MainApp {
     this.debugHelper = debugHelper;
 
     // Navigation
-    this.debugHelper.registerDebug(this.navigationBar);
+    this.debugHelper.registerDebug(this.navigation);
     this.debugHelper.registerDebug(this.sideBar);
 
     // Blocks
@@ -14333,7 +14348,7 @@ var Popover = function ($) {
 
 }();
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0), __webpack_require__(33)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0), __webpack_require__(34)))
 
 /***/ }),
 /* 9 */
@@ -17450,7 +17465,7 @@ module.exports = __webpack_require__.p + "landing.html";
     };
 });
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(29)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(30)))
 
 /***/ }),
 /* 15 */
@@ -19747,7 +19762,7 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 		return (_gsScope.GreenSockGlobals || _gsScope)[name];
 	};
 	if (true) { //AMD
-		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(28)], __WEBPACK_AMD_DEFINE_FACTORY__ = (getGlobal),
+		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(29)], __WEBPACK_AMD_DEFINE_FACTORY__ = (getGlobal),
 				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -27922,7 +27937,7 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = GalleryBlock;
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(30)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(31)))
 
 /***/ }),
 /* 21 */
@@ -27941,8 +27956,8 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__navigationbar__ = __webpack_require__(23);
-/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0__navigationbar__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__navigation__ = __webpack_require__(23);
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0__navigation__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__sidebar__ = __webpack_require__(24);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_1__sidebar__["a"]; });
 
@@ -27953,40 +27968,110 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function($) {class NavigationBar {
+/* WEBPACK VAR INJECTION */(function($) {class Navigation {
 
   /**
    * params:
    *  - navbar: JQuery DOM => Navbar
+   *  - sidenav: JQuery DOM => Sidenav
    */
-  constructor(navbar) {
+  constructor(navbar, sidenav) {
     // associate
     this.navbar = navbar;
+    this.sidenav = sidenav;
 
     // variables
-    this.navigation = {};
-    this.navigation.all = this.navbar.find('.nav-linker');
+    this.navigation = { navbar: {}, sidenav: {}, isMobileSize: false };
+    this.navigation.navbar.all = this.navbar.find('.nav-linker');
+    this.navigation.sidenav.all = this.sidenav.find('.nav-linker');
+
+    this.hamburger = this.navbar.find('#nav-hamburger');
+    this.sidenav.state = false;
 
     // All .nav-link => register block navigation
-    this.navigation.all.each((i, e) => {
+    this.navigation.navbar.all.each((i, e) => {
       $(e).click(this.navigatieToBlock.bind(this, $(e).data('target')));
     });
+    this.navigation.sidenav.all.each((i, e) => {
+      $(e).click(this.navigatieToBlock.bind(this, $(e).data('target')));
+    });
+
+    // Register sidenav overlay area (for hiding the sidenav)
+    this.sidenav.find('.overlay').click(this.hideSidenav.bind(this));
+
+    // Register nav-hamburger (mobile - sidenav:off-canvas)
+    this.hamburger.click(this.toggleSidenav.bind(this));
   }
 
   /**
    * Show navbar
    */
-  showNavbar() {
+  showNavbar(animate = true) {
     if (this.debugHelper) this.debugHelper.logf('navbar_toggle', 'showing navbar');
-    this.navbar.animate({ top: 0 }, 750);
+    if (animate) {
+      this.navbar.animate({ y: 0, z: 0 }, 750);
+    } else {
+      this.navbar.animate({ y: 0, z: 0 }, 1);
+    }
   }
 
   /**
    * Hide navbar
    */
-  hideNavbar() {
+  hideNavbar(animate = true) {
     if (this.debugHelper) this.debugHelper.logf('navbar_toggle', 'hiding navbar');
-    this.navbar.animate({ top: -this.navbar.outerHeight() }, 750);
+    if (animate) {
+      this.navbar.animate({ y: -this.navbar.outerHeight(), z: 0 }, 750);
+    } else {
+      this.navbar.animate({ y: -this.navbar.outerHeight(), z: 0 }, 1);
+    }
+  }
+
+  /**
+   * Toggle show/hide sidenav
+   */
+  toggleSidenav() {
+    if (!this.sidenav.state) {
+      this.showSidenav();
+    } else {
+      this.hideSidenav();
+    }
+  }
+
+  /**
+   * Show sidenav
+   */
+  showSidenav() {
+    if (this.debugHelper) this.debugHelper.logf('sidenav_toggle', 'showing sidenav');
+
+    // Siding sidenav and fullpage-wrapper
+    this.sidenav.addClass('open');
+    $('.fullpage-wrapper .section').each((i, e) => {
+      $(e).addClass('open-sidenav');
+    });
+    // Disable fullpage scrolling
+    $.fn.fullpage.setKeyboardScrolling(false);
+    $.fn.fullpage.setAllowScrolling(false);
+
+    this.sidenav.state = true;
+  }
+
+  /**
+   * Hide sidenav
+   */
+  hideSidenav() {
+    if (this.debugHelper) this.debugHelper.logf('sidenav_toggle', 'hiding sidenav');
+
+    // Hiding sidenav and fullpage-wrapper
+    this.sidenav.removeClass('open');
+    $('.fullpage-wrapper .section').each((i, e) => {
+      $(e).removeClass('open-sidenav');
+    });
+    // Disable fullpage scrolling
+    $.fn.fullpage.setKeyboardScrolling(true);
+    $.fn.fullpage.setAllowScrolling(true);
+
+    this.sidenav.state = false;
   }
 
   /**
@@ -27994,10 +28079,29 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
    */
   registerOnLeave(index, nextIndex, direction) {
     // Show/Hide Navbar
-    if (index == 1 && nextIndex != 1) {
-      this.showNavbar();
-    } else if (index != 1 && nextIndex == 1) {
-      this.hideNavbar();
+    if (!this.navigation.isMobileSize) {
+      if (index == 1 && nextIndex != 1) {
+        this.showNavbar();
+      } else if (index != 1 && nextIndex == 1) {
+        this.hideNavbar();
+      }
+    }
+  }
+
+  /**
+   * Register the window resize event
+   */
+  registerResize(width, height) {
+    if (width >= 992) {
+      this.hideSidenav();
+      if (window.states.currentSection == 1) {
+        this.hideNavbar(false);
+      }
+
+      this.navigation.isMobileSize = false;
+    } else if (width < 992) {
+      this.showNavbar(false);
+      this.navigation.isMobileSize = true;
     }
   }
 
@@ -28009,7 +28113,7 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
   }
 
 }
-/* harmony export (immutable) */ __webpack_exports__["a"] = NavigationBar;
+/* harmony export (immutable) */ __webpack_exports__["a"] = Navigation;
 
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
@@ -28129,7 +28233,8 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
 
 /***/ }),
 /* 26 */,
-/* 27 */
+/* 27 */,
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -28373,7 +28478,7 @@ return utils;
 
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -30302,7 +30407,7 @@ return utils;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_RESULT__;/*! iScroll v5.2.0 ~ (c) 2008-2016 Matteo Spinelli ~ http://cubiq.org/license */
@@ -32400,7 +32505,7 @@ if ( typeof module != 'undefined' && module.exports ) {
 
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -32417,7 +32522,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
   if ( true ) {
     // AMD
     !(__WEBPACK_AMD_DEFINE_ARRAY__ = [
-        __webpack_require__(32),
+        __webpack_require__(33),
         __webpack_require__(1)
       ], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
@@ -32613,7 +32718,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -33173,7 +33278,7 @@ return Item;
 
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -33191,8 +33296,8 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
     !(__WEBPACK_AMD_DEFINE_ARRAY__ = [
         __webpack_require__(3),
         __webpack_require__(1),
-        __webpack_require__(27),
-        __webpack_require__(31)
+        __webpack_require__(28),
+        __webpack_require__(32)
       ], __WEBPACK_AMD_DEFINE_RESULT__ = function( EvEmitter, getSize, utils, Item ) {
         return factory( window, EvEmitter, getSize, utils, Item);
       }.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
@@ -34117,7 +34222,7 @@ return Outlayer;
 
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! tether 1.4.0 */
@@ -35938,7 +36043,7 @@ return Tether;
 
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

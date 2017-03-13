@@ -1,8 +1,12 @@
+<?php
+  $lazyModeDir = "/dev13";
+?>
+
 <!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta id="Viewport" name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
     <meta name="theme-color" content="#292B2C">
 
     <link rel="icon" type="image/png" href="assets/frontend/favicon/favicon-32x32.png" sizes="32x32" />
@@ -19,7 +23,7 @@
 
     <!-- Navbar -->
     <nav class="navbar fixed-top navbar-inverse bg-inverse">
-      <div class="navbar-desktop hidden-sm-down">
+      <div class="navbar-desktop hidden-md-down">
         <div class="nav-left">
           <div class="nav-linker" data-target="home-block">เริ่มต้น</div>
           <div class="nav-linker" data-target="detail-block">รายละเอียด</div>
@@ -27,7 +31,7 @@
           <div class="nav-linker" data-target="camp-block">ค่ายย่อย</div>
         </div>
         <div class="logo">
-          <img src="/assets/frontend/images/logo-only-text.png" height="35" />
+          <img src="{{ $lazyModeDir }}/assets/frontend/images/logo-only-text.png" />
         </div>
         <div class="nav-right">
           <div class="nav-linker" data-target="timeline-block">กำหนดการ</div>
@@ -35,9 +39,30 @@
           <div class="nav-linker" data-target="recommend-block">คำนิยม</div>
           <div class="nav-linker" data-target="faq-block">ถาม-ตอบ</div>
         </div>
-        <div class="triangle"></div>
       </div>
-      <div class="navbar-mobile hidden-md-up"></div>
+      <div class="navbar-mobile hidden-lg-up">
+        <div class="logo">
+          <img src="{{ $lazyModeDir }}/assets/frontend/images/logo-only-text.png" />
+        </div>
+        <div class="nav-hamburger" id="nav-hamburger">
+          <i class="fa fa-bars" aria-hidden="true"></i>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Side nav (mobile) -->
+    <nav class="sidenav">
+      <div class="overlay"></div>
+      <div class="navigation">
+        <div class="nav-linker" data-target="home-block">เริ่มต้น</div>
+        <div class="nav-linker" data-target="detail-block">รายละเอียด</div>
+        <div class="nav-linker" data-target="sponsor-block">ผู้สนับสนุน</div>
+        <div class="nav-linker" data-target="camp-block">ค่ายย่อย</div>
+        <div class="nav-linker" data-target="timeline-block">กำหนดการ</div>
+        <div class="nav-linker" data-target="gallery-block">ภาพกิจกรรม</div>
+        <div class="nav-linker" data-target="recommend-block">คำนิยม</div>
+        <div class="nav-linker" data-target="faq-block">ถาม-ตอบ</div>
+      </div>
     </nav>
 
     <!-- Sidebar (Sharing & Social) -->
@@ -59,14 +84,14 @@
       <section class="section home-block" data-anchor="home-block">
         <div class="content">
           <div class="logo">
-            <img src="/assets/frontend/images/logo.png" width="400" />
+            <img src="{{ $lazyModeDir }}/assets/frontend/images/logo.png" width="400" />
           </div>
           <h5>
             คณะเทคโนโลยีสารสนเทศ<br />
             สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง
           </h5>
           <h6>
-            ได้รับเงินสนับสนุนจากงบประมาณแผ่นดินประจำปี 2559
+            ได้รับเงินสนับสนุนจากงบประมาณแผ่นดินประจำปี 2560
           </h6>
         </div>
       </section>
