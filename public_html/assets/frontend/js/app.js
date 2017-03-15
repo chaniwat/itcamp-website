@@ -10694,6 +10694,9 @@ class LandingApp {
 class MainApp {
 
   constructor() {
+    // Set detault
+    window.default.scrollingSpeed = 1200;
+
     this.initNavigation();
     this.initBlocks();
     this.initFullPageJS();
@@ -10714,6 +10717,19 @@ class MainApp {
     this.blocks = {
       camp: new __WEBPACK_IMPORTED_MODULE_1__block__["a" /* CampBlock */]($(".camp-block")),
       gallery: new __WEBPACK_IMPORTED_MODULE_1__block__["b" /* GalleryBlock */]($(".gallery-block"))
+    };
+
+    this.blocks.OnLeave = (index, nextIndex, direction) => {
+      /*
+      if(nextIndex == 2 && (index == 1 || index == 3) || index == 2 && (nextIndex == 1 || nextIndex == 3)) {
+        $.fn.fullpage.setScrollingSpeed(3500);
+      } else {
+        // Speed upon distance
+        // let distance = Math.abs(nextIndex - index);
+        // $.fn.fullpage.setScrollingSpeed(window.default.scrollingSpeed * distance);
+        $.fn.fullpage.setScrollingSpeed(window.default.scrollingSpeed);
+      }
+      */
     };
   }
 
@@ -10741,6 +10757,8 @@ class MainApp {
     let registerOnLeave = (index, nextIndex, direction) => {
       window.states.currentSection = nextIndex;
 
+      this.blocks.OnLeave(index, nextIndex, direction);
+
       this.navigation.registerOnLeave(index, nextIndex, direction);
       this.sideBar.registerOnLeave(index, nextIndex, direction);
     };
@@ -10755,7 +10773,7 @@ class MainApp {
         controlArrows: false,
 
         easingcss3: 'cubic-bezier(0.770, 0.000, 0.175, 1.000)',
-        scrollingSpeed: 1200,
+        scrollingSpeed: window.default.scrollingSpeed,
         scrollOverflow: true,
         scrollOverflowReset: false,
         scrollOverflowOptions: {
@@ -27988,12 +28006,18 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
     this.hamburger = this.navbar.find('#nav-hamburger');
     this.sidenav.state = false;
 
-    // All .nav-link => register block navigation
+    // All .nav-link => register linking, register block navigation
     this.navigation.navbar.all.each((i, e) => {
-      $(e).click(this.navigatieToBlock.bind(this, $(e).data('target')));
+      let elem = $(e);
+      let target = elem.data('target');
+      this.navigation.navbar[target] = elem;
+      elem.click(this.navigatieToBlock.bind(this, target));
     });
     this.navigation.sidenav.all.each((i, e) => {
-      $(e).click(this.navigatieToBlock.bind(this, $(e).data('target')));
+      let elem = $(e);
+      let target = elem.data('target');
+      this.navigation.sidenav[target] = elem;
+      elem.click(this.navigatieToBlock.bind(this, target));
     });
 
     // Register sidenav overlay area (for hiding the sidenav)
@@ -28049,6 +28073,8 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
     $('.fullpage-wrapper .section').each((i, e) => {
       $(e).addClass('open-sidenav');
     });
+    // Fading in Overlay
+    this.sidenav.find('.overlay').fadeIn();
     // Disable fullpage scrolling
     $.fn.fullpage.setKeyboardScrolling(false);
     $.fn.fullpage.setAllowScrolling(false);
@@ -28064,9 +28090,13 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 
     // Hiding sidenav and fullpage-wrapper
     this.sidenav.removeClass('open');
+    this.sidenav.addClass('closing');
     $('.fullpage-wrapper .section').each((i, e) => {
       $(e).removeClass('open-sidenav');
     });
+    // Fading out Overlay
+    let overlayElem = this.sidenav.find('.overlay');
+    overlayElem.fadeOut(() => this.sidenav.removeClass('closing'));
     // Disable fullpage scrolling
     $.fn.fullpage.setKeyboardScrolling(true);
     $.fn.fullpage.setAllowScrolling(true);
@@ -28075,10 +28105,53 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
   }
 
   /**
+   * Add active class on navbar/sidenav (call when change section)
+   */
+  setNavActive(index) {
+    this.navigation.navbar.all.removeClass("active");
+    this.navigation.sidenav.all.removeClass("active");
+
+    switch (index) {
+      case 1:
+        this.navigation.navbar["home-block"].addClass("active");
+        this.navigation.sidenav["home-block"].addClass("active");
+        break;
+      case 2:
+        this.navigation.navbar["detail-block"].addClass("active");
+        this.navigation.sidenav["detail-block"].addClass("active");
+        break;
+      case 3:
+        this.navigation.navbar["sponsor-block"].addClass("active");
+        this.navigation.sidenav["sponsor-block"].addClass("active");
+        break;
+      case 4:
+        this.navigation.navbar["camp-block"].addClass("active");
+        this.navigation.sidenav["camp-block"].addClass("active");
+        break;
+      case 5:
+        this.navigation.navbar["timeline-block"].addClass("active");
+        this.navigation.sidenav["timeline-block"].addClass("active");
+        break;
+      case 6:
+        this.navigation.navbar["gallery-block"].addClass("active");
+        this.navigation.sidenav["gallery-block"].addClass("active");
+        break;
+      case 7:
+        this.navigation.navbar["recommend-block"].addClass("active");
+        this.navigation.sidenav["recommend-block"].addClass("active");
+        break;
+      case 8:
+        this.navigation.navbar["faq-block"].addClass("active");
+        this.navigation.sidenav["faq-block"].addClass("active");
+        break;
+    }
+  }
+
+  /**
    * Register the onLeave event handler (fullpage.js)
    */
   registerOnLeave(index, nextIndex, direction) {
-    // Show/Hide Navbar
+    // Show/Hide Navbar (if not a mobile size)
     if (!this.navigation.isMobileSize) {
       if (index == 1 && nextIndex != 1) {
         this.showNavbar();
@@ -28086,6 +28159,9 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
         this.hideNavbar();
       }
     }
+
+    // Set active on index
+    this.setNavActive(nextIndex);
   }
 
   /**
@@ -36090,6 +36166,9 @@ return Tether;
 // FullPage
 
 
+
+// Declare window default (GLOBAL)
+window.default = {};
 
 // Import Debugger
 // import { debugHelper } from './debug';

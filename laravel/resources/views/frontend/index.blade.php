@@ -1,5 +1,6 @@
 <?php
-  $lazyModeDir = "/dev13";
+//  $lazyModeDir = "/dev13";
+  $lazyModeDir = "";
 ?>
 
 <!DOCTYPE html>
@@ -25,7 +26,7 @@
     <nav class="navbar fixed-top navbar-inverse bg-inverse">
       <div class="navbar-desktop hidden-md-down">
         <div class="nav-left">
-          <div class="nav-linker" data-target="home-block">เริ่มต้น</div>
+          <div class="nav-linker active" data-target="home-block">เริ่มต้น</div>
           <div class="nav-linker" data-target="detail-block">รายละเอียด</div>
           <div class="nav-linker" data-target="sponsor-block">ผู้สนับสนุน</div>
           <div class="nav-linker" data-target="camp-block">ค่ายย่อย</div>
@@ -54,7 +55,7 @@
     <nav class="sidenav">
       <div class="overlay"></div>
       <div class="navigation">
-        <div class="nav-linker" data-target="home-block">เริ่มต้น</div>
+        <div class="nav-linker active" data-target="home-block">เริ่มต้น</div>
         <div class="nav-linker" data-target="detail-block">รายละเอียด</div>
         <div class="nav-linker" data-target="sponsor-block">ผู้สนับสนุน</div>
         <div class="nav-linker" data-target="camp-block">ค่ายย่อย</div>
@@ -94,30 +95,33 @@
             ได้รับเงินสนับสนุนจากงบประมาณแผ่นดินประจำปี 2560
           </h6>
         </div>
+        <div class="waves">
+          <div class="waving-blue"></div>
+          <div class="waving-green"></div>
+          <div class="waving-purple"></div>
+        </div>
       </section>
 
       <!-- Detail block -->
       <section class="section detail-block" data-anchor="detail-block">
         <div class="content">
-          <h1>รายละเอียดค่าย</h1>
-          <br />
+          <h1 class="force-mitr">รายละเอียดค่าย</h1>
           <p>แดนเซอร์แฟร์ช็อปปิ้งบอยคอตต์ ภูมิทัศน์เซลส์สปายแจ๊ส ซีอีโอ แต๋วโปสเตอร์มาร์เก็ตแม่ค้าทัวริสต์ ไฮเวย์บลูเบอร์รี่อยุติธรรม คอร์สอุปการคุณไชน่าละอ่อน ยอมรับสคริปต์ ฮอตดอกเทียมทานสามแยกริกเตอร์โบรกเกอร์ โอเลี้ยงพรีเซ็นเตอร์โปรเจ็คก๊วน แอดมิสชันดอกเตอร์ เมจิกโนติสเมเปิลเอสเพรสโซเพรียวบาง ไฟลท์ คาร์โก้ อึ้มกรุ๊ป คอนโดก่อนหน้าซาร์สติ๊กเกอร์ แพ็คซีรีส์แครกเกอร์</p>
-          <br />
           <div class="row justify-content-center overview-detail">
             <div class="col-lg-3 offset-lg-0 col-md-5">
-              <img />
+              <img src="{{ $lazyModeDir }}/assets/frontend/images/home-regis.png" />
               <h3>รับสมัคร</h3>
-              <h4>xx/xx/xx - xx/xx/xx</h4>
+              <span class="sub">18 มีนาคม - 00 พฤษภาคม 2560</span>
             </div>
             <div class="col-lg-3 col-md-5">
-              <img />
+              <img src="{{ $lazyModeDir }}/assets/frontend/images/home-calendar.png" />
               <h3>วันจัดค่าย</h3>
-              <h4>xx/xx/xx - xx/xx/xx</h4>
+              <span class="sub">9-13 มิถุนายน 2560</span>
             </div>
             <div class="col-lg-3 offset-lg-0 col-md-6">
-              <img />
+              <img src="{{ $lazyModeDir }}/assets/frontend/images/home-place.png" />
               <h3>สถานที่</h3>
-              <h4>xxxxxxxxxx</h4>
+              <span class="sub font-weight-bold">IT<span class="text-orange">KMITL</span></span>
             </div>
           </ul>
         </div>
@@ -148,11 +152,11 @@
         <!-- Camp navigation -->
         <nav class="camp-nav hide">
           <ul>
-            <li class="slide-link app" data-target="app"><img /></li>
-            <li class="slide-link game" data-target="game"><img /></li>
-            <li class="slide-link network" data-target="network"><img /></li>
-            <li class="slide-link iot" data-target="iot"><img /></li>
-            <li class="slide-link datasci" data-target="datasci"><img /></li>
+            <li class="slide-link app" data-target="app"></li>
+            <li class="slide-link game" data-target="game"></li>
+            <li class="slide-link network" data-target="network"></li>
+            <li class="slide-link iot" data-target="iot"></li>
+            <li class="slide-link datasci" data-target="datasci"></li>
           </ul>
         </nav>
 
