@@ -17,6 +17,27 @@ function registerOtherFieldHandler() {
   });
 }
 
+function registerInputMasks() {
+  $("#birthday").mask('99/99/9999', {
+    placeholder: "MM/DD/YYYY"
+  });
+
+  $("#citizen_numid").mask('9-9999-99999-99-9', {
+    placeholder: "X-XXXX-XXXXX-XX-X"
+  });
+
+  var phonePlaceHolder = "XXXXXXXXXX"
+  $("#phone").mask('9999999999', {
+    placeholder: "XXXXXXXXXX"
+  });
+  $("#guardian_phone_1").mask('9999999999', {
+    placeholder: "XXXXXXXXXX"
+  });
+  $("#guardian_phone_2").mask('9999999999', {
+    placeholder: "XXXXXXXXXX"
+  });
+}
+
 $(function(){
   if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
     var ww = ( $(window).width() < window.screen.width ) ? $(window).width() : window.screen.width; //get proper width
@@ -32,4 +53,5 @@ $(function(){
 
 $(document).ready(function() {
   registerOtherFieldHandler();
+  registerInputMasks();
 });

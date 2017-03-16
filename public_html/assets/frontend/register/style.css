@@ -1,5 +1,5 @@
 html {
-    font-size: 20px;
+    font-size: 18px;
     min-width: 580px;
 }
 
@@ -27,17 +27,17 @@ h3 {
 }
 
 .form-control {
-    font-family: 'ThaiSansNeue';
+    font-family: 'Cloud';
     padding: 0.45rem 0.45rem;
 }
 
 .btn {
-    font-family: 'ThaiSansNeue';
+    font-family: 'Cloud';
     font-size: 1.25rem;
 }
 
 select.form-control {
-    height: 45px !important;
+    height: 40px !important;
 }
 
 .form-text {
