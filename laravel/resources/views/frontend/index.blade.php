@@ -1,6 +1,6 @@
 <?php
-//  $lazyModeDir = "/dev13";
-  $lazyModeDir = "";
+  $lazyModeDir = "/dev13";
+//  $lazyModeDir = "";
 ?>
 
 <!DOCTYPE html>
@@ -129,6 +129,12 @@
 
       <!-- Sponsor block -->
       <section class="section sponsor-block" data-anchor="sponsor-block">
+        <div class="waves">
+          <div class="waves-bg"></div>
+          <div class="waving-blue"></div>
+          <div class="waving-green"></div>
+          <div class="waving-purple"></div>
+        </div>
         <div class="content">
           <h1>ผู้สนับสนุน</h1>
           <br />
@@ -144,6 +150,7 @@
             </div>
           </div>
         </div>
+        <div class="camp-connect" id="sponsor-camp-connect-el"></div>
       </section>
 
       <!-- Camp block -->
@@ -159,6 +166,11 @@
             <li class="slide-link datasci" data-target="datasci"></li>
           </ul>
         </nav>
+
+        <!-- Camp Background (Parallax independent) -->
+        <div class="camp-background">
+
+        </div>
 
         <!-- Main slide -->
         <div class="slide">
@@ -219,6 +231,8 @@
 
       <!-- Timeline block -->
       <section class="section timeline-block" data-anchor="timeline-block">
+        <div class="camp-connect-bg" id="timeline-camp-connect-bg-el"></div>
+        <div class="camp-connect" id="timeline-camp-connect-el"></div>
         <div class="content">
           <h1>กำหนดการ</h1>
           <br />
