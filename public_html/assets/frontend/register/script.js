@@ -51,16 +51,20 @@ function registerFileCheck() {
   var documents = ["application/pdf", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"];
   var any = pictures.concat(documents);
 
+  var setupAllowedFile = function(elem, allowedExts) {
+    elem.change(checkInput.bind(this, allowedExts));
+  }
   var checkInput = function(allowedExts, event) {
     var elemO = $(event.target).get(0);
     var files = elemO.files;
     if(files.length > 0) {
+      console.log(files[0].type);
       var valid = $.inArray(files[0].type, allowedExts) > -1;
       if(!valid) {
-        alert('ไฟล์ผิดประเภท');
+        $("#fileAlert").modal('show');
 
         elemO.value = '';
-        if(elemO.value){
+        if(elemO.value) {
           elemO.type = "text";
           elemO.type = "file";
         }
@@ -70,13 +74,12 @@ function registerFileCheck() {
     }
   }
 
-  $("#a_confirmcurrentgrade").change(checkInput.bind(this, any));
-  $("#q_recreation_1_f").change(checkInput.bind(this, pictures));
-
+  setupAllowedFile($("#a_confirmcurrentgrade"), any);
+  setupAllowedFile($("#q_recreation_1_f"), pictures);
   if(GlobalOption.camp == 'camp_game') {
-    $("#q_game_5").change(checkInput.bind(this, pictures));
+    setupAllowedFile($("#q_game_5"), pictures);
   } else if(GlobalOption.camp == 'camp_iot') {
-    $("#q_iot_5").change(checkInput.bind(this, pictures));
+    setupAllowedFile($("#q_iot_5"), pictures);
   }
 }
 function registerValidateForm() {
@@ -109,7 +112,7 @@ function registerValidateForm() {
     if(valid) {
       $("#confirmModal").modal('show');
     } else {
-      alert('กรุณากรอกข้อมูลให้ครบ');
+      $("#formAlert").modal('show');
     };
   });
 }

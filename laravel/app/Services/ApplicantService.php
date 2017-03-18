@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Applicant;
 use App\ApplicantDetailKey;
 use App\Camp;
+use App\Exceptions\FieldTypeNotAcceptException;
 use App\Question;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -87,7 +88,7 @@ class ApplicantService
                     $jsonValue = json_decode($models->find($key)->field_setting, True);
 
                     if(!$this->form->isFileMimeAccept($jsonValue['acceptTypes'], $file->getMimeType())) {
-                        throw new \Exception('form_invalid_file_type');
+                        throw new FieldTypeNotAcceptException('form_invalid_file_type');
                     }
 
                     $destination = $jsonValue['directory'];

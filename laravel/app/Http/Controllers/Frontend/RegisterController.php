@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\ApplicantDetailKey;
 use App\Camp;
+use App\Exceptions\FieldTypeNotAcceptException;
 use App\Question;
 use App\Services\ApplicantService;
 use App\Services\ValidatorService;
@@ -25,7 +26,12 @@ class RegisterController extends Controller
 
     public function register(Request $request, $camp)
     {
-        $this->applicant->register($request, $camp);
+        try {
+            $this->applicant->register($request, $camp);
+        } catch(FieldTypeNotAcceptException $e) {
+            // FIXME go back and keep form data
+            return abort(500);
+        }
 
         return redirect()->route('view.frontend.register.complete');
     }
