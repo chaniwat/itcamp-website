@@ -16,9 +16,9 @@
     <title>ITCAMP 13 | Register</title>
 
     {{--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">--}}
-    <link rel="stylesheet" href="{{ asset('assets/frontend/css/app.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/frontend/css/app.css') }}?v={{ (int)microtime(true) }}" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker3.standalone.min.css" />
-    <link rel="stylesheet" href="{{ asset('assets/frontend/register/style.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/frontend/register/style.css') }}?v={{ (int)microtime(true) }}" />
 
     <style>
         body {
@@ -201,7 +201,7 @@
       GlobalOption.mode = 'REGISTER';
       GlobalOption.camp = '{{ $camp }}';
     </script>
-    <script src="{{ asset('assets/frontend/register/script.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/frontend/register/script.js') }}?v={{ (int)microtime(true) }}" type="text/javascript"></script>
 </body>
 
 </html>

@@ -17,7 +17,7 @@
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="assets/frontend/css/jquery.fullpage.css">
-    <link rel="stylesheet" href="assets/frontend/css/app.css">
+    <link rel="stylesheet" href="assets/frontend/css/app.css?v={{ (int)microtime(true) }}">
   </head>
 
   <body>
@@ -309,6 +309,6 @@
 
     </section>
 
-    <script type="text/javascript" src="assets/frontend/js/app.js"></script>
+    <script type="text/javascript" src="assets/frontend/js/app.js?v={{ (int)microtime(true) }}"></script>
   </body>
 </html>
