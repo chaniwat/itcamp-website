@@ -11,6 +11,18 @@ class FormService
         "document" => ["application/pdf", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"]
     ];
 
+    function __construct()
+    {
+        $any = [];
+
+        foreach($this->fileType as $type => $values)
+        {
+            $any = array_merge($any, $values);
+        }
+
+        $this->fileType['any'] = $any;
+    }
+
     /**
      * Check if field type is accept
      * @param $field_type

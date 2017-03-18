@@ -32,12 +32,16 @@ class ApplicantService
 
         // Extract IDs
         $camp = Camp::where('name', $camp)->first();
-        $applicantDetailKeys = DB::table('applicant_detail_keys')->pluck('id')->all();
-        $questionKeys = DB::table('questions')->whereIn('section_id', array(2, 3, $camp->section->id))->pluck('id')->all();
+        $applicantDetailIDs = DB::table('applicant_detail_keys')->pluck('id')->all();
+        $questionIDs = DB::table('questions')->whereIn('section_id', array(2, 3, $camp->section->id))->pluck('id')->all();
 
         // Extract Answer
-        $applicantDetailAnswers = $request->only($applicantDetailKeys);
-        $questionAnswers = $request->only($questionKeys);
+        $applicantDetailAnswers = $request->only($applicantDetailIDs);
+        $questionAnswers = $request->only($questionIDs);
+
+        // Get all keys
+        $applicantDetailKeys = ApplicantDetailKey::all();
+        $questionKeys = Question::all();
 
         // Check file type first
         $this->checkFile($request, $applicantDetailKeys, $applicantDetailAnswers);
@@ -48,18 +52,12 @@ class ApplicantService
         $applicant->camp()->associate($camp);
         $applicant->save();
 
-        // Get all applicant_detail_key
-        $applicantDetailKeys = ApplicantDetailKey::all();
-
         // Construct Applicant detail DB values
         $applicantDetailValue = $this
             ->constructDBArrayValues($request, $applicant, $applicantDetailKeys, $applicantDetailAnswers, 'applicant_detail_key_id');
 
 //        var_dump($applicantDetailValue);
         DB::table('applicant_applicant_detail_key')->insert($applicantDetailValue);
-
-        // Get all applicant_detail_key
-        $questionKeys = Question::all();
 
         // Construct Applicant detail DB values
         $questionValue = $this
