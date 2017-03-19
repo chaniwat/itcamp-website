@@ -1,4 +1,5 @@
 <?php
+//  $lazyModeDir = "/13";
 //  $lazyModeDir = "/dev13";
   $lazyModeDir = "";
 ?>
@@ -28,14 +29,16 @@
 </head>
 
 <body>
-    {{-- TODO Finish complete registration details --}}
-
     <div class="container register-from">
         <section class="body">
             <div class="row">
                 <div class="col-12" style="margin-bottom: 1rem;">
-                    <div class="alert alert-success" role="alert" style="margin: 0;">
-                        <strong>สมัครเสร็จสิ้น</strong> ยังไม่ใช่ดีไซน์ล่าสุดนาาา~~
+                    <div class="text-center" style="margin: 0; font-size: 20px;">
+                        <img src="{{ asset('assets/frontend/images/logo.png') }}" width="300" style="margin-bottom: 0.8rem;" />
+                        <h1 style="font-weight: bold; margin-bottom: 0.8rem;">สมัครเสร็จสิ้น</h1>
+                        ประกาศผู้ผ่านการคัดเลือกในวันที่ xx พฤษภาคม 2560 นี้ <br />
+                        และอย่าลืม เข้ามาร่วมพูดคุยกับพี่ๆ และเพื่อนคนอื่นๆ ได้ในกรุ๊ป <a href="https://www.facebook.com/groups/ITCampSociety/" target="_blank">ITCAMP Society &#64; ITKMITL</a> นะครับ <br />
+                        ติดตามรายละเอียดเพิ่มเติม ที่ <a href="https://www.facebook.com/itcampKMITL" target="_blank">facebook.com/itcampKMITL</a> หรือ twitter <a href="https://twitter.com/ITCAMP" target="_blank">&#64;ITCAMP</a> <br />
                     </div>
                 </div>
                 <div class="col-12 offset-lg-4 col-lg-4">

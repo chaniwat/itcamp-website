@@ -1,4 +1,5 @@
 <?php
+//  $lazyModeDir = "/13";
 //  $lazyModeDir = "/dev13";
   $lazyModeDir = "";
 ?>
@@ -47,7 +48,7 @@
     <div class="container register-from">
         <header>
             <div class="text-center">
-                <img src="{{ asset('assets/frontend/images/logo.png') }}" width="300" />
+                <img src="{{ asset('assets/frontend/images/'.implode('-', explode('_', $camp)).'-o.png') }}" height="325" />
                 <h1>แบบฟอร์มสมัครค่ายไอทีแคมป์</h1>
                 <h2>ค่ายย่อย <span class="force-fredoka" style="color: {{ $colors[1] }}">"@lang("camp.".$camp)"</span></h2>
             </div>
@@ -57,27 +58,8 @@
             <form id="registerForm" action="{{ route('frontend.register', ['camp' => $camp]) }}" method="POST" enctype="multipart/form-data">
                 {{ csrf_field() }}
 
-                <h2>ส่วนที่ 1 : ข้อมูลทั่วของผู้สมัคร</h2>
+                <h2>ส่วนที่ 1 : ข้อมูลทั่วไปของผู้สมัคร</h2>
                 <hr />
-                {{--
-                <div id="accordion" role="tablist" aria-multiselectable="true">
-                    <div class="card">
-                        <div class="card-header" role="tab" id="headingOne">
-                            <h5 class="mb-0">
-                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                    <h3>ข้อมูลส่วนตัว</h3>
-                                </a>
-                            </h5>
-                        </div>
-
-                        <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne">
-                            <div class="card-block">
-                                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                            </div>
-                        </div>
-                    </div>
-                --}}
-
                 <h3>ข้อมูลส่วนตัว</h3>
                 <div class="row">
                     @foreach($applicantQuestions->where('priority', '<=', '1000')->where('priority', '>=', '992') as $question)
@@ -185,7 +167,7 @@
                     กรุณากรอกข้อมูลให้ครบ
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
+                    <button type="indbutton" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
                 </div>
             </div>
         </div>
