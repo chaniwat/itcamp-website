@@ -1,3 +1,7 @@
+<?php
+  $lazyModeDir = env("APP_ROOT");
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -60,7 +64,7 @@
 <section class="section landing-block" data-anchor="home-block">
   <div class="content">
     <div class="logo">
-      <img src="/assets/frontend/images/logo.png" />
+      <img src="{{ $lazyModeDir }}/assets/frontend/images/logo.png" />
     </div>
     <h6 class="support">
       ได้รับเงินสนับสนุนจากงบประมาณแผ่นดินประจำปี 2560

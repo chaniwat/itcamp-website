@@ -33,13 +33,13 @@ class RegisterController extends Controller
             return abort(500);
         }
 
-        return redirect()->route('view.frontend.register.complete');
+        return redirect()->route('view.frontend.register.complete')->with('finish', true);
     }
 
     public function showRegister($camp)
     {
         if(!in_array($camp, ['app', 'game', 'network', 'iot', 'datasci'])) {
-            return abort(404);
+            return redirect()->route('view.frontend.index');
         }
 
         $data = [
@@ -61,7 +61,11 @@ class RegisterController extends Controller
 
     public function showComplete()
     {
-        return view('frontend.reg_complete');
+        if(session('finish')) {
+            return view('frontend.reg_complete');
+        } else {
+            return redirect()->route('view.frontend.index');
+        }
     }
 
 }

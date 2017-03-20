@@ -1,7 +1,5 @@
 <?php
-//  $lazyModeDir = "/13";
-//  $lazyModeDir = "/dev13";
-  $lazyModeDir = "";
+  $lazyModeDir = env("APP_ROOT");
 ?>
 
 <!DOCTYPE html>
@@ -122,7 +120,7 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                ...
+                                <span class="text-bold" style="font-size: 1.4rem;">ข้อมูลจะไม่สามารถทำการแก้ไขได้ <br/> ให้น้องๆตรวจสอบข้อมูลก่อนการยืนยันอีกครั้ง</span>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>

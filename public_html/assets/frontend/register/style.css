@@ -79,3 +79,8 @@ textarea {
     font-size: 1.5rem;
 }
 
+.showImg {
+    display: block;
+    margin: 0.5rem 0;
+}
+

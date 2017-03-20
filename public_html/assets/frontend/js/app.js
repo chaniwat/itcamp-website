@@ -10723,7 +10723,29 @@ class MainApp {
       gallery: new __WEBPACK_IMPORTED_MODULE_1__block__["b" /* GalleryBlock */]($(".gallery-block"))
     };
 
-    this.blocks.OnLeave = (index, nextIndex, direction) => {};
+    this.blocks.OnLeave = (index, nextIndex, direction) => {
+      if (direction == 'down') {
+        let nextSection = this.sections[nextIndex - 1];
+        let iscroll = nextSection.find('.fp-scrollable').data('iscrollInstance');
+
+        if (iscroll && typeof iscroll !== undefined) {
+          iscroll.scrollTo(0, 0, 0);
+        }
+      } else if (direction == 'up') {
+        let nextSection = this.sections[nextIndex - 1];
+        let iscroll = nextSection.find('.fp-scrollable').data('iscrollInstance');
+        let contentHeight = nextSection.find('.content').outerHeight();
+        let offset = contentHeight - window.innerHeight;
+
+        if (iscroll && typeof iscroll !== undefined) {
+          if (offset > 0) {
+            iscroll.scrollTo(0, -offset, 0);
+          } else {
+            iscroll.scrollTo(0, 0, 0);
+          }
+        }
+      }
+    };
   }
 
   initFullPageJS() {
@@ -10740,8 +10762,9 @@ class MainApp {
       $.fn.fullpage.reBuild();
     };
 
+    let registerAfterLoad = (anchorLink, index) => {};
+
     let registerAfterRender = () => {
-      console.log("AfterRender Fired!");
       this.blocks.gallery.registerAfterRender();
 
       // Call resize for once for trigger anything that need dimension recalculate
@@ -10779,8 +10802,9 @@ class MainApp {
         scrollOverflowReset: false,
         scrollOverflowOptions: {
           //keyBindings: true; // Bug if used with fullpage.js
+          probeType: 3
         },
-
+        afterLoad: registerAfterLoad,
         afterRender: registerAfterRender,
         onLeave: registerOnLeave,
         onSlideLeave: registerOnSlideLeave
@@ -36210,13 +36234,15 @@ window.default = {};
 if (/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) {
   var ww = $(window).width() < window.screen.width ? $(window).width() : window.screen.width; //get proper width
   var mw = 500; // min width of site
-  var ratio = ww / mw; //calculate ratio
+  var ratio = ww / mw; // calculate ratio
+  var mxw = 768; // max width of site
+  var mxratio = ww / mxw; // calculate max ratio
   if (ww < mw) {
-    //smaller than minimum size
+    // smaller than minimum size
     $('#Viewport').attr('content', 'initial-scale=' + ratio + ', maximum-scale=' + ratio + ', minimum-scale=' + ratio + ', user-scalable=no, width=' + ww);
   } else {
-    //regular size
-    $('#Viewport').attr('content', 'initial-scale=1.0, maximum-scale=2, minimum-scale=1.0, user-scalable=yes, width=' + ww);
+    // regular size
+    $('#Viewport').attr('content', 'initial-scale=' + mxratio + ', maximum-scale=' + mxratio + ', minimum-scale=' + mxratio + ', user-scalable=no, width=' + mxw);
   }
 }
 

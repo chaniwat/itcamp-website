@@ -1,7 +1,5 @@
 <?php
-//  $lazyModeDir = "/13";
-//  $lazyModeDir = "/dev13";
-  $lazyModeDir = "";
+  $lazyModeDir = env("APP_ROOT");
 ?>
 
 <!DOCTYPE html>
@@ -36,9 +34,9 @@
                     <div class="text-center" style="margin: 0; font-size: 20px;">
                         <img src="{{ asset('assets/frontend/images/logo.png') }}" width="300" style="margin-bottom: 0.8rem;" />
                         <h1 style="font-weight: bold; margin-bottom: 0.8rem;">สมัครเสร็จสิ้น</h1>
-                        ประกาศผู้ผ่านการคัดเลือกในวันที่ xx พฤษภาคม 2560 นี้ <br />
+                        ประกาศผู้ผ่านการคัดเลือกในวันที่ 8 พฤษภาคม 2560 นี้ <br />
                         และอย่าลืม เข้ามาร่วมพูดคุยกับพี่ๆ และเพื่อนคนอื่นๆ ได้ในกรุ๊ป <a href="https://www.facebook.com/groups/ITCampSociety/" target="_blank">ITCAMP Society &#64; ITKMITL</a> นะครับ <br />
-                        ติดตามรายละเอียดเพิ่มเติม ที่ <a href="https://www.facebook.com/itcampKMITL" target="_blank">facebook.com/itcampKMITL</a> หรือ twitter <a href="https://twitter.com/ITCAMP" target="_blank">&#64;ITCAMP</a> <br />
+                        ติดตามรายละเอียดเพิ่มเติมได้ที่ <a href="https://www.facebook.com/itcampKMITL" target="_blank">facebook.com/itcampKMITL</a> หรือ Twitter <a href="https://twitter.com/ITCAMP" target="_blank">&#64;ITCAMP</a> <br />
                     </div>
                 </div>
                 <div class="col-12 offset-lg-4 col-lg-4">

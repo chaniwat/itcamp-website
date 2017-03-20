@@ -58,7 +58,6 @@ function registerFileCheck() {
     var elemO = $(event.target).get(0);
     var files = elemO.files;
     if(files.length > 0) {
-      console.log(files[0].type);
       var valid = $.inArray(files[0].type, allowedExts) > -1;
       if(!valid) {
         $("#fileAlert").modal('show');
@@ -74,14 +73,48 @@ function registerFileCheck() {
     }
   }
 
+  var registerShowPicture = function(fieldID) {
+    $("#" + fieldID).change(function() {
+      if (!$("#" + fieldID + "_show").length) {
+        $("<img class='showImg' id='" + fieldID + "_show'>").insertBefore("#" + fieldID);
+      }
+
+      if (this.files && this.files[0]) {
+        var isPic = $.inArray(this.files[0].type, pictures) > -1;
+
+        if(isPic) {
+          var reader = new FileReader();
+
+          reader.onload = function (e) {
+            $("#" + fieldID + "_show")
+              .attr('src', e.target.result)
+              .height(300);
+          };
+
+          reader.readAsDataURL(this.files[0]);
+          return;
+        }
+      }
+
+      if ($("#" + fieldID + "_show").length) {
+        $("#" + fieldID + "_show").remove();
+      }
+    });
+  }
+
   setupAllowedFile($("#a_confirmcurrentgrade"), any);
   setupAllowedFile($("#q_recreation_1_f"), pictures);
+  registerShowPicture("a_confirmcurrentgrade");
+  registerShowPicture("q_recreation_1_f");
   if(GlobalOption.camp == 'camp_game') {
     setupAllowedFile($("#q_game_5"), pictures);
+    registerShowPicture("q_game_5");
   } else if(GlobalOption.camp == 'camp_iot') {
     setupAllowedFile($("#q_iot_5"), pictures);
+    registerShowPicture("q_iot_5");
   }
 }
+
 function registerValidateForm() {
   var valid;
   var textValidator = function(i, e) {
