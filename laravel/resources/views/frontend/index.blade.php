@@ -12,6 +12,16 @@
     <link rel="icon" type="image/png" href="assets/frontend/favicon/favicon-32x32.png" sizes="32x32" />
     <link rel="icon" type="image/png" href="assets/frontend/favicon/favicon-16x16.png" sizes="16x16" />
 
+    <meta property="og:title" content="ITCAMP13">
+    <meta property="og:description" content="กลับมาอีกครั้ง! ค่ายไอทีแคมป์ ครั้งที่ 13 ค่ายแนะแนวคณะไอทีสำหรับน้องๆ 8-12 มิถุนายน 2560">
+    <meta property="og:image" content="http://itcamp.in.th/13/assets/seo/itcamp13_thumbnail.png">
+    <meta property="og:url" content="http://itcamp.in.th/13">
+
+    <meta name="twitter:title" content="ITCAMP13">
+    <meta name="twitter:description" content="กลับมาอีกครั้ง! ค่ายไอทีแคมป์ ครั้งที่ 13 ค่ายแนะแนวคณะไอทีสำหรับน้องๆ 8-12 มิถุนายน 2560">
+    <meta name="twitter:image" content="http://itcamp.in.th/13/assets/seo/itcamp13_thumbnail.png">
+    <meta name="twitter:card" content="summary_large_image">
+
     <title>ITCAMP 13</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -40,7 +50,7 @@
         <div class="nav-left">
           <div class="nav-linker active" data-target="home-block">เริ่มต้น</div>
           <div class="nav-linker" data-target="detail-block">รายละเอียด</div>
-          <div class="nav-linker" data-target="sponsor-block">ผู้สนับสนุน</div>
+          <div class="nav-linker" data-target="supporter-block">ผู้สนับสนุน</div>
           <div class="nav-linker" data-target="camp-block">ค่ายย่อย</div>
         </div>
         <div class="logo">
@@ -58,7 +68,7 @@
           <i class="fa fa-bars" aria-hidden="true"></i>
         </div>
         <div class="logo">
-          <img src="/dev13/assets/frontend/images/logo-only-text.png" />
+          <img src="{{ $lazyModeDir }}/assets/frontend/images/logo-only-text.png" />
         </div>
       </div>
     </nav>
@@ -69,7 +79,7 @@
       <div class="navigation">
         <div class="nav-linker active" data-target="home-block">เริ่มต้น</div>
         <div class="nav-linker" data-target="detail-block">รายละเอียด</div>
-        <div class="nav-linker" data-target="sponsor-block">ผู้สนับสนุน</div>
+        <div class="nav-linker" data-target="supporter-block">ผู้สนับสนุน</div>
         <div class="nav-linker" data-target="camp-block">ค่ายย่อย</div>
         <div class="nav-linker" data-target="timeline-block">กำหนดการ</div>
         <div class="nav-linker" data-target="gallery-block">ภาพกิจกรรม</div>
@@ -146,8 +156,8 @@
         </div>
       </section>
 
-      <!-- Sponsor block -->
-      <section class="section sponsor-block" data-anchor="sponsor-block">
+      <!-- supporter block -->
+      <section class="section supporter-block" data-anchor="supporter-block">
         <div class="waves">
           <div class="waves-bg"></div>
           <div class="waving-blue"></div>
@@ -156,16 +166,13 @@
         </div>
         <div class="content">
           <h1 class="block-title">ผู้สนับสนุน</h1>
-          <div class="row justify-content-center sponsors-list">
-            <div class="col">
+          <div class="justify-content-center supporters-list">
               <img class="img-thumbnail" src="{{ $lazyModeDir }}/assets/frontend/images/kmitl.jpg" />
-            </div>
-            <div class="col">
               <img class="img-thumbnail" src="{{ $lazyModeDir }}/assets/frontend/images/itkmitl.jpg" />
             </div>
           </div>
         </div>
-        <div class="camp-connect" id="sponsor-camp-connect-el"></div>
+        <div class="camp-connect" id="supporter-camp-connect-el"></div>
       </section>
 
       <!-- Camp block -->
@@ -293,7 +300,7 @@
               </div>
               <div class="camp-detail col-12 col-lg-7">
                 <div class="camp-detail-wrapper">
-                  <span class="badge badge-pill badge-default">ค่ายย่อย IoT (Internet Of Things)</span>
+                  <span class="badge badge-pill badge-default">ค่ายย่อย IoT (Internet of Things)</span>
                   <h2 class="camp-name">IoTSecure</h2>
                   <hr />
                   <p><span class="space-4"></span>ร่วมมือกันสร้างไอเดียชิ้นใหม่เพื่อต่อต้านไวรัสในโลกไซเบอร์ด้วยเทคโนโลยี Internet of Things มาสร้างสรรค์ไอเดียเจ๋ง ๆ กันได้ที่ค่าย IoTSecure ที่จะพาน้องๆ เรียนรู้ในสิ่งประดิษฐ์ที่ทันสมัยไม่ซ้ำใคร รวมถึงได้ทดลองใช้อุปกรณ์เสริมไม่ว่าจะเป็น Arduino Uno R3, ESP8266 และอื่น ๆ อีกมากมาย <br />

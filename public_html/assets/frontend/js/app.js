@@ -10702,6 +10702,7 @@ class MainApp {
     this.initNavigation();
     this.initBlocks();
     this.initFullPageJS();
+    this.initSharer();
 
     window.states = { currentSection: 1 };
   }
@@ -10716,7 +10717,7 @@ class MainApp {
   }
 
   initBlocks() {
-    this.sections = [$(".home-block"), $(".detail-block"), $(".sponsor-block"), $(".camp-block"), $(".timeline-block"), $(".gallery-block"), $(".recommend-block"), $(".faq-block")];
+    this.sections = [$(".home-block"), $(".detail-block"), $(".supporter-block"), $(".camp-block"), $(".timeline-block"), $(".gallery-block"), $(".recommend-block"), $(".faq-block")];
 
     this.blocks = {
       camp: new __WEBPACK_IMPORTED_MODULE_1__block__["a" /* CampBlock */]($(".camp-block")),
@@ -10813,6 +10814,20 @@ class MainApp {
 
     // window is resize
     $(window).resize(resizeHandler.bind(this));
+  }
+
+  initSharer() {
+    $('.fb-share').click(function (e) {
+      e.preventDefault();
+      window.open($(this).attr('href'), 'fbShareWindow', 'height=450, width=550, top=' + ($(window).height() / 2 - 275) + ', left=' + ($(window).width() / 2 - 225) + ', toolbar=0, location=0, menubar=0, directories=0, scrollbars=0');
+      return false;
+    });
+
+    $('.twit-share').click(function (e) {
+      e.preventDefault();
+      window.open($(this).attr('href'), 'twitShareWindow', 'height=450, width=550, top=' + ($(window).height() / 2 - 275) + ', left=' + ($(window).width() / 2 - 225) + ', toolbar=0, location=0, menubar=0, directories=0, scrollbars=0');
+      return false;
+    });
   }
 
   setDebug(debugHelper) {
@@ -28175,8 +28190,8 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
         this.navigation.sidenav["detail-block"].addClass("active");
         break;
       case 3:
-        this.navigation.navbar["sponsor-block"].addClass("active");
-        this.navigation.sidenav["sponsor-block"].addClass("active");
+        this.navigation.navbar["supporter-block"].addClass("active");
+        this.navigation.sidenav["supporter-block"].addClass("active");
         break;
       case 4:
         this.navigation.navbar["camp-block"].addClass("active");
