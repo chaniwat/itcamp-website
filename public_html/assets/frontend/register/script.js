@@ -16,6 +16,7 @@ function registerOtherFieldHandler() {
     });
   });
 }
+
 function registerInputMasks() {
   $("#birthday").mask('99/99/9999', {
     placeholder: "MM/DD/YYYY"
@@ -46,6 +47,7 @@ function registerInputMasks() {
     placeholder: zipcodePlaceHolder
   });
 }
+
 function registerFileCheck() {
   var pictures = ["image/jpeg", "image/gif", "image/png"];
   var documents = ["application/pdf", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"];
@@ -59,8 +61,19 @@ function registerFileCheck() {
     var files = elemO.files;
     if(files.length > 0) {
       var valid = $.inArray(files[0].type, allowedExts) > -1;
+
       if(!valid) {
         $("#fileAlert").modal('show');
+
+        elemO.value = '';
+        if(elemO.value) {
+          elemO.type = "text";
+          elemO.type = "file";
+        }
+      }
+
+      if (files.length > 0 && files[0].size > 2097152) {
+        $("#fileSizeAlert").modal('show');
 
         elemO.value = '';
         if(elemO.value) {
@@ -117,6 +130,8 @@ function registerFileCheck() {
 
 function registerValidateForm() {
   var valid;
+  var file;
+
   var textValidator = function(i, e) {
     e = $(e);
     e.parent('.form-group').removeClass('has-danger');
@@ -138,6 +153,7 @@ function registerValidateForm() {
 
   $('#submitBtn').click(function() {
     valid = true;
+
     $('input[required]').each(textValidator);
     $('select[required]').each(selectValidator);
     $('textarea[required]').each(textValidator);
