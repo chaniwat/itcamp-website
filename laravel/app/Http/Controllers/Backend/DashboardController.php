@@ -16,8 +16,12 @@ class DashboardController extends Controller
     public function showRegisterDashboard() {
         #region HUGE QUERIES
 
+        // TODO Make SQL view OR keeping this ;_;
+
+        DB::enableQueryLog();
+
         $applicant = Applicant::all();
-        $applicant_count = $applicant->count() == 0 ? 1 : $applicant->count();
+        $applicant_count = $applicant->count();
 
         $camp_app = Camp::where('name', 'camp_app')->first();
         $camp_app_boy = DB::table('applicant_applicant_detail_key')
@@ -27,7 +31,7 @@ class DashboardController extends Controller
             ->where('camps.id', $camp_app->id)
             ->where('applicant_detail_key_id', 'sex')
             ->where('answer', '{"value": "male"}')
-            ->groupBy('applicant_id')
+            ->groupBy('camps.id')
             ->first();
         $camp_app_girl = DB::table('applicant_applicant_detail_key')
             ->join('applicants', 'applicants.id', '=', 'applicant_applicant_detail_key.applicant_id')
@@ -36,7 +40,7 @@ class DashboardController extends Controller
             ->where('camps.id', $camp_app->id)
             ->where('applicant_detail_key_id', 'sex')
             ->where('answer', '{"value": "female"}')
-            ->groupBy('applicant_id')
+            ->groupBy('camps.id')
             ->first();
         $camp_app_approve = DB::table('applicant_applicant_detail_key')
             ->join('applicants', 'applicants.id', '=', 'applicant_applicant_detail_key.applicant_id')
@@ -44,9 +48,9 @@ class DashboardController extends Controller
             ->select(DB::raw('count(*) as applicant_count'))
             ->where('camps.id', $camp_app->id)
             ->whereIn('applicants.state', array('CHECKED', 'CONFIRM', 'SELECT', 'RESERVE', 'FAIL'))
-            ->groupBy('applicant_id')
+            ->groupBy('camps.id')
             ->first();
-        
+
         $camp_game = Camp::where('name', 'camp_game')->first();
         $camp_game_boy = DB::table('applicant_applicant_detail_key')
             ->join('applicants', 'applicants.id', '=', 'applicant_applicant_detail_key.applicant_id')
@@ -55,7 +59,7 @@ class DashboardController extends Controller
             ->where('camps.id', $camp_game->id)
             ->where('applicant_detail_key_id', 'sex')
             ->where('answer', '{"value": "male"}')
-            ->groupBy('applicant_id')
+            ->groupBy('camps.id')
             ->first();
         $camp_game_girl = DB::table('applicant_applicant_detail_key')
             ->join('applicants', 'applicants.id', '=', 'applicant_applicant_detail_key.applicant_id')
@@ -64,7 +68,7 @@ class DashboardController extends Controller
             ->where('camps.id', $camp_game->id)
             ->where('applicant_detail_key_id', 'sex')
             ->where('answer', '{"value": "female"}')
-            ->groupBy('applicant_id')
+            ->groupBy('camps.id')
             ->first();
         $camp_game_approve = DB::table('applicant_applicant_detail_key')
             ->join('applicants', 'applicants.id', '=', 'applicant_applicant_detail_key.applicant_id')
@@ -72,9 +76,9 @@ class DashboardController extends Controller
             ->select(DB::raw('count(*) as applicant_count'))
             ->where('camps.id', $camp_game->id)
             ->whereIn('applicants.state', array('CHECKED', 'CONFIRM', 'SELECT', 'RESERVE', 'FAIL'))
-            ->groupBy('applicant_id')
+            ->groupBy('camps.id')
             ->first();
-        
+
         $camp_network = Camp::where('name', 'camp_network')->first();
         $camp_network_boy = DB::table('applicant_applicant_detail_key')
             ->join('applicants', 'applicants.id', '=', 'applicant_applicant_detail_key.applicant_id')
@@ -83,7 +87,7 @@ class DashboardController extends Controller
             ->where('camps.id', $camp_network->id)
             ->where('applicant_detail_key_id', 'sex')
             ->where('answer', '{"value": "male"}')
-            ->groupBy('applicant_id')
+            ->groupBy('camps.id')
             ->first();
         $camp_network_girl = DB::table('applicant_applicant_detail_key')
             ->join('applicants', 'applicants.id', '=', 'applicant_applicant_detail_key.applicant_id')
@@ -92,7 +96,7 @@ class DashboardController extends Controller
             ->where('camps.id', $camp_network->id)
             ->where('applicant_detail_key_id', 'sex')
             ->where('answer', '{"value": "female"}')
-            ->groupBy('applicant_id')
+            ->groupBy('camps.id')
             ->first();
         $camp_network_approve = DB::table('applicant_applicant_detail_key')
             ->join('applicants', 'applicants.id', '=', 'applicant_applicant_detail_key.applicant_id')
@@ -100,9 +104,9 @@ class DashboardController extends Controller
             ->select(DB::raw('count(*) as applicant_count'))
             ->where('camps.id', $camp_network->id)
             ->whereIn('applicants.state', array('CHECKED', 'CONFIRM', 'SELECT', 'RESERVE', 'FAIL'))
-            ->groupBy('applicant_id')
+            ->groupBy('camps.id')
             ->first();
-        
+
         $camp_iot = Camp::where('name', 'camp_iot')->first();
         $camp_iot_boy = DB::table('applicant_applicant_detail_key')
             ->join('applicants', 'applicants.id', '=', 'applicant_applicant_detail_key.applicant_id')
@@ -111,7 +115,7 @@ class DashboardController extends Controller
             ->where('camps.id', $camp_iot->id)
             ->where('applicant_detail_key_id', 'sex')
             ->where('answer', '{"value": "male"}')
-            ->groupBy('applicant_id')
+            ->groupBy('camps.id')
             ->first();
         $camp_iot_girl = DB::table('applicant_applicant_detail_key')
             ->join('applicants', 'applicants.id', '=', 'applicant_applicant_detail_key.applicant_id')
@@ -120,7 +124,7 @@ class DashboardController extends Controller
             ->where('camps.id', $camp_iot->id)
             ->where('applicant_detail_key_id', 'sex')
             ->where('answer', '{"value": "female"}')
-            ->groupBy('applicant_id')
+            ->groupBy('camps.id')
             ->first();
         $camp_iot_approve = DB::table('applicant_applicant_detail_key')
             ->join('applicants', 'applicants.id', '=', 'applicant_applicant_detail_key.applicant_id')
@@ -128,9 +132,9 @@ class DashboardController extends Controller
             ->select(DB::raw('count(*) as applicant_count'))
             ->where('camps.id', $camp_iot->id)
             ->whereIn('applicants.state', array('CHECKED', 'CONFIRM', 'SELECT', 'RESERVE', 'FAIL'))
-            ->groupBy('applicant_id')
+            ->groupBy('camps.id')
             ->first();
-        
+
         $camp_datasci = Camp::where('name', 'camp_datasci')->first();
         $camp_datasci_boy = DB::table('applicant_applicant_detail_key')
             ->join('applicants', 'applicants.id', '=', 'applicant_applicant_detail_key.applicant_id')
@@ -139,7 +143,7 @@ class DashboardController extends Controller
             ->where('camps.id', $camp_datasci->id)
             ->where('applicant_detail_key_id', 'sex')
             ->where('answer', '{"value": "male"}')
-            ->groupBy('applicant_id')
+            ->groupBy('camps.id')
             ->first();
         $camp_datasci_girl = DB::table('applicant_applicant_detail_key')
             ->join('applicants', 'applicants.id', '=', 'applicant_applicant_detail_key.applicant_id')
@@ -148,7 +152,7 @@ class DashboardController extends Controller
             ->where('camps.id', $camp_datasci->id)
             ->where('applicant_detail_key_id', 'sex')
             ->where('answer', '{"value": "female"}')
-            ->groupBy('applicant_id')
+            ->groupBy('camps.id')
             ->first();
         $camp_datasci_approve = DB::table('applicant_applicant_detail_key')
             ->join('applicants', 'applicants.id', '=', 'applicant_applicant_detail_key.applicant_id')
@@ -156,24 +160,26 @@ class DashboardController extends Controller
             ->select(DB::raw('count(*) as applicant_count'))
             ->where('camps.id', $camp_datasci->id)
             ->whereIn('applicants.state', array('CHECKED', 'CONFIRM', 'SELECT', 'RESERVE', 'FAIL'))
-            ->groupBy('applicant_id')
+            ->groupBy('camps.id')
             ->first();
 
         $boy = DB::table('applicant_applicant_detail_key')
             ->select(DB::raw('count(*) as applicant_count'))
             ->where('applicant_detail_key_id', 'sex')
             ->where('answer', '{"value": "male"}')
-            ->groupBy('applicant_id')
+            ->groupBy('answer')
             ->first();
         $girl = DB::table('applicant_applicant_detail_key')
             ->select(DB::raw('count(*) as applicant_count'))
             ->where('applicant_detail_key_id', 'sex')
             ->where('answer', '{"value": "female"}')
-            ->groupBy('applicant_id')
+            ->groupBy('answer')
             ->first();
 
         $checked = $applicant->whereIn('state', array('CHECKED', 'CONFIRM', 'SELECT', 'RESERVE', 'FAIL', 'REJECT'))->count();
         $approve = $applicant->whereIn('state', array('CHECKED', 'CONFIRM', 'SELECT', 'RESERVE', 'FAIL'))->count();
+
+//        dd(DB::getQueryLog());
 
         #endregion
 

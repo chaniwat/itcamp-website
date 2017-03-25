@@ -65,7 +65,7 @@
                         <div class="inner">
                             <h3>{{ $questions->where('section_id', '5')->count() }}</h3>
 
-                            <p>Appersky</p>
+                            <p>@lang('camp.camp_app')</p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-social-codepen"></i>
@@ -79,7 +79,7 @@
                         <div class="inner">
                             <h3>{{ $questions->where('section_id', '6')->count() }}</h3>
 
-                            <p>Gamesoft</p>
+                            <p>@lang('camp.camp_game')</p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-ios-football"></i>
@@ -93,7 +93,7 @@
                         <div class="inner">
                             <h3>{{ $questions->where('section_id', '7')->count() }}</h3>
 
-                            <p>Network Defender</p>
+                            <p>@lang('camp.camp_network')</p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-wifi"></i>
@@ -107,7 +107,7 @@
                         <div class="inner">
                             <h3>{{ $questions->where('section_id', '8')->count() }}</h3>
 
-                            <p>IoTech</p>
+                            <p>@lang('camp.camp_game')</p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-outlet"></i>
@@ -121,7 +121,7 @@
                         <div class="inner">
                             <h3>{{ $questions->where('section_id', '9')->count() }}</h3>
 
-                            <p>Data Cyber</p>
+                            <p>@lang('camp.camp_datasci')</p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-cube"></i>
