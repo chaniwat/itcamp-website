@@ -1,0 +1,35 @@
+/* Camp Buttons */
+@mixin generate-camp-btn($name, $color) {
+  .btn-camp#{$name} {
+    background-color: $color;
+    border-color: darken($color, 10%);
+
+    &:hover {
+      background-color: darken($color, 10%);
+      border-color: darken($color, 25%);
+    }
+
+    &:active, &:focus {
+      background-color: darken($color, 35%);
+      border-color: darken($color, 25%);
+    }
+
+    &:active:focus {
+      background-color: darken($color, 35%);
+      border-color: darken($color, 25%);
+      outline-color: $color;
+    }
+  }
+}
+
+$btn-camps: (
+        app: $color-camp-app,
+        game: $color-camp-game,
+        network: $color-camp-network,
+        iot: $color-camp-iot,
+        datasci: $color-camp-datasci
+);
+
+@each $name, $color in $btn-camps {
+  @include generate-camp-btn($name, $color);
+}
