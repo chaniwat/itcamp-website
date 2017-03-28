@@ -12,6 +12,8 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
         <!-- Ionicons -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+        <!-- DataTables -->
+        <link rel="stylesheet" href="{{ asset('assets/backend/plugins/datatables/dataTables.bootstrap.css') }}"/>
         <!-- addition style for each pages -->
         @yield('style')
         <!-- Theme style -->
@@ -68,6 +70,9 @@
         <script src="{{ asset('assets/backend/js/utility.js') }}"></script>
         <!-- FastClick -->
         <script src="{{ asset('assets/backend/plugins/fastclick/fastclick.js') }}"></script>
+        <!-- DataTables -->
+        <script src="{{ asset('assets/backend/plugins/datatables/jquery.dataTables.js') }}"></script>
+        <script src="{{ asset('assets/backend/plugins/datatables/dataTables.bootstrap.js') }}"></script>
         <!-- addition script for each pages -->
         @yield('script')
         <!-- AdminLTE App -->

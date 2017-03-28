@@ -5,6 +5,6 @@ return [
     "camp_app" => "AppVira",
     "camp_game" => "GamePersky",
     "camp_network" => "NetworkTon",
-    "camp_iot" => "IOTSecure",
+    "camp_iot" => "IoTSecure",
     "camp_datasci" => "DataScan",
 ];

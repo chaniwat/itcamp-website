@@ -2,14 +2,15 @@
 
 namespace App\Exceptions;
 
-use Exception;
-
-class InvalidFieldSettingException extends \Exception
+/**
+ * Class InvalidFieldSettingException<br>
+ * Invalid field setting
+ * @package App\Exceptions
+ */
+class InvalidFieldSettingException extends BaseException
 {
-
-    public function __construct($message)
+    public function __construct()
     {
-        parent::__construct($message);
+        parent::__construct('Invalid field setting', 400, 'invalid_field_setting');
     }
-
 }

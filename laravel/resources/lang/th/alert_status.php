@@ -30,7 +30,7 @@ return [
     'frontend_register_profile_phone_bad_format' => 'เบอร์โทรศัพท์ผิดรูปแบบ', // phone bad format
     'frontend_register_profile_zipcode_bad_format' => 'รหัสไปรษณีย์ผิดรูปแบบ', // zipcode bad format
     'form_empty_field' => 'กรุณากรอกข้อมูลให้ครบ', // empty field
-    'form_invalid_file_type' => 'รูปแบบไฟล์ผิดพลาด', // invalid file type
+    'file_mime_not_accepted' => 'รูปแบบไฟล์ผิดพลาด', // invalid file type
     'login_failed' => 'เข้าสู่ระบบล้มเหลว', // login failed
     'logout_successful' => 'ออกจากระบบสำเร็จ', // logout successful
     'username_already_used' => 'ยูสเซอร์เนมนี้ถูกใช้แล้ว', // username already used

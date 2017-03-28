@@ -2,45 +2,102 @@
 
 namespace App\Services;
 
+use Symfony\Component\HttpFoundation\File\File;
+
+/**
+ * Class FormService<br>
+ * Form field formatting and File checking services<br>
+ * <b>This service only performs formatting and checking for form field</b>
+ * @package App\Services
+ * @see QuestionService for create, manage and store applicant or camp questions
+ */
 class FormService
 {
-    private $acceptField = ['TEXT', 'TEXTAREA', 'PASSWORD', 'EMAIL', 'NUMBER', 'DATE', 'RADIO', 'CHECKBOX', 'SELECT', 'SELECT_MULTIPLE', 'FILE'];
-    private $acceptFileTypeSetting = ['picture', 'document', 'any'];
-    private $fileType = [
-        "picture" => ["image/jpeg", "image/gif", "image/png"],
-        "document" => ["application/pdf", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"]
+
+    /**
+     * Maximum upload size, in bytes<br>
+     * Because of each web server have its own maximum size (look in php.info)
+     */
+    const FILE_UPLOADED_MAX_SIZE = 2097152;
+    // FIXME Control in .env
+
+    /**
+     * Accept field lists
+     */
+    const ACCEPTS_FIELD = ['TEXT', 'TEXTAREA', 'PASSWORD', 'EMAIL', 'NUMBER', 'DATE', 'RADIO', 'CHECKBOX', 'SELECT', 'SELECT_MULTIPLE', 'FILE'];
+
+    /**
+     * Accept file type
+     */
+    const ACCEPTS_FILE_TYPE = ['picture', 'document', 'any', 'all'];
+
+    /**
+     * File mime-type maps<br>
+     * Map type to file mimes
+     */
+    const FILE_MIME_TYPE_MAP = [
+        "picture" => [
+            "image/jpeg",   // .jpg
+            "image/gif",    // .gif
+            "image/png"     // .png
+        ],
+        "document" => [
+            "application/pdf",      // .pdf
+            "application/msword",   // .doc
+            "application/vnd.openxmlformats-officedocument.wordprocessingml.document" // .docx
+        ]
     ];
 
     /**
-     * Check if field type is accept
-     * @param $field_type
+     * Check if field type is accepted
+     * @param string $type
      * @return bool
      */
-    public function isFieldTypeAccept($field_type)
+    public function checkFieldTypeAccepted($type)
     {
-        return in_array($field_type, $this->acceptField);
+        return in_array($type, self::ACCEPTS_FIELD);
     }
 
     /**
-     * Check if file mime is accept (by type)
-     * @param $fileType
-     * @param $fileMime
+     * Check if file mime is accepted (by type)
+     * @param string $setting JSON string -> field_setting
+     * @param File $file Uploaded file or any file that related to form setting
      * @return bool
      */
-    public function isFileMimeAccept($fileType, $fileMime)
+    public function checkFileMimeAccepted($setting, File $file)
     {
-        $typeArray = $fileType == 'all' ? $this->fileType['picture'] + $this->fileType['document'] : $this->fileType[$fileType];
+        $settingJson = json_decode($setting, True);
 
-        return in_array($fileMime, $typeArray);
+        if(in_array($settingJson['acceptTypes'], ['any', 'all'])) {
+            $accepts = [];
+            foreach(self::FILE_MIME_TYPE_MAP as $type => $values)
+            {
+                $accepts = array_merge($accepts, $values);
+            }
+        } else {
+            $accepts = self::FILE_MIME_TYPE_MAP[$settingJson['acceptTypes']];
+        }
+
+        return in_array($file->getMimeType(), $accepts);
     }
 
     /**
-     * Get all available field type
+     * Check if file size is accepted (check in byte)
+     * @param File $file
+     * @return bool
+     */
+    public function checkFileSizeAccepted(File $file)
+    {
+        return $file->getSize() <= self::FILE_UPLOADED_MAX_SIZE;
+    }
+
+    /**
+     * Get available field type
      * @return array
      */
-    public function getAllAvailableFieldType()
+    public function getAvailableFieldType()
     {
-        return $this->acceptField;
+        return self::ACCEPTS_FIELD;
     }
 
     #region setting field
@@ -81,7 +138,7 @@ class FormService
     private function checkFileSettingFormat($arrayObject) {
         if(sizeof($arrayObject) == 2 && array_key_exists("directory", $arrayObject) && gettype($arrayObject['directory']) == 'string'
             && array_key_exists("acceptTypes", $arrayObject) && gettype($arrayObject['acceptTypes']) == 'string') {
-            if(in_array($arrayObject['acceptTypes'], $this->acceptFileTypeSetting)) {
+            if(in_array($arrayObject['acceptTypes'], self::ACCEPTS_FILE_TYPE)) {
                 return true;
             }
         }
@@ -201,7 +258,7 @@ class FormService
      * @return bool
      * @throws \Exception
      */
-    public function checkValueTypeFormat($type, $json) {
+    public function checkValueFormat($type, $json) {
         if(gettype($json) == 'string') {
             // If json is string, construct the object
             if(gettype(json_decode($json, True)) == 'array') {
@@ -232,12 +289,12 @@ class FormService
     }
 
     /**
-     * Construct a field value to json (see in design schema value files)
+     * Format given value to target field type
      * @param $type
      * @param $value
      * @return string
      */
-    public function constructValueTypeFormat($type, $value) {
+    public function formatValue($type, $value) {
         $json = '';
 
         if(in_array($type, ['EMAIL', 'FILE', 'NUMBER', 'PASSWORD', 'TEXT', 'TEXTAREA'])) {

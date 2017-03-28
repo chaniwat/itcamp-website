@@ -3,7 +3,6 @@
 namespace App\Exceptions;
 
 use Exception;
-use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -64,10 +63,6 @@ class Handler extends ExceptionHandler
     {
         // If not the assets, handles it (Bypass assets)
         if(!$request->is("assets/*")) {
-            if(!env('APP_OPEN')) {
-                // Redirect all route to frontend landing page
-                return redirect()->route('view.frontend.landing');
-            }
 
             if($request->is("backend/*")) {
                 // Backend handle
@@ -83,12 +78,18 @@ class Handler extends ExceptionHandler
                     }
                 }
             } else {
+                if(!env('APP_OPEN')) {
+                    // Redirect all route to frontend landing page
+                    return redirect()->route('view.frontend.landing');
+                }
+
                 // Frontend handle
                 config()->set('auth.defaults.guard', 'web');
 
                 // Redirect all route to frontend index page
                 return redirect()->route('view.frontend.index');
             }
+
         }
 
         return parent::render($request, $e);

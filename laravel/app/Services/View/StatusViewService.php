@@ -56,7 +56,7 @@ class StatusViewService
         'frontend_register_profile_phone_bad_format' => 'danger', // phone bad format
         'frontend_register_profile_zipcode_bad_format' => 'danger', // zipcode bad format
         'form_empty_field' => 'danger', // empty field
-        'form_invalid_file_type' => 'danger', // invalid file type
+        'file_mime_not_accepted' => 'danger', // invalid file mime
         'login_failed' => 'danger', // login failed
         'logout_successful' => 'info', // logout successful
         'username_already_used' => 'warning', // username already used

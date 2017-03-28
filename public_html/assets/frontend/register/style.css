@@ -1,5 +1,5 @@
 html {
-    font-size: 20px;
+    font-size: 16px;
     min-width: 580px;
 }
 
@@ -12,6 +12,12 @@ body {
     border-radius: 15px;
     margin: 2rem auto;
     padding: 25px;
+}
+
+@media (min-width: 1200px) {
+    .register-from {
+        padding: 25px 120px;
+    }
 }
 
 header {
@@ -27,17 +33,17 @@ h3 {
 }
 
 .form-control {
-    font-family: 'ThaiSansNeue';
+    font-family: 'Cloud';
     padding: 0.45rem 0.45rem;
 }
 
 .btn {
-    font-family: 'ThaiSansNeue';
+    font-family: 'Cloud';
     font-size: 1.25rem;
 }
 
 select.form-control {
-    height: 45px !important;
+    height: 36px !important;
 }
 
 .form-text {
@@ -65,7 +71,7 @@ textarea {
 }
 
 .datepicker-days, .datepicker-months, .datepicker-years, .datepicker-decades, .datepicker-centuries {
-    font-size: 22px;
+    font-size: 18px;
 }
 
 /* Specific fixed */
@@ -73,3 +79,7 @@ textarea {
     font-size: 1.5rem;
 }
 
+.showImg {
+    display: block;
+    margin: 0.5rem 0;
+}

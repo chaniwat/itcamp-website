@@ -1,4 +1,7 @@
+const path = require('path');
 const { mix } = require('laravel-mix');
+
+// TODO https://www.npmjs.com/package/laravel-elixir-config
 
 /*
  |--------------------------------------------------------------------------
@@ -11,5 +14,10 @@ const { mix } = require('laravel-mix');
  |
  */
 
-mix.js('resources/assets/js/app.js', 'public/js')
-   .sass('resources/assets/sass/app.scss', 'public/css');
+mix.webpackConfig({
+  output: {
+    publicPath: path.resolve(__dirname, '../public_html')
+  }
+});
+
+mix.sass('resources/assets/sass/backend.scss', 'assets/backend/css/app.css');

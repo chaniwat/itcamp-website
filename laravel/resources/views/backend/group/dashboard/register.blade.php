@@ -23,7 +23,7 @@
                                 <div class="inner">
                                     <h3>{{ $count['app']['total'] }} / 30</h3>
 
-                                    <p>Appersky</p>
+                                    <p>@lang('camp.camp_app')</p>
                                 </div>
                                 <div class="icon">
                                     <i class="ion ion-social-codepen"></i>
@@ -44,7 +44,7 @@
                                 <div class="inner">
                                     <h3>{{ $count['game']['total'] }} / 30</h3>
 
-                                    <p>Gamesoft</p>
+                                    <p>@lang('camp.camp_game')</p>
                                 </div>
                                 <div class="icon">
                                     <i class="ion ion-ios-football"></i>
@@ -65,7 +65,7 @@
                                 <div class="inner">
                                     <h3>{{ $count['network']['total'] }} / 30</h3>
 
-                                    <p>Network Defender</p>
+                                    <p>@lang('camp.camp_network')</p>
                                 </div>
                                 <div class="icon">
                                     <i class="ion ion-wifi"></i>
@@ -86,7 +86,7 @@
                                 <div class="inner">
                                     <h3>{{ $count['iot']['total'] }} / 30</h3>
 
-                                    <p>IoTech</p>
+                                    <p>@lang('camp.camp_iot')</p>
                                 </div>
                                 <div class="icon">
                                     <i class="ion ion-outlet"></i>
@@ -107,7 +107,7 @@
                                 <div class="inner">
                                     <h3>{{ $count['datasci']['total'] }} / 30</h3>
 
-                                    <p>Data Cyber</p>
+                                    <p>@lang('camp.camp_datasci')</p>
                                 </div>
                                 <div class="icon">
                                     <i class="ion ion-cube"></i>
@@ -135,8 +135,8 @@
                                 </div>
                                 <div class="small-box-footer" style="padding: 0; border-top: 5px solid whitesmoke;">
                                     <div class="progress progress-ms bg-gray active" style="margin-bottom: 0;">
-                                        <div class="progress-bar progress-bar-striped progress-bar-fCamp" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: {{ sprintf("%.2f", ($count['checked'] / $count['total']) * 100) }}%; background-color: #2c3e50;">
-                                            <span class="progress-bar-text">{{ sprintf("%.2f", ($count['checked'] / $count['total']) * 100) }}%</span>
+                                        <div class="progress-bar progress-bar-striped progress-bar-fCamp" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: {{ sprintf("%.2f", $count['total'] != 0 ? ($count['checked'] / $count['total']) * 100 : 0) }}%; background-color: #2c3e50;">
+                                            <span class="progress-bar-text">{{ sprintf("%.2f", $count['total'] != 0 ? ($count['checked'] / $count['total']) * 100 : 0) }}%</span>
                                         </div>
                                     </div>
                                 </div>

@@ -3,7 +3,7 @@
     @foreach($lists as $item)
         <div class="form-check">
             <label class="form-check-label">
-                <input type="radio" class="form-check-input" id="{{ $field_id }}" name="{{ $field_id }}" value="{{ $item['key'] }}">
+                <input type="radio" class="form-check-input" id="{{ $field_id }}" name="{{ $field_id }}" value="{{ $item['key'] }}"  {{ $item['key'] == old($field_id) ? 'checked' : '' }}>
                 {{ $item['text'] }}
             </label>
         </div>

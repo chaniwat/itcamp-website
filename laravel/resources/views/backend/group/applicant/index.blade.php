@@ -19,13 +19,17 @@
             <h3 class="box-title">กล่องควบคุม</h3>
         </div>
         <div class="box-body">
-
+            <a href="javascript:;" class="btn btn-primary btn-campapp"><i class="fa fa-bars" aria-hidden="true"></i> แสดงค่าย @lang('camp.camp_app')</a>
+            <a href="javascript:;" class="btn btn-primary btn-campgame"><i class="fa fa-bars" aria-hidden="true"></i> แสดงค่าย @lang('camp.camp_game')</a>
+            <a href="javascript:;" class="btn btn-primary btn-campnetwork"><i class="fa fa-bars" aria-hidden="true"></i> แสดงค่าย @lang('camp.camp_network')</a>
+            <a href="javascript:;" class="btn btn-primary btn-campiot"><i class="fa fa-bars" aria-hidden="true"></i> แสดงค่าย @lang('camp.camp_iot')</a>
+            <a href="javascript:;" class="btn btn-primary btn-campdatasci"><i class="fa fa-bars" aria-hidden="true"></i> แสดงค่าย @lang('camp.camp_datasci')</a>
         </div>
     </div>
 
     <div class="box box-default">
         <div class="box-body">
-            <table class="table table-bordered">
+            <table class="table table-bordered table-hover">
                 <thead>
                     <tr>
                         <th width="60">ID</th>
@@ -69,4 +73,17 @@
         </div>
     </div>
 
+@endsection
+
+@section('script')
+    <script type="text/javascript">
+        $("table.table").DataTable({
+          "paging": true,
+          "lengthChange": false,
+          "searching": false,
+          "ordering": true,
+          "info": true,
+          "autoWidth": false
+        });
+    </script>
 @endsection

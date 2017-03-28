@@ -9,6 +9,22 @@ use App\Section;
 class QuestionService
 {
 
+    /**
+     * Question type mapping
+     */
+    const QUESTION_TYPE_MAPS = [
+        'applicant' => [
+            'key_table' => 'applicant_detail_keys',
+            'key_id' => 'applicant_detail_key_id',
+            'answer_table' => 'applicant_applicant_detail_key'
+        ],
+        'camp' => [
+            'key_table' => 'questions',
+            'key_id' => 'question_id',
+            'answer_table' => 'answers'
+        ]
+    ];
+
     const CRITICAL_APPLICANT_FIELD = ['p_name', 'p_name_other', 'f_name', 'l_name', 'nickname', 'birthday', 'sex', 'religion'];
 
     /**
