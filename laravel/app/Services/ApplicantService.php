@@ -5,7 +5,8 @@ namespace App\Services;
 use App\Applicant;
 use App\ApplicantDetailKey;
 use App\Camp;
-use App\Exceptions\FieldTypeNotAcceptException;
+use App\Exceptions\FileMimeNotAcceptedException;
+use App\Exceptions\FileSizeNotAcceptedException;
 use App\Question;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -25,13 +26,14 @@ class ApplicantService
      * Register new applicant
      * @param Request $request
      * @param $camp
-     * @throws \Exception
      */
     public function register(Request $request, $camp)
     {
-        // TODO Validate require field
+        // Get all keys
+        $applicantDetailKeys = ApplicantDetailKey::all();
+        $questionKeys = Question::all();
 
-        // Extract IDs
+        // Get IDs
         $camp = Camp::where('name', $camp)->first();
         $applicantDetailIDs = DB::table('applicant_detail_keys')->pluck('id')->all();
         $questionIDs = DB::table('questions')->whereIn('section_id', array(2, 3, $camp->section->id))->pluck('id')->all();
@@ -40,11 +42,7 @@ class ApplicantService
         $applicantDetailAnswers = $request->only($applicantDetailIDs);
         $questionAnswers = $request->only($questionIDs);
 
-        // Get all keys
-        $applicantDetailKeys = ApplicantDetailKey::all();
-        $questionKeys = Question::all();
-
-        // Check file type first
+        // Files checking
         $this->checkFile($request, $applicantDetailKeys, $applicantDetailAnswers);
         $this->checkFile($request, $questionKeys, $questionAnswers);
 
@@ -53,66 +51,9 @@ class ApplicantService
         $applicant->camp()->associate($camp);
         $applicant->save();
 
-        // Construct Applicant detail DB values
-        $applicantDetailValue = $this
-            ->constructDBArrayValues($request, $applicant, $applicantDetailKeys, $applicantDetailAnswers, 'applicant_detail_key_id');
-
-//        var_dump($applicantDetailValue);
-        DB::table('applicant_applicant_detail_key')->insert($applicantDetailValue);
-
-        // Construct Applicant detail DB values
-        $questionValue = $this
-            ->constructDBArrayValues($request, $applicant, $questionKeys, $questionAnswers, 'question_id');
-
-//        var_dump($questionValue);
-        DB::table('answers')->insert($questionValue);
-    }
-
-    private function constructDBArrayValues(Request $request, Applicant $applicant, $models, $answers, $qKey)
-    {
-        // Construct Applicant detail DB values
-        $arrayValue = [];
-
-        foreach ($answers as $key => $value)
-        {
-            $field_type = $models->find($key)->field_type;
-
-            if($field_type == 'FILE')
-            {
-                /*
-                 * Upload file
-                 */
-                $filePath = null;
-                if($request->hasFile($key)) {
-                    $file = $request->file($key);
-                    $jsonValue = json_decode($models->find($key)->field_setting, True);
-
-                    if(!$this->form->isFileMimeAccept($jsonValue['acceptTypes'], $file->getMimeType())) {
-                        throw new FieldTypeNotAcceptException('form_invalid_file_type');
-                    }
-
-                    $destination = $jsonValue['directory'];
-                    $filename = Carbon::now()->format('mdYHis').md5($file->getClientOriginalName()).".".$file->getClientOriginalExtension();
-                    $file->move("storage/".$destination, $filename);
-
-                    $value = $destination."/".$filename;
-                }
-            }
-
-            if($value)
-            {
-                $array = [];
-
-                $array["applicant_id"] = $applicant->id;
-//                $array["applicant_id"] = 1;
-                $array[$qKey] = $key;
-                $array["answer"] = $this->form->constructValueTypeFormat($field_type, $value);
-
-                array_push($arrayValue, $array);
-            }
-        }
-
-        return $arrayValue;
+        // Save answers
+        $this->saveAnswers($request, $applicant, 'applicant', $applicantDetailKeys, $applicantDetailAnswers);
+        $this->saveAnswers($request, $applicant, 'camp', $questionKeys, $questionAnswers);
     }
 
     private function checkFile(Request $request, $models, $answers)
@@ -121,21 +62,55 @@ class ApplicantService
         {
             $field_type = $models->find($key)->field_type;
 
-            if ($field_type == 'FILE') {
-                /*
-                 * Upload file
-                 */
-                $filePath = null;
-                if ($request->hasFile($key)) {
-                    $file = $request->file($key);
-                    $jsonValue = json_decode($models->find($key)->field_setting, True);
+            if ($field_type == 'FILE' && $request->hasFile($key)) {
+                $file = $request->file($key);
 
-                    if (!$this->form->isFileMimeAccept($jsonValue['acceptTypes'], $file->getMimeType())) {
-                        throw new \Exception('form_invalid_file_type');
-                    }
+                if (!$this->form->checkFileMimeAccepted($models->find($key)->field_setting, $file)) {
+                    throw new FileMimeNotAcceptedException();
+                } else if (!$this->form->checkFileSizeAccepted($file)) {
+                    throw new FileSizeNotAcceptedException();
                 }
             }
         }
+    }
+
+    private function saveAnswers(Request $request, Applicant $applicant, $questionType, $keys, $answers)
+    {
+        $question_setting = QuestionService::QUESTION_TYPE_MAPS[$questionType];
+
+        // Construct Applicant detail DB values
+        $values = [];
+
+        foreach ($answers as $key => $value)
+        {
+            $field_type = $keys->find($key)->field_type;
+
+            // If field is 'FILE' and file is exists, storing file and generate path (value)
+            if($field_type == 'FILE' && $request->hasFile($key))
+            {
+                $destination = json_decode($keys->find($key)->field_setting, True)['directory'];
+
+                $file = $request->file($key);
+
+                $filename = Carbon::now()->format('mdYHis').md5($file->getClientOriginalName()).".".strtolower($file->getClientOriginalExtension());
+                $file->move("storage/".$destination, $filename);
+
+                $value = $destination."/".$filename;
+            }
+
+            if($value)
+            {
+                $array = [];
+
+                $array["applicant_id"] = $applicant->id;
+                $array[$question_setting['key_id']] = $key;
+                $array["answer"] = $this->form->formatValue($field_type, $value);
+
+                array_push($values, $array);
+            }
+        }
+
+        DB::table($question_setting['answer_table'])->insert($values);
     }
 
 }

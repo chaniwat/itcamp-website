@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Exceptions\FieldTypeNotAcceptException;
-use App\Exceptions\InvalidFieldFormatException;
+use App\Exceptions\FieldTypeNotAcceptedBaseException;
+use App\Exceptions\InvalidFieldFormatBaseException;
 use App\Question;
 use App\Section;
 use App\Services\FormService;
@@ -70,11 +70,11 @@ class CampQuestionController extends Controller
         {
             $this->question->createCampQuestion($request->all());
         }
-        catch (FieldTypeNotAcceptException $ex)
+        catch (FieldTypeNotAcceptedBaseException $ex)
         {
             $error = 'backend_form_field_type_not_accept';
         }
-        catch (InvalidFieldFormatException $ex)
+        catch (InvalidFieldFormatBaseException $ex)
         {
             $error = 'backend_incorrect_format_in_field_value';
         }
@@ -122,11 +122,11 @@ class CampQuestionController extends Controller
         {
             $this->question->updateCampQuestion($id, $request->all());
         }
-        catch (FieldTypeNotAcceptException $ex)
+        catch (FieldTypeNotAcceptedBaseException $ex)
         {
             $error = 'backend_form_field_type_not_accept';
         }
-        catch (InvalidFieldFormatException $ex)
+        catch (InvalidFieldFormatBaseException $ex)
         {
             $error = 'backend_incorrect_format_in_field_value';
         }
@@ -179,7 +179,7 @@ class CampQuestionController extends Controller
         }
 
         $data = [
-            'field_types' => $this->formService->getAllAvailableFieldType(),
+            'field_types' => $this->formService->getAvailableFieldType(),
             'sections' => $this->getAvailableSection()
         ];
 
@@ -202,7 +202,7 @@ class CampQuestionController extends Controller
 
         $data = [
             'question' => $question,
-            'field_types' => $this->formService->getAllAvailableFieldType(),
+            'field_types' => $this->formService->getAvailableFieldType(),
             'sections' => $this->getAvailableSection()
         ];
 

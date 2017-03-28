@@ -2,12 +2,15 @@
 
 namespace App\Exceptions;
 
-use Exception;
-
-class InvalidFieldFormatException extends InvalidFieldSettingException
+/**
+ * Class InvalidFieldFormatException<br>
+ * Invalid field format (value's format)
+ * @package App\Exceptions
+ */
+class InvalidFieldFormatException extends BaseException
 {
-    public function __construct($message)
+    public function __construct()
     {
-        parent::__construct($message);
+        parent::__construct("Invalid field format (incorrect value's format)", 400, 'invalid_field_value');
     }
 }

@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Backend;
 
 use App\ApplicantDetailKey;
-use App\Exceptions\FieldTypeNotAcceptException;
-use App\Exceptions\InvalidFieldFormatException;
+use App\Exceptions\FieldTypeNotAcceptedBaseException;
+use App\Exceptions\InvalidFieldFormatBaseException;
 use App\Services\ApplicantQuestionService;
 use App\Services\FormService;
 use App\Services\QuestionService;
@@ -69,11 +69,11 @@ class ApplicantQuestionController extends Controller
         {
             $this->question->createApplicantQuestion($request->all());
         }
-        catch (FieldTypeNotAcceptException $ex)
+        catch (FieldTypeNotAcceptedBaseException $ex)
         {
             $error = 'backend_form_field_type_not_accept';
         }
-        catch (InvalidFieldFormatException $ex)
+        catch (InvalidFieldFormatBaseException $ex)
         {
             $error = 'backend_incorrect_format_in_field_value';
         }
@@ -121,11 +121,11 @@ class ApplicantQuestionController extends Controller
         {
             $this->question->updateApplicantQuestion($id, $request->all());
         }
-        catch (FieldTypeNotAcceptException $ex)
+        catch (FieldTypeNotAcceptedBaseException $ex)
         {
             $error = 'backend_form_field_type_not_accept';
         }
-        catch (InvalidFieldFormatException $ex)
+        catch (InvalidFieldFormatBaseException $ex)
         {
             $error = 'backend_incorrect_format_in_field_value';
         }
@@ -178,7 +178,7 @@ class ApplicantQuestionController extends Controller
         }
 
         $data = [
-            'field_types' => $this->formService->getAllAvailableFieldType(),
+            'field_types' => $this->formService->getAvailableFieldType(),
         ];
 
         return view('backend.group.question.applicant.create')->with('data', $data);
@@ -200,7 +200,7 @@ class ApplicantQuestionController extends Controller
 
         $data = [
             'question' => $question,
-            'field_types' => $this->formService->getAllAvailableFieldType()
+            'field_types' => $this->formService->getAvailableFieldType()
         ];
 
         return view('backend.group.question.applicant.update')->with('data', $data);

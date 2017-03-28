@@ -3,7 +3,7 @@
 
     <select multiple class="form-control" id="{{ $field_id }}" name="{{ $field_id }}">
         @foreach($lists as $item)
-            <option value="{{ $item->key }}">{{ $item->text }}</option>
+            <option value="{{ $item['key'] }}" {{ in_array($item['key'], old($field_id)) ? 'selected' : '' }}>{{ $item['text'] }}</option>
         @endforeach
     </select>
     <small class="form-text text-muted">{!! $description !!}</small>

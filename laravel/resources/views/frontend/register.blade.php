@@ -201,6 +201,15 @@
       GlobalOption.camp = '{{ $camp }}';
     </script>
     <script src="{{ asset('assets/frontend/register/script.js') }}?v={{ (int)microtime(true) }}" type="text/javascript"></script>
+    <script type="text/javascript">
+      @if(session('status'))
+        @if(session('status') == 'file_mime_not_accepted')
+        $("#fileAlert").modal('show');
+        @elseif(session('status') == 'file_size_not_accepted')
+        $("#fileSizeAlert").modal('show');
+        @endif
+      @endif
+    </script>
 </body>
 
 </html>

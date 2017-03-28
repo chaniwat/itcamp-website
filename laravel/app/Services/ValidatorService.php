@@ -2,8 +2,9 @@
 
 namespace App\Services;
 
-use App\Exceptions\FieldTypeNotAcceptException;
+use App\Exceptions\FieldTypeNotAcceptedException;
 use App\Exceptions\InvalidFieldFormatException;
+use App\Exceptions\ValidatorNoRulesGivenException;
 use Illuminate\Contracts\Validation\Factory;
 use Illuminate\Http\Request;
 
@@ -44,7 +45,7 @@ class ValidatorService
      * Validate the request's input
      * @param Request $request
      * @param $rules
-     * @throws \Exception
+     * @throws ValidatorNoRulesGivenException
      */
     public function validate(Request $request, $rules = null)
     {
@@ -55,7 +56,7 @@ class ValidatorService
 
         if($this->rules == null)
         {
-            throw new \Exception("Set rules first before validate the inputs!!");
+            throw new ValidatorNoRulesGivenException();
         }
 
         $this->validator = $this->validatorFactory->make($request->all(), $this->rules);
@@ -81,16 +82,15 @@ class ValidatorService
      * Validate field setting for Question (format)
      * @param $field_type
      * @param $field_setting
-     * @return bool|string
-     * @throws FieldTypeNotAcceptException
+     * @throws FieldTypeNotAcceptedException
      * @throws InvalidFieldFormatException
      */
     public function validateFieldSetting($field_type, $field_setting)
     {
-        if(!$this->formService->isFieldTypeAccept($field_type)) {
-            throw new FieldTypeNotAcceptException('Field type not accept: ' + $field_type);
+        if(!$this->formService->checkFieldTypeAccepted($field_type)) {
+            throw new FieldTypeNotAcceptedException($field_type);
         } else if(!$this->formService->checkSettingFormat($field_type, $field_setting)) {
-            throw new InvalidFieldFormatException('Invalid setting format');
+            throw new InvalidFieldFormatException();
         }
     }
 
@@ -98,16 +98,15 @@ class ValidatorService
      * Validate field value for Question (format)
      * @param $field_type
      * @param $field_value
-     * @return bool|string
-     * @throws FieldTypeNotAcceptException
+     * @throws FieldTypeNotAcceptedException
      * @throws InvalidFieldFormatException
      */
     public function validateFieldValue($field_type, $field_value)
     {
-        if(!$this->formService->isFieldTypeAccept($field_type)) {
-            throw new FieldTypeNotAcceptException('Field type not accept: ' + $field_type);
+        if(!$this->formService->checkFieldTypeAccepted($field_type)) {
+            throw new FieldTypeNotAcceptedException($field_type);
         } else if(!$this->formService->checkSettingValue($field_type, $field_value)) {
-            throw new InvalidFieldFormatException('Invalid setting format');
+            throw new InvalidFieldFormatException();
         }
     }
 
