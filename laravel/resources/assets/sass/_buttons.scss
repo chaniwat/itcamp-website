@@ -1,25 +1,33 @@
 /* Camp Buttons */
-@mixin generate-camp-btn($name, $color) {
-  .btn-camp#{$name} {
+@mixin generate-btn-variant($name, $color) {
+  .#{$name} {
     background-color: $color;
     border-color: darken($color, 10%);
 
-    &:hover {
+    &:hover, &:focus {
       background-color: darken($color, 10%);
       border-color: darken($color, 25%);
     }
 
-    &:active, &:focus {
-      background-color: darken($color, 35%);
+    &:active {
+      background-color: darken($color, 15%);
       border-color: darken($color, 25%);
     }
 
     &:active:focus {
-      background-color: darken($color, 35%);
+      background-color: darken($color, 15%);
       border-color: darken($color, 25%);
       outline-color: $color;
     }
   }
+}
+
+@mixin generate-camp-btn($name, $color) {
+  @include generate-btn-variant('btn-camp'+$name, $color);
+}
+
+@mixin generate-applicant-btn($name, $color) {
+  @include generate-btn-variant('btn-applicant-'+$name, $color);
 }
 
 $btn-camps: (
@@ -32,4 +40,14 @@ $btn-camps: (
 
 @each $name, $color in $btn-camps {
   @include generate-camp-btn($name, $color);
+}
+
+$btn-applicants: (
+        pending: $color-applicant-all,
+        checked: $color-applicant-checked,
+        reject: $color-applicant-reject,
+);
+
+@each $name, $color in $btn-applicants {
+  @include generate-applicant-btn($name, $color);
 }
