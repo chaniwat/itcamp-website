@@ -12,8 +12,7 @@ class FileService
      * Maximum upload size, in bytes<br>
      * Because of each web server have its own maximum size (look in php.info)
      */
-    const FILE_UPLOADED_MAX_SIZE = 2097152;
-    // FIXME Control in .env
+    const DEFAULT_FILE_UPLOADED_MAX_SIZE = 2097152;
 
     /**
      * Accept file type
@@ -67,7 +66,7 @@ class FileService
      */
     public function checkFileSizeAccepted(File $file)
     {
-        return $file->getSize() <= self::FILE_UPLOADED_MAX_SIZE;
+        return $file->getSize() <= env('FILE_UPLOADED_MAX_SIZE', self::FILE_UPLOADED_MAX_SIZE);
     }
 
     /**
