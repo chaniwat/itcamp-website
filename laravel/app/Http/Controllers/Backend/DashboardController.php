@@ -14,211 +14,60 @@ class DashboardController extends Controller
     }
 
     public function showRegisterDashboard() {
-        #region HUGE QUERIES
 
-        // TODO Make SQL view OR keeping this ;_;
+        $applicant_count = Applicant::getApplicantCount();
+        $male_count = Applicant::getMaleCount();
+        $female_count = Applicant::getFemaleCount();
+        $checked_count = Applicant::getCheckedCount();
+        $approved_count = Applicant::getApprovedCount();
 
-        DB::enableQueryLog();
-
-        $applicant = Applicant::all();
-        $applicant_count = $applicant->count();
-
+        /** @var Camp $camp_app */
         $camp_app = Camp::where('name', 'camp_app')->first();
-        $camp_app_boy = DB::table('applicant_applicant_detail_key')
-            ->join('applicants', 'applicants.id', '=', 'applicant_applicant_detail_key.applicant_id')
-            ->join('camps', 'camps.id', '=', 'applicants.camp_id')
-            ->select(DB::raw('count(*) as applicant_count'))
-            ->where('camps.id', $camp_app->id)
-            ->where('applicant_detail_key_id', 'sex')
-            ->where('answer', '{"value": "male"}')
-            ->groupBy('camps.id')
-            ->first();
-        $camp_app_girl = DB::table('applicant_applicant_detail_key')
-            ->join('applicants', 'applicants.id', '=', 'applicant_applicant_detail_key.applicant_id')
-            ->join('camps', 'camps.id', '=', 'applicants.camp_id')
-            ->select(DB::raw('count(*) as applicant_count'))
-            ->where('camps.id', $camp_app->id)
-            ->where('applicant_detail_key_id', 'sex')
-            ->where('answer', '{"value": "female"}')
-            ->groupBy('camps.id')
-            ->first();
-        $camp_app_approve = DB::table('applicant_applicant_detail_key')
-            ->join('applicants', 'applicants.id', '=', 'applicant_applicant_detail_key.applicant_id')
-            ->join('camps', 'camps.id', '=', 'applicants.camp_id')
-            ->select(DB::raw('count(*) as applicant_count'))
-            ->where('camps.id', $camp_app->id)
-            ->whereIn('applicants.state', array('CHECKED', 'CONFIRM', 'SELECT', 'RESERVE', 'FAIL'))
-            ->groupBy('camps.id')
-            ->first();
-
+        /** @var Camp $camp_game */
         $camp_game = Camp::where('name', 'camp_game')->first();
-        $camp_game_boy = DB::table('applicant_applicant_detail_key')
-            ->join('applicants', 'applicants.id', '=', 'applicant_applicant_detail_key.applicant_id')
-            ->join('camps', 'camps.id', '=', 'applicants.camp_id')
-            ->select(DB::raw('count(*) as applicant_count'))
-            ->where('camps.id', $camp_game->id)
-            ->where('applicant_detail_key_id', 'sex')
-            ->where('answer', '{"value": "male"}')
-            ->groupBy('camps.id')
-            ->first();
-        $camp_game_girl = DB::table('applicant_applicant_detail_key')
-            ->join('applicants', 'applicants.id', '=', 'applicant_applicant_detail_key.applicant_id')
-            ->join('camps', 'camps.id', '=', 'applicants.camp_id')
-            ->select(DB::raw('count(*) as applicant_count'))
-            ->where('camps.id', $camp_game->id)
-            ->where('applicant_detail_key_id', 'sex')
-            ->where('answer', '{"value": "female"}')
-            ->groupBy('camps.id')
-            ->first();
-        $camp_game_approve = DB::table('applicant_applicant_detail_key')
-            ->join('applicants', 'applicants.id', '=', 'applicant_applicant_detail_key.applicant_id')
-            ->join('camps', 'camps.id', '=', 'applicants.camp_id')
-            ->select(DB::raw('count(*) as applicant_count'))
-            ->where('camps.id', $camp_game->id)
-            ->whereIn('applicants.state', array('CHECKED', 'CONFIRM', 'SELECT', 'RESERVE', 'FAIL'))
-            ->groupBy('camps.id')
-            ->first();
-
+        /** @var Camp $camp_network */
         $camp_network = Camp::where('name', 'camp_network')->first();
-        $camp_network_boy = DB::table('applicant_applicant_detail_key')
-            ->join('applicants', 'applicants.id', '=', 'applicant_applicant_detail_key.applicant_id')
-            ->join('camps', 'camps.id', '=', 'applicants.camp_id')
-            ->select(DB::raw('count(*) as applicant_count'))
-            ->where('camps.id', $camp_network->id)
-            ->where('applicant_detail_key_id', 'sex')
-            ->where('answer', '{"value": "male"}')
-            ->groupBy('camps.id')
-            ->first();
-        $camp_network_girl = DB::table('applicant_applicant_detail_key')
-            ->join('applicants', 'applicants.id', '=', 'applicant_applicant_detail_key.applicant_id')
-            ->join('camps', 'camps.id', '=', 'applicants.camp_id')
-            ->select(DB::raw('count(*) as applicant_count'))
-            ->where('camps.id', $camp_network->id)
-            ->where('applicant_detail_key_id', 'sex')
-            ->where('answer', '{"value": "female"}')
-            ->groupBy('camps.id')
-            ->first();
-        $camp_network_approve = DB::table('applicant_applicant_detail_key')
-            ->join('applicants', 'applicants.id', '=', 'applicant_applicant_detail_key.applicant_id')
-            ->join('camps', 'camps.id', '=', 'applicants.camp_id')
-            ->select(DB::raw('count(*) as applicant_count'))
-            ->where('camps.id', $camp_network->id)
-            ->whereIn('applicants.state', array('CHECKED', 'CONFIRM', 'SELECT', 'RESERVE', 'FAIL'))
-            ->groupBy('camps.id')
-            ->first();
-
+        /** @var Camp $camp_iot */
         $camp_iot = Camp::where('name', 'camp_iot')->first();
-        $camp_iot_boy = DB::table('applicant_applicant_detail_key')
-            ->join('applicants', 'applicants.id', '=', 'applicant_applicant_detail_key.applicant_id')
-            ->join('camps', 'camps.id', '=', 'applicants.camp_id')
-            ->select(DB::raw('count(*) as applicant_count'))
-            ->where('camps.id', $camp_iot->id)
-            ->where('applicant_detail_key_id', 'sex')
-            ->where('answer', '{"value": "male"}')
-            ->groupBy('camps.id')
-            ->first();
-        $camp_iot_girl = DB::table('applicant_applicant_detail_key')
-            ->join('applicants', 'applicants.id', '=', 'applicant_applicant_detail_key.applicant_id')
-            ->join('camps', 'camps.id', '=', 'applicants.camp_id')
-            ->select(DB::raw('count(*) as applicant_count'))
-            ->where('camps.id', $camp_iot->id)
-            ->where('applicant_detail_key_id', 'sex')
-            ->where('answer', '{"value": "female"}')
-            ->groupBy('camps.id')
-            ->first();
-        $camp_iot_approve = DB::table('applicant_applicant_detail_key')
-            ->join('applicants', 'applicants.id', '=', 'applicant_applicant_detail_key.applicant_id')
-            ->join('camps', 'camps.id', '=', 'applicants.camp_id')
-            ->select(DB::raw('count(*) as applicant_count'))
-            ->where('camps.id', $camp_iot->id)
-            ->whereIn('applicants.state', array('CHECKED', 'CONFIRM', 'SELECT', 'RESERVE', 'FAIL'))
-            ->groupBy('camps.id')
-            ->first();
-
+        /** @var Camp $camp_datasci */
         $camp_datasci = Camp::where('name', 'camp_datasci')->first();
-        $camp_datasci_boy = DB::table('applicant_applicant_detail_key')
-            ->join('applicants', 'applicants.id', '=', 'applicant_applicant_detail_key.applicant_id')
-            ->join('camps', 'camps.id', '=', 'applicants.camp_id')
-            ->select(DB::raw('count(*) as applicant_count'))
-            ->where('camps.id', $camp_datasci->id)
-            ->where('applicant_detail_key_id', 'sex')
-            ->where('answer', '{"value": "male"}')
-            ->groupBy('camps.id')
-            ->first();
-        $camp_datasci_girl = DB::table('applicant_applicant_detail_key')
-            ->join('applicants', 'applicants.id', '=', 'applicant_applicant_detail_key.applicant_id')
-            ->join('camps', 'camps.id', '=', 'applicants.camp_id')
-            ->select(DB::raw('count(*) as applicant_count'))
-            ->where('camps.id', $camp_datasci->id)
-            ->where('applicant_detail_key_id', 'sex')
-            ->where('answer', '{"value": "female"}')
-            ->groupBy('camps.id')
-            ->first();
-        $camp_datasci_approve = DB::table('applicant_applicant_detail_key')
-            ->join('applicants', 'applicants.id', '=', 'applicant_applicant_detail_key.applicant_id')
-            ->join('camps', 'camps.id', '=', 'applicants.camp_id')
-            ->select(DB::raw('count(*) as applicant_count'))
-            ->where('camps.id', $camp_datasci->id)
-            ->whereIn('applicants.state', array('CHECKED', 'CONFIRM', 'SELECT', 'RESERVE', 'FAIL'))
-            ->groupBy('camps.id')
-            ->first();
-
-        $boy = DB::table('applicant_applicant_detail_key')
-            ->select(DB::raw('count(*) as applicant_count'))
-            ->where('applicant_detail_key_id', 'sex')
-            ->where('answer', '{"value": "male"}')
-            ->groupBy('answer')
-            ->first();
-        $girl = DB::table('applicant_applicant_detail_key')
-            ->select(DB::raw('count(*) as applicant_count'))
-            ->where('applicant_detail_key_id', 'sex')
-            ->where('answer', '{"value": "female"}')
-            ->groupBy('answer')
-            ->first();
-
-        $checked = $applicant->whereIn('state', array('CHECKED', 'CONFIRM', 'SELECT', 'RESERVE', 'FAIL', 'REJECT'))->count();
-        $approve = $applicant->whereIn('state', array('CHECKED', 'CONFIRM', 'SELECT', 'RESERVE', 'FAIL'))->count();
-
-//        dd(DB::getQueryLog());
-
-        #endregion
 
         $data = [
             "count" => [
                 "app" => [
-                    "total" => $camp_app->applicants->count(),
-                    "boy" => $camp_app_boy ? $camp_app_boy->applicant_count : 0,
-                    "girl" => $camp_app_girl ? $camp_app_girl->applicant_count : 0,
-                    "approve" => $camp_app_approve ? $camp_app_approve->applicant_count : 0,
+                    "total" => $camp_app->getApplicantCount(),
+                    "boy" => $camp_app->getApplicantMaleCount(),
+                    "girl" => $camp_app->getApplicantFemaleCount(),
+                    "approve" => $camp_app->getApplicantApprovedCount(),
                 ],
                 "game" => [
-                    "total" => $camp_game->applicants->count(),
-                    "boy" => $camp_game_boy ? $camp_game_boy->applicant_count : 0,
-                    "girl" => $camp_game_girl ? $camp_game_girl->applicant_count : 0,
-                    "approve" => $camp_game_approve ? $camp_game_approve->applicant_count : 0,
+                    "total" => $camp_game->getApplicantCount(),
+                    "boy" => $camp_game->getApplicantMaleCount(),
+                    "girl" => $camp_game->getApplicantFemaleCount(),
+                    "approve" => $camp_game->getApplicantApprovedCount(),
                 ],
                 "network" => [
-                    "total" => $camp_network->applicants->count(),
-                    "boy" => $camp_network_boy ? $camp_network_boy->applicant_count : 0,
-                    "girl" => $camp_network_girl ? $camp_network_girl->applicant_count : 0,
-                    "approve" => $camp_network_approve ? $camp_network_approve->applicant_count : 0,
+                    "total" => $camp_network->getApplicantCount(),
+                    "boy" => $camp_network->getApplicantMaleCount(),
+                    "girl" => $camp_network->getApplicantFemaleCount(),
+                    "approve" => $camp_network->getApplicantApprovedCount(),
                 ],
                 "iot" => [
-                    "total" => $camp_iot->applicants->count(),
-                    "boy" => $camp_iot_boy ? $camp_iot_boy->applicant_count : 0,
-                    "girl" => $camp_iot_girl ? $camp_iot_girl->applicant_count : 0,
-                    "approve" => $camp_iot_approve ? $camp_iot_approve->applicant_count : 0,
+                    "total" => $camp_iot->getApplicantCount(),
+                    "boy" => $camp_iot->getApplicantMaleCount(),
+                    "girl" => $camp_iot->getApplicantFemaleCount(),
+                    "approve" => $camp_iot->getApplicantApprovedCount(),
                 ],
                 "datasci" => [
-                    "total" => $camp_datasci->applicants->count(),
-                    "boy" => $camp_datasci_boy ? $camp_datasci_boy->applicant_count : 0,
-                    "girl" => $camp_datasci_girl ? $camp_datasci_girl->applicant_count : 0,
-                    "approve" => $camp_datasci_approve ? $camp_datasci_approve->applicant_count : 0,
+                    "total" => $camp_datasci->getApplicantCount(),
+                    "boy" => $camp_datasci->getApplicantMaleCount(),
+                    "girl" => $camp_datasci->getApplicantFemaleCount(),
+                    "approve" => $camp_datasci->getApplicantApprovedCount(),
                 ],
-                "checked" => $checked,
-                "approve" => $approve,
-                "boy" => $boy ? $boy->applicant_count : 0,
-                "girl" => $girl ? $girl->applicant_count : 0,
+                "checked" => $checked_count,
+                "approve" => $approved_count,
+                "boy" => $male_count,
+                "girl" => $female_count,
                 "total" => $applicant_count
             ]
         ];
