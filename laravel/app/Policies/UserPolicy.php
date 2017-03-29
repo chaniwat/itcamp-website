@@ -19,7 +19,7 @@ class UserPolicy
     }
 
     /**
-     * Can logged user view account management (ex. view)
+     * Can logged user granted for backend management (ex. staff account, environment setting)
      * @param User $user
      * @return bool
      */
@@ -36,4 +36,5 @@ class UserPolicy
 
         return false;
     }
+
 }

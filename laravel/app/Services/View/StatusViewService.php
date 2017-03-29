@@ -42,6 +42,7 @@ class StatusViewService
         'backend_not_enough_permission_to_create_question' => 'warning', // not enough permission to create camp question
         'backend_not_enough_permission_to_edit_question' => 'warning', // not enough permission to edit camp question
         'backend_not_enough_permission_to_remove_question' => 'warning', // not enough permission to remove camp question
+        'backend_not_enough_permission_to_manage_staff' => 'warning', // not enough permission to manage staff
         'backend_question_id_already_used' => 'warning', // camp question field_id already used
         'backend_question_not_found' => 'warning', // camp question not found
         'backend_remove_applicant_question_success' => 'success', // remove applicant question

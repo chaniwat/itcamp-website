@@ -18,12 +18,14 @@
             @can('view', \App\Question::class)
                 <li class="{{ $viewHelper->isActivePath(["backend/question/camp", "backend/question/camp/*"]) }}"><a href="{{ route('view.backend.question.camp') }}"><i class="fa fa-book"></i> <span>ดูคำถามค่าย</span></a></li>
             @endcan
-            @can('view_backend', \App\User::class)
+            @can('view_account', \App\Applicant::class)
                 <li class="treeview {{ $viewHelper->isActivePath(["backend/account/*"]) }}">
                     <a href="#"><i class="fa fa-book"></i> <span>จัดการบัญชีผู้ใช้</span> <i class="fa fa-angle-left pull-right"></i></a>
                     <ul class="treeview-menu">
                         <li class="{{ $viewHelper->isActivePath(["backend/account/applicant", "backend/account/applicant/*"]) }}"><a href="{{ route('view.backend.account.applicant') }}"><i class="fa fa-book"></i> <span>บัญชีผู้ใช้ Applicant</span></a></li>
-                        <li class="{{ $viewHelper->isActivePath(["backend/account/staff", "backend/account/staff/*"]) }}"><a href="{{ route('view.backend.account.staff') }}"><i class="fa fa-book"></i> <span>บัญชีผู้ใช้ Staff</span></a></li>
+                        @can('view_backend', \App\User::class)
+                            <li class="{{ $viewHelper->isActivePath(["backend/account/staff", "backend/account/staff/*"]) }}"><a href="{{ route('view.backend.account.staff') }}"><i class="fa fa-book"></i> <span>บัญชีผู้ใช้ Staff</span></a></li>
+                        @endcan
                     </ul>
                 </li>
             @endcan

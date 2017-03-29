@@ -6,14 +6,13 @@ use App\Section;
 use App\Services\AccountService;
 use App\Services\ValidatorService;
 use App\Staff;
+use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Gate;
 
 class AccountStaffController extends Controller
 {
-
-    // TODO Check policies (Gate Policy)
-
     /**
      * Validator Service instance
      */
@@ -36,6 +35,10 @@ class AccountStaffController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function createStaff(Request $request) {
+        // Policies Check
+        if (Gate::denies('view_backend', User::class)) {
+            return redirect()->route('view.backend.index')->with('status', 'backend_not_enough_permission_to_manage_staff');
+        }
 
         $rules = [
             'username' => 'required|unique:users,username',
@@ -72,6 +75,10 @@ class AccountStaffController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function updateStaff(Request $request, $id) {
+        // Policies Check
+        if (Gate::denies('view_backend', User::class)) {
+            return redirect()->route('view.backend.index')->with('status', 'backend_not_enough_permission_to_manage_staff');
+        }
 
         $rules = [
             'name' => 'required'
@@ -100,6 +107,10 @@ class AccountStaffController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function updateStaffPassword(Request $request, $id) {
+        // Policies Check
+        if (Gate::denies('view_backend', User::class)) {
+            return redirect()->route('view.backend.index')->with('status', 'backend_not_enough_permission_to_manage_staff');
+        }
 
         $rules = [
             'password' => 'required|confirmed',
@@ -123,6 +134,11 @@ class AccountStaffController extends Controller
      * @return $this
      */
     public function showStaff() {
+        // Policies Check
+        if (Gate::denies('view_backend', User::class)) {
+            return redirect()->route('view.backend.index')->with('status', 'backend_not_enough_permission_to_manage_staff');
+        }
+
         return view('backend.group.account.staff.index')->with('staffs', Staff::all());
     }
 
@@ -131,6 +147,11 @@ class AccountStaffController extends Controller
      * @return $this
      */
     public function showCreateStaff() {
+        // Policies Check
+        if (Gate::denies('view_backend', User::class)) {
+            return redirect()->route('view.backend.index')->with('status', 'backend_not_enough_permission_to_manage_staff');
+        }
+
         $data = [
             'sections' => Section::all()
         ];
@@ -144,6 +165,11 @@ class AccountStaffController extends Controller
      * @return $this
      */
     public function showUpdateStaff($id) {
+        // Policies Check
+        if (Gate::denies('view_backend', User::class)) {
+            return redirect()->route('view.backend.index')->with('status', 'backend_not_enough_permission_to_manage_staff');
+        }
+
         $data = [
             'sections' => Section::all(),
             'staff' => Staff::find($id)

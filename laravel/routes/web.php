@@ -79,7 +79,7 @@ Route::group(['prefix' => 'backend', 'namespace' => 'Backend'], function () {
 
         Route::group(['prefix' => 'question'], function () {
 
-            Route::group(['prefix' => 'applicant', 'middleware' => 'admin.backend'], function () {
+            Route::group(['prefix' => 'applicant'], function () {
                 Route::get('/', 'ApplicantQuestionController@showViewQuestion')->name('view.backend.question.applicant');
                 Route::get('create', 'ApplicantQuestionController@showViewCreateQuestion')->name('view.backend.question.applicant.create');
                 Route::get('{id}/update', 'ApplicantQuestionController@showViewUpdateQuestion')->name('view.backend.question.applicant.update');
@@ -101,7 +101,7 @@ Route::group(['prefix' => 'backend', 'namespace' => 'Backend'], function () {
 
         });
 
-        Route::group(['prefix' => 'account', 'middleware' => 'admin.backend'], function () {
+        Route::group(['prefix' => 'account'], function () {
 
             Route::group(['prefix' => 'applicant'], function () {
                 // TODO Applicant Account Management (For applicant to login into system when have been selected)
@@ -110,7 +110,7 @@ Route::group(['prefix' => 'backend', 'namespace' => 'Backend'], function () {
                 })->name('view.backend.account.applicant');
             });
 
-            Route::group(['prefix' => 'staff'], function () {
+            Route::group(['prefix' => 'staff', 'middleware' => 'admin.backend'], function () {
                 Route::get('/', 'AccountStaffController@showStaff')->name('view.backend.account.staff');
                 Route::get('create', 'AccountStaffController@showCreateStaff')->name('view.backend.account.staff.create');
                 Route::get('{id}/update', 'AccountStaffController@showUpdateStaff')->name('view.backend.account.staff.update');
