@@ -8,7 +8,6 @@ use App\Camp;
 use App\Exceptions\FileMimeNotAcceptedException;
 use App\Exceptions\FileSizeNotAcceptedException;
 use App\Question;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -16,10 +15,12 @@ class ApplicantService
 {
 
     private $form;
+    private $file;
 
-    function __construct(FormService $formService)
+    function __construct(FormService $formService, FileService $fileService)
     {
         $this->form = $formService;
+        $this->file = $fileService;
     }
 
     /**
@@ -65,9 +66,9 @@ class ApplicantService
             if ($field_type == 'FILE' && $request->hasFile($key)) {
                 $file = $request->file($key);
 
-                if (!$this->form->checkFileMimeAccepted($models->find($key)->field_setting, $file)) {
+                if (!$this->file->checkFileMimeAccepted($models->find($key)->field_setting, $file)) {
                     throw new FileMimeNotAcceptedException();
-                } else if (!$this->form->checkFileSizeAccepted($file)) {
+                } else if (!$this->file->checkFileSizeAccepted($file)) {
                     throw new FileSizeNotAcceptedException();
                 }
             }
@@ -90,12 +91,7 @@ class ApplicantService
             {
                 $destination = json_decode($keys->find($key)->field_setting, True)['directory'];
 
-                $file = $request->file($key);
-
-                $filename = Carbon::now()->format('mdYHis').md5($file->getClientOriginalName()).".".strtolower($file->getClientOriginalExtension());
-                $file->move("storage/".$destination, $filename);
-
-                $value = $destination."/".$filename;
+                $value = $this->file->storeFile($request->file($key), $destination);
             }
 
             if($value)

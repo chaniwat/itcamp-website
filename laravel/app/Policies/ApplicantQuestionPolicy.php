@@ -34,7 +34,7 @@ class ApplicantQuestionPolicy
 
             if(
                 // Current user is admin or web developer or head
-                ($staff->is_admin || $staff->section->name == 'web_developer' || $staff->section->name == 'head' )
+                ($staff->is_admin || $staff->section->name == 'web_developer' || $staff->section->name == 'head')
             ) {
                 return true;
             }
@@ -76,7 +76,7 @@ class ApplicantQuestionPolicy
     }
 
     /**
-     * Can logged user view question (ex. view)
+     * Can logged user view applicant question
      * @return bool
      */
     public function view() {

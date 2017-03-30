@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Camp extends Model
 {
@@ -31,4 +32,41 @@ class Camp extends Model
     public function applicants() {
         return $this->hasMany('App\Applicant');
     }
+
+    private function createCountBaseSQL() {
+        return DB::table('applicant_applicant_detail_key')
+            ->join('applicants', 'applicants.id', '=', 'applicant_applicant_detail_key.applicant_id')
+            ->join('camps', 'camps.id', '=', 'applicants.camp_id')
+            ->select(DB::raw('count(*) as applicant_count'))
+            ->where('camps.id', $this->id)
+            ->groupBy('camps.id');
+    }
+
+    public function getApplicantCount() {
+        return $this->applicants->count();
+    }
+
+    public function getApplicantMaleCount() {
+        $query = $this->createCountBaseSQL()
+            ->where('applicant_detail_key_id', 'sex')
+            ->where('answer', '{"value": "male"}')
+            ->first();
+        return $query != null ? $query->applicant_count : 0;
+    }
+
+    public function getApplicantFemaleCount() {
+        $query = $this->createCountBaseSQL()
+            ->where('applicant_detail_key_id', 'sex')
+            ->where('answer', '{"value": "female"}')
+            ->first();
+        return $query != null ? $query->applicant_count : 0;
+    }
+
+    public function getApplicantApprovedCount() {
+        $query = $this->createCountBaseSQL()
+            ->whereIn('applicants.state', array('CHECKED', 'CONFIRM', 'SELECT', 'RESERVE', 'FAIL'))
+            ->first();
+        return $query != null ? $query->applicant_count : 0;
+    }
+
 }

@@ -9,6 +9,10 @@
     td {
         vertical-align: middle !important;
     }
+
+    .dataTables_filter {
+        display: none;
+    }
 </style>
 @endsection
 
@@ -19,11 +23,23 @@
             <h3 class="box-title">กล่องควบคุม</h3>
         </div>
         <div class="box-body">
-            <a href="javascript:;" class="btn btn-primary btn-campapp"><i class="fa fa-bars" aria-hidden="true"></i> แสดงค่าย @lang('camp.camp_app')</a>
-            <a href="javascript:;" class="btn btn-primary btn-campgame"><i class="fa fa-bars" aria-hidden="true"></i> แสดงค่าย @lang('camp.camp_game')</a>
-            <a href="javascript:;" class="btn btn-primary btn-campnetwork"><i class="fa fa-bars" aria-hidden="true"></i> แสดงค่าย @lang('camp.camp_network')</a>
-            <a href="javascript:;" class="btn btn-primary btn-campiot"><i class="fa fa-bars" aria-hidden="true"></i> แสดงค่าย @lang('camp.camp_iot')</a>
-            <a href="javascript:;" class="btn btn-primary btn-campdatasci"><i class="fa fa-bars" aria-hidden="true"></i> แสดงค่าย @lang('camp.camp_datasci')</a>
+            <div class="row">
+                <div class="col-xs-12" style="margin-bottom: 0.8rem;">
+                    <button class="btn btn-info" id="btn-clear-search" data-target="all"><i class="fa fa-bars" aria-hidden="true"></i> แสดงผู้สมัครทั้งหมด</button>
+                </div>
+                <div class="col-xs-12" id="camp-control" style="margin-bottom: 0.8rem;">
+                    <button class="btn btn-primary btn-campapp" data-target="camp_app"><i class="fa fa-bars" aria-hidden="true"></i> แสดงค่าย @lang('camp.camp_app')</button>
+                    <button class="btn btn-primary btn-campgame" data-target="camp_game"><i class="fa fa-bars" aria-hidden="true"></i> แสดงค่าย @lang('camp.camp_game')</button>
+                    <button class="btn btn-primary btn-campnetwork" data-target="camp_network"><i class="fa fa-bars" aria-hidden="true"></i> แสดงค่าย @lang('camp.camp_network')</button>
+                    <button class="btn btn-primary btn-campiot" data-target="camp_iot"><i class="fa fa-bars" aria-hidden="true"></i> แสดงค่าย @lang('camp.camp_iot')</button>
+                    <button class="btn btn-primary btn-campdatasci" data-target="camp_datasci"><i class="fa fa-bars" aria-hidden="true"></i> แสดงค่าย @lang('camp.camp_datasci')</button>
+                </div>
+                <div class="col-xs-12" id="status-control">
+                    <button class="btn btn-primary btn-applicant-pending" data-target="PENDING"><i class="fa fa-bars" aria-hidden="true"></i> แสดงผู้สมัครที่ยังไม่ตรวจ</button>
+                    <button class="btn btn-primary btn-applicant-checked" data-target="CHECKED"><i class="fa fa-bars" aria-hidden="true"></i> แสดงผู้สมัครที่ใบสมัครผ่าน</button>
+                    <button class="btn btn-primary btn-applicant-reject" data-target="REJECT"><i class="fa fa-bars" aria-hidden="true"></i> แสดงผู้สมัครที่ใบสมัครไม่ผ่าน</button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -37,7 +53,7 @@
                         <th>ค่าย</th>
                         <th>สถานะการสมัคร</th>
                         <th>วันที่สมัคร</th>
-                        <th width="80">แก้ไข</th>
+                        <th width="80">View</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -64,7 +80,7 @@
                             <td>@lang("camp.".$applicant->camp->name)</td>
                             <td>{{ $applicant->state }}</td>
                             <td>{{ $applicant->created_at }}</td>
-                            <td><a href="{{ route('view.backend.applicants.detail', ['id' => $applicant->id]) }}" class="btn btn-info btn-flat btn-sm"><i class="fa fa-wrench" aria-hidden="true"></i> แก้ไข</a>
+                            <td><a href="{{ route('view.backend.applicants.detail', ['id' => $applicant->id]) }}" class="btn btn-info btn-flat btn-sm"><i class="fa fa-user" aria-hidden="true"></i> ดูรายลเอียด</a>
                             </td>
                         </tr>
                     @endforeach
@@ -77,13 +93,53 @@
 
 @section('script')
     <script type="text/javascript">
-        $("table.table").DataTable({
-          "paging": true,
-          "lengthChange": false,
-          "searching": false,
-          "ordering": true,
-          "info": true,
-          "autoWidth": false
+        var dTable = $("table.table").DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false
+        });
+
+        $(function() {
+            var camp = {
+                "camp_app": "@lang("camp.camp_app")",
+                "camp_game": "@lang("camp.camp_game")",
+                "camp_network": "@lang("camp.camp_network")",
+                "camp_iot": "@lang("camp.camp_iot")",
+                "camp_datasci": "@lang("camp.camp_datasci")",
+            };
+
+            var check = {
+                "PENDING": '(PENDING)',
+                "CHECKED": '(COMPLETE|SELECT|RESERVE|FAIL)',
+                "REJECT": '(REJECT)',
+            }
+
+            var clearSearch = function() {
+                dTable.column(2).search('').draw();
+                dTable.column(3).search('').draw();
+            };
+
+            $("#btn-clear-search").click(function() {
+                clearSearch();
+            });
+
+            $("#camp-control button.btn").each(function(i, e) {
+                e = $(e);
+                e.click(function() {
+                    clearSearch();
+                    dTable.column(2).search(camp[e.data('target')]).draw();
+                });
+            });
+
+            $("#status-control button.btn").each(function(i, e) {
+                e = $(e);
+                e.click(function() {
+                    clearSearch();
+                    dTable.column(3).search(check[e.data('target')], true).draw();
+                });
+            });
         });
     </script>
 @endsection

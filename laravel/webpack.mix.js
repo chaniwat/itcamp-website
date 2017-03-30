@@ -1,8 +1,6 @@
 const path = require('path');
 const { mix } = require('laravel-mix');
 
-// TODO https://www.npmjs.com/package/laravel-elixir-config
-
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -16,7 +14,7 @@ const { mix } = require('laravel-mix');
 
 mix.webpackConfig({
   output: {
-    publicPath: path.resolve(__dirname, '../public_html')
+    path: path.resolve(__dirname, '../public_html')
   }
 });
 

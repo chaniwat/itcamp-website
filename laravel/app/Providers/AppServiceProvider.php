@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Services\AccountService;
 use App\Services\ApplicantService;
 use App\Services\AuthenticateService;
+use App\Services\FileService;
 use App\Services\FormService;
 use App\Services\QuestionService;
 use App\Services\ValidatorService;
@@ -27,6 +28,8 @@ class AppServiceProvider extends ServiceProvider
     {
         // Utilities Service
         //
+        // File Service
+        $this->app->bind('app.fileService', FileService::class);
         // Form Service
         $this->app->bind('app.formService', FormService::class);
         // Validator Service

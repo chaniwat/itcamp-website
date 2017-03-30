@@ -36,7 +36,7 @@ class RegisterController extends Controller
     public function showRegister($camp)
     {
         if(!in_array($camp, ['app', 'game', 'network', 'iot', 'datasci'])) {
-            return redirect()->route('view.frontend.index');
+            return abort(404);
         }
 
         $data = [

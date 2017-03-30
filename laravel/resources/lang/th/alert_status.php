@@ -16,6 +16,7 @@ return [
     'backend_not_enough_permission_to_create_question' => 'คุณไม่สามารถตั้งคำถามค่ายใหม่่ได้', // not enough permission to create camp question
     'backend_not_enough_permission_to_edit_question' => 'คุณไม่สามารถแก้ไขคำถามค่ายนี้ได้', // not enough permission to edit camp question
     'backend_not_enough_permission_to_remove_question' => 'คุณไม่สามารถลบคำถามค่ายนี้ได้', // not enough permission to remove camp question
+    'backend_not_enough_permission_to_manage_staff' => 'คุณไม่มีสิทธิ์ในการจัดการบัญชี staff', // not enough permission to manage staff
     'backend_question_id_already_used' => 'field_id ของคำถามค่ายนี้ถูกใช้แล้ว', // field_id already used
     'backend_question_not_found' => 'ไม่มีคำถามค่ายที่ระบุ', // camp question not found
     'backend_remove_applicant_question_success' => 'ลบคำถามผู้สมัครสำเร็จ', // remove applicant question
