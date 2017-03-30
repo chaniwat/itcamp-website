@@ -66,7 +66,7 @@ class FileService
      */
     public function checkFileSizeAccepted(File $file)
     {
-        return $file->getSize() <= env('FILE_UPLOADED_MAX_SIZE', self::FILE_UPLOADED_MAX_SIZE);
+        return $file->getSize() <= env('FILE_UPLOADED_MAX_SIZE', self::DEFAULT_FILE_UPLOADED_MAX_SIZE);
     }
 
     /**
