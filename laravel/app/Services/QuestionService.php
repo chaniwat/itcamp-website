@@ -25,11 +25,16 @@ class QuestionService
         ]
     ];
 
-    const CRITICAL_APPLICANT_FIELD = ['p_name', 'p_name_other', 'f_name', 'l_name', 'nickname', 'birthday', 'sex', 'religion'];
-
     /**
-     * Validator service instance
+     * Critical applicant detail field (Cannot delete, needed)<br>
+     * FIXME Isolate to new table or made it by default
      */
+    const CRITICAL_APPLICANT_FIELD = [
+        'p_name', 'f_name', 'l_name', 'nickname', 'birthday', 'sex', 'religion', 'citizen_numid',
+        'address_homenum', 'address_moo', 'address_road', 'address_tumbon', 'address_amphure', 'address_province', 'address_zipcode',
+        'phone', 'email'
+    ];
+
     private $validator;
 
     public function __construct(ValidatorService $validatorService)
