@@ -14,6 +14,7 @@ use App\Services\View\PathHelperService;
 use App\Services\View\StatusViewService;
 use App\Services\View\ViewHelperInterface;
 use App\Services\View\ViewHelperService;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -63,6 +64,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Schema::defaultStringLength(191);
+
         // Share viewHelper to all views (ViewHelperService)
         View::share('viewHelper', $this->app->make('app.view.viewHelperService'));
     }
