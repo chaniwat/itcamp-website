@@ -39,7 +39,7 @@ class StatsController extends Controller
         $errors = Tracker::errors($range, false)
             ->where('error_id', '<>', $the404error->id)->take(15)->get();
 
-        $visits = Tracker::pageViews(60 * 24 * 30);
+        $visits = Tracker::pageViews(60 * 24 * 7);
         $unique_visits = DB::select(
             DB::raw(
                 "SELECT date, count(*) as total 

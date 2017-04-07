@@ -34,6 +34,8 @@ return [
      */
     'do_not_track_routes' => [
         'tracker.stats.*',
+        'view.backend.*',
+        'backend.*'
     ],
 
     /*
