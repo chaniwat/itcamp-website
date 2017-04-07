@@ -36,15 +36,34 @@ class StatsController extends Controller
         $range->setEnd(Carbon::now());
 
         $the404error = Error::where('code', '404')->first();
-        $errors = Tracker::errors($range, false)
-            ->where('error_id', '<>', $the404error->id)->take(15)->get();
+        if($the404error != null) {
+            $errors = Tracker::errors($range, false)
+                ->where('error_id', '<>', $the404error->id)->take(15)->get();
+        } else {
+            $errors = Tracker::errors($range, false)->take(15)->get();
+        }
 
-        $visits = Tracker::pageViews(60 * 24 * 7);
+        $visits = DB::select(
+            DB::raw(
+                "SELECT DATE(created_at) AS date, count(*) AS total 
+                FROM `tracker_log`
+                WHERE created_at >= :start AND created_at <= :end
+                GROUP BY DATE(created_at)"),
+            [
+                "start" => Carbon::now()->subDays(7),
+                "end" => Carbon::now()
+            ]
+        );
         $unique_visits = DB::select(
             DB::raw(
                 "SELECT date, count(*) as total 
                 FROM (SELECT DATE(created_at) AS date, session_id FROM `tracker_log` GROUP BY DATE(created_at), session_id) AS t1
-                GROUP BY date")
+                WHERE date >= :start AND date <= :end
+                GROUP BY date"),
+            [
+                "start" => Carbon::now()->subDays(7),
+                "end" => Carbon::now()
+            ]
         );
 
         $visits_dates = [];
