@@ -153,7 +153,7 @@ return [
      *     sudo apt-get purge php5-geoip
      *
      */
-    'log_geoip' => false,
+    'log_geoip' => true,
 
     /*
      * Do you wish to log the user agent?
@@ -173,7 +173,7 @@ return [
     /*
      * Do you wish to log languages?
      */
-    'log_languages' => false,
+    'log_languages' => true,
 
     /*
      * Do you wish to log HTTP referers?
@@ -183,7 +183,7 @@ return [
     /*
      * Do you wish to log url paths?
      */
-    'log_paths' => false,
+    'log_paths' => true,
 
     /*
      * Do you wish to log url queries and query arguments?
@@ -287,7 +287,7 @@ return [
 
     'authenticated_user_id_column' => 'id', // to Auth::user()->id
 
-    'authenticated_user_username_column' => 'email', // to Auth::user()->email
+    'authenticated_user_username_column' => 'username', // to Auth::user()->email
 
     /*
      * Enable the Stats Panel?
