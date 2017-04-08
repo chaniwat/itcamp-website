@@ -53,7 +53,7 @@
         </header>
 
         <section class="body">
-            <form id="registerForm" action="{{ route('frontend.register', ['camp' => $camp]) }}" method="POST" enctype="multipart/form-data">
+            <form id="registerForm" action="{{ route('frontend.register', ['camp' => $camp]) }}" method="POST" enctype="multipart/form-data" novalidate>
                 {{ csrf_field() }}
 
                 <h2>ส่วนที่ 1 : ข้อมูลทั่วไปของผู้สมัคร</h2>
@@ -106,7 +106,7 @@
                 <hr />
                 <div class="row">
                     <div class="col-12 offset-lg-4 col-lg-4">
-                        <button type="button" class="btn btn-block btn-success" id="submitBtn">สมัคร</button>
+                        <button type="submit" class="btn btn-block btn-success" id="submitBtn">สมัคร</button>
                     </div>
                 </div>
 

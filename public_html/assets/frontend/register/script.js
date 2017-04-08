@@ -130,40 +130,68 @@ function registerFileCheck() {
 
 function registerValidateForm() {
   var valid;
+  var firstInvalidElement = null;
+  var confirmModalOpen = false;
 
-  var textValidator = function(i, e) {
-    e = $(e);
+  var textValidator = function(e) {
     e.parent('.form-group').removeClass('has-danger');
 
     if(!e[0].checkValidity() || e.val().replace(/^\s+|\s+$/g,'') == '') {
       e.parent('.form-group').addClass('has-danger');
       valid = false;
+
+      if(!firstInvalidElement) {
+        firstInvalidElement = e;
+      }
     }
 
     e.val(e.val().replace(/^\s+|\s+$/g,''));
   }
-  var selectValidator = function(i, e) {
-    e = $(e);
+  var selectValidator = function(e) {
     e.parent('.form-group').removeClass('has-danger');
 
     if($(e).val() == null) {
       e.parent('.form-group').addClass('has-danger');
       valid = false;
+
+      if(!firstInvalidElement) {
+        firstInvalidElement = e;
+      }
     }
   }
 
-  $('#submitBtn').click(function() {
-    valid = true;
+  // for state changing
+  $("#confirmModal").on('shown.bs.modal', function() {
+    confirmModalOpen = true;
+  });
+  $("#confirmModal").on('hide.bs.modal', function() {
+    confirmModalOpen = false;
+  });
 
-    $('input[required]').each(textValidator);
-    $('select[required]').each(selectValidator);
-    $('textarea[required]').each(textValidator);
+  $('#registerForm').submit(function(e) {
+    if(!confirmModalOpen) {
+      e.preventDefault();
 
-    if(valid) {
-      $("#confirmModal").modal('show');
-    } else {
-      $("#formAlert").modal('show');
-    };
+      valid = true;
+      firstInvalidElement = null;
+
+      $('input[required], select[required], textarea[required]').each(function (i, e) {
+        e = $(e);
+
+        if(e.is('input') || e.is('textarea')) {
+          textValidator(e);
+        } else {
+          selectValidator(e);
+        }
+      });
+
+      if(valid) {
+        $("#confirmModal").modal('show');
+      } else {
+        $("#formAlert").modal('show');
+        firstInvalidElement.focus();
+      };
+    }
   });
 }
 
@@ -185,6 +213,7 @@ $(document).ready(function() {
     registerOtherFieldHandler();
     registerInputMasks();
     registerFileCheck();
+
     registerValidateForm();
   }
 });
