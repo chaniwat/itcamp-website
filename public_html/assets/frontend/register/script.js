@@ -130,16 +130,17 @@ function registerFileCheck() {
 
 function registerValidateForm() {
   var valid;
-  var file;
 
   var textValidator = function(i, e) {
     e = $(e);
     e.parent('.form-group').removeClass('has-danger');
 
-    if(!e[0].checkValidity()) {
+    if(!e[0].checkValidity() || e.val().replace(/^\s+|\s+$/g,'') == '') {
       e.parent('.form-group').addClass('has-danger');
       valid = false;
     }
+
+    e.val(e.val().replace(/^\s+|\s+$/g,''));
   }
   var selectValidator = function(i, e) {
     e = $(e);
