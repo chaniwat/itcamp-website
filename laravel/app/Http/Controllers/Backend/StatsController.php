@@ -14,10 +14,16 @@ class StatsController extends Controller
 {
 
     public function showOverview() {
-        $devices = $this->getDevicesViews();
-        $l7days = $this->get7DaysLogs();
+        // Log from 7 days past
+        $range = new Minutes();
+        $range->setStart(Carbon::now()->subDays(7));
+        $range->setEnd(Carbon::now());
 
-        $logs = array_merge($l7days, $devices);
+        $devices = $this->getDevicesViews($range);
+        $visits = $this->getVisits($range);
+        $errors = $this->getErrors($range);
+
+        $logs = array_merge($visits, $devices, $errors);
 
         return view('backend.group.stats.overview')->with($logs);
     }
@@ -30,35 +36,40 @@ class StatsController extends Controller
         abort(404);
     }
 
-    private function get7DaysLogs() {
-        $range = new Minutes();
-        $range->setStart(Carbon::now()->subDays(7));
-        $range->setEnd(Carbon::now());
+    const SKIP_ERROR_REPORT = ['404'];
 
-        $the404error = Error::where('code', '404')->first();
-        if($the404error != null) {
-            $errors = Tracker::errors($range, false)
-                ->where('error_id', '<>', $the404error->id)->take(15)->get();
-        } else {
-            $errors = Tracker::errors($range, false)->take(15)->get();
-        }
+    private function getErrors(Minutes $range) {
+        $skipErrors = Error::whereIn('code', self::SKIP_ERROR_REPORT)->pluck('id')->all();
+        $errors = Tracker::errors($range, false)->whereNotIn('error_id', $skipErrors)->take(15)->get();
 
+        return [
+            "errors" => $errors,
+        ];
+    }
+
+    private function getVisits(Minutes $range) {
         $visits = DB::select(
             DB::raw(
                 "SELECT DATE(created_at) AS date, count(*) AS total 
                 FROM `tracker_log`
                 WHERE created_at >= :start AND created_at <= :end
+                AND error_id IS NULL
                 GROUP BY DATE(created_at)"),
             [
-                "start" => Carbon::now()->subDays(7),
-                "end" => Carbon::now()
+                "start" => $range->getStart(),
+                "end" => $range->getEnd()
             ]
         );
         $unique_visits = DB::select(
             DB::raw(
                 "SELECT date, count(*) as total 
-                FROM (SELECT DATE(created_at) AS date, session_id FROM `tracker_log` GROUP BY DATE(created_at), session_id) AS t1
-                WHERE date >= :start AND date <= :end
+                FROM (
+                  SELECT DATE(created_at) AS date, session_id
+                  FROM `tracker_log` 
+                  WHERE created_at >= :start AND created_at <= :end
+                  AND error_id IS NULL
+                  GROUP BY DATE(created_at), session_id
+                ) AS t1
                 GROUP BY date"),
             [
                 "start" => Carbon::now()->subDays(7),
@@ -66,43 +77,27 @@ class StatsController extends Controller
             ]
         );
 
-        $visits_dates = [];
-        $visits_counts = [];
-        foreach ($visits as $visit) {
-            array_push($visits_dates, $visit->date);
-            array_push($visits_counts, $visit->total);
-        }
-        $unique_visits_counts = [];
-        foreach ($unique_visits as $visit) {
-            array_push($unique_visits_counts, $visit->total);
-        }
-
         return [
-            "errors" => $errors,
-            "visits_dates" => $visits_dates,
-            "visits_counts" => $visits_counts,
-            "unique_visits_counts" => $unique_visits_counts
+            "visits_dates" => array_pluck($visits, 'date'),
+            "visits_counts" => array_pluck($visits, 'total'),
+            "unique_visits_counts" => array_pluck($unique_visits, 'total')
         ];
     }
 
-    private function getDevicesViews() {
+    private function getDevicesViews(Minutes $range) {
         $devices = DB::table('tracker_log')
             ->join('tracker_sessions', 'tracker_sessions.id', '=', 'tracker_log.session_id')
             ->join('tracker_devices', 'tracker_devices.id', '=', 'tracker_sessions.device_id')
             ->select(DB::raw('kind, count(*) as device_count'))
+            ->where('tracker_log.created_at', '>=', $range->getStart())
+            ->where('tracker_log.created_at', '<=', $range->getEnd())
+            ->whereNull('tracker_log.error_id')
             ->groupBy('kind')
             ->get();
 
-        $devices_labels = [];
-        $devices_counts = [];
-        foreach ($devices as $device) {
-            array_push($devices_labels, $device->kind);
-            array_push($devices_counts, $device->device_count);
-        }
-
         return [
-            "devices_labels" => $devices_labels,
-            "devices_counts" => $devices_counts
+            "devices_labels" => array_pluck($devices, 'kind'),
+            "devices_counts" => array_pluck($devices, 'device_count')
         ];
     }
 
