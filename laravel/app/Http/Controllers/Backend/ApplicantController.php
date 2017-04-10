@@ -10,6 +10,8 @@ use App\Http\Controllers\Controller;
 class ApplicantController extends Controller
 {
 
+    // TODO Approve/Reject Applicant
+
     public function showApplicants()
     {
         return view('backend.group.applicant.index')->with('applicants', Applicant::orderByRaw(
