@@ -23,7 +23,7 @@ class CreateTrackerAgentsTable extends Migration
             function ($table) {
                 $table->bigIncrements('id');
 
-                $table->string('name')->unique();
+                $table->string('name');
                 $table->string('browser')->index();
                 $table->string('browser_version');
 
