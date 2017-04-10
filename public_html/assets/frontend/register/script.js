@@ -145,7 +145,9 @@ function registerValidateForm() {
       }
     }
 
-    e.val(e.val().replace(/^\s+|\s+$/g,''));
+    if(!e.is('input[type=file]'))  {
+      e.val(e.val().replace(/^\s+|\s+$/g,''));
+    }
   }
   var selectValidator = function(e) {
     e.parent('.form-group').removeClass('has-danger');
