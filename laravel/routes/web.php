@@ -21,6 +21,13 @@ Route::group(['namespace' => 'Frontend'], function () {
     #region register
 
     if(env('APP_OPEN')) {
+
+        Route::group(['prefix' => 'advertise'], function () {
+            Route::get('/', 'AdvertiseController@showForm')->name('view.frontend.advertise');
+            Route::get('/complete', 'AdvertiseController@showComplete')->name('view.frontend.advertise.complete');
+            Route::post('/', 'AdvertiseController@saveAdvertise')->name('frontend.advertise');
+        });
+
         Route::group(['prefix' => 'register'], function () {
             Route::get('/complete', 'RegisterController@showComplete')->name('view.frontend.register.complete');
             Route::get('/{camp}', 'RegisterController@showRegister')->name('view.frontend.register');

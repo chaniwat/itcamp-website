@@ -30,7 +30,7 @@ class RegisterController extends Controller
             return redirect()->back()->withInput($request->all())->with('status', $e->status_message);
         }
 
-        return redirect()->route('view.frontend.register.complete')->with('finish', true);
+        return redirect()->route('view.frontend.register.complete')->with('reg_finish', true);
     }
 
     public function showRegister($camp)
@@ -58,7 +58,7 @@ class RegisterController extends Controller
 
     public function showComplete()
     {
-        if(session('finish')) {
+        if(session('reg_finish')) {
             return view('frontend.reg_complete');
         } else {
             return redirect()->route('view.frontend.index');
