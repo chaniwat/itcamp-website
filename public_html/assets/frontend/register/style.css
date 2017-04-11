@@ -25,7 +25,7 @@ header {
 }
 
 header img {
-    margin-bottom: 18px;
+    margin-bottom: 1.5rem;
 }
 
 h3 {
@@ -82,4 +82,9 @@ textarea {
 .showImg {
     display: block;
     margin: 0.5rem 0;
+}
+
+#savingModal h3 {
+    margin-top: 1rem;
+    margin-bottom: 0;
 }

@@ -48,14 +48,11 @@ function registerInputMasks() {
   });
 }
 
-function registerFileCheck() {
+function registerFileCheck(mode) {
   var pictures = ["image/jpeg", "image/gif", "image/png"];
   var documents = ["application/pdf", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"];
   var any = pictures.concat(documents);
 
-  var setupAllowedFile = function(elem, allowedExts) {
-    elem.change(checkInput.bind(this, allowedExts));
-  }
   var checkInput = function(allowedExts, event) {
     var elemO = $(event.target).get(0);
     var files = elemO.files;
@@ -84,6 +81,10 @@ function registerFileCheck() {
     } else {
       console.log('No file selected');
     }
+  }
+
+  var setupAllowedFile = function(elem, allowedExts) {
+    elem.change(checkInput.bind(this, allowedExts));
   }
 
   var registerShowPicture = function(fieldID) {
@@ -115,23 +116,31 @@ function registerFileCheck() {
     });
   }
 
-  setupAllowedFile($("#a_confirmcurrentgrade"), any);
-  setupAllowedFile($("#q_recreation_1_f"), pictures);
-  registerShowPicture("a_confirmcurrentgrade");
-  registerShowPicture("q_recreation_1_f");
-  if(GlobalOption.camp == 'camp_game') {
-    setupAllowedFile($("#q_game_5"), pictures);
-    registerShowPicture("q_game_5");
-  } else if(GlobalOption.camp == 'camp_iot') {
-    setupAllowedFile($("#q_iot_5"), pictures);
-    registerShowPicture("q_iot_5");
+  if(mode == "REGISTER") {
+    setupAllowedFile($("#a_confirmcurrentgrade"), any);
+    registerShowPicture("a_confirmcurrentgrade");
+
+    setupAllowedFile($("#q_recreation_1_f"), pictures);
+    registerShowPicture("q_recreation_1_f");
+
+    if(GlobalOption.camp == 'camp_game') {
+      setupAllowedFile($("#q_game_5"), pictures);
+      registerShowPicture("q_game_5");
+    } else if(GlobalOption.camp == 'camp_iot') {
+      setupAllowedFile($("#q_iot_5"), pictures);
+      registerShowPicture("q_iot_5");
+    }
+  } else if(mode == "ADVERTISE") {
+    setupAllowedFile($("#banner"), pictures);
+    registerShowPicture("banner");
   }
 }
 
-function registerValidateForm() {
+function registerValidateForm(elem) {
   var valid;
   var firstInvalidElement = null;
   var confirmModalOpen = false;
+  var submitting = false;
 
   var textValidator = function(e) {
     e.parent('.form-group').removeClass('has-danger');
@@ -167,10 +176,20 @@ function registerValidateForm() {
     confirmModalOpen = true;
   });
   $("#confirmModal").on('hide.bs.modal', function() {
-    confirmModalOpen = false;
+    if(!submitting) {
+      confirmModalOpen = false;
+    }
+  });
+  $("#confirmModal").on('hidden.bs.modal', function() {
+    if(submitting) {
+      $("#savingModal").modal({
+          backdrop: 'static',
+          keyboard: false
+      });
+    }
   });
 
-  $('#registerForm').submit(function(e) {
+  elem.submit(function(e) {
     if(!confirmModalOpen) {
       e.preventDefault();
 
@@ -193,6 +212,9 @@ function registerValidateForm() {
         $("#formAlert").modal('show');
         firstInvalidElement.focus();
       };
+    } else {
+      submitting = true;
+      $("#confirmModal").modal('hide');
     }
   });
 }
@@ -211,11 +233,15 @@ $(function(){
 });
 
 $(document).ready(function() {
+
+  registerFileCheck(GlobalOption.mode);
+
   if(GlobalOption.mode == "REGISTER") {
     registerOtherFieldHandler();
     registerInputMasks();
-    registerFileCheck();
 
-    registerValidateForm();
+    registerValidateForm($('#registerForm'));
+  } else if(GlobalOption.mode == "ADVERTISE") {
+    registerValidateForm($('#advertiseForm'));
   }
 });

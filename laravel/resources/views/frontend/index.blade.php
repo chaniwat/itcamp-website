@@ -152,7 +152,7 @@
               <h3>สถานที่</h3>
               <span class="sub font-weight-bold">IT<span class="text-orange">KMITL</span></span>
             </div>
-          </ul>
+          </div>
         </div>
       </section>
 
@@ -166,11 +166,31 @@
         </div>
         <div class="content">
           <h1 class="block-title">ผู้สนับสนุน</h1>
-          <div class="justify-content-center supporters-list">
-              <img class="img-thumbnail" src="{{ $lazyModeDir }}/assets/frontend/images/kmitl.jpg" />
-              <img class="img-thumbnail" src="{{ $lazyModeDir }}/assets/frontend/images/itkmitl.jpg" />
-            </div>
-          </div>
+
+            @if(count($sponsors['big']) > 0)
+                <div class="justify-content-center supporters-list">
+                    @foreach($sponsors['big'] as $img)
+                        <div class="supporter-img"><img class="img-thumbnail" src="{{ $lazyModeDir }}/assets/sponsor/{{ $img }}" /></div>
+                    @endforeach
+                </div>
+            @endif
+
+            @if(count($sponsors['medium']) > 0)
+                <div class="justify-content-center supporters-list medium">
+                    @foreach($sponsors['medium'] as $img)
+                        <div class="supporter-img"><img class="img-thumbnail" src="{{ $lazyModeDir }}/assets/sponsor/{{ $img }}" /></div>
+                    @endforeach
+                </div>
+            @endif
+
+            @if(count($sponsors['small']) > 0)
+                <div class="justify-content-center supporters-list small">
+                    @foreach($sponsors['small'] as $img)
+                        <div class="supporter-img"><img class="img-thumbnail" src="{{ $lazyModeDir }}/assets/sponsor/{{ $img }}" /></div>
+                    @endforeach
+                </div>
+            @endif
+
         </div>
         <div class="camp-connect" id="supporter-camp-connect-el"></div>
       </section>
@@ -628,8 +648,29 @@
             </div>
             <div class="row sharing-link">
               <div class="col-12">
-                <h3 class="block-title">ร่วมประชาสัมพันธ์กับเรา</h3>
-                <a href="javscript:;" class="btn btn-sharing-link disabled">เร็วๆนี้</a>
+                  <h3 class="block-title">ร่วมประชาสัมพันธ์กับเรา</h3>
+                  <a href="{{ route('view.frontend.advertise') }}" class="btn btn-sharing-link">คลิก</a>
+
+                  <hr />
+
+                  <h4>เว็บไซต์ที่ร่วมประชาสัมพันธ์</h4>
+
+                  @if(count($exchangers['banner']) > 0)
+                      <div class="justify-content-center exchangers-list-banner">
+                          @foreach($exchangers['banner'] as $exchanger)
+                            <a href="{{ $exchanger->url }}" target="_blank"><div class="exchanger"><img class="img-thumbnail" src="{{ $lazyModeDir }}/storage/{{ $exchanger->banner }}" /></div></a>
+                          @endforeach
+                      </div>
+                  @endif
+
+                  @if(count($exchangers['text']) > 0)
+                      <div class="justify-content-center exchangers-list-text">
+                          @foreach($exchangers['text'] as $exchanger)
+                            <a href="{{ $exchanger->url }}" target="_blank"><div class="exchanger">{{ $exchanger->title }}</div></a>
+                          @endforeach
+                      </div>
+                  @endif
+
               </div>
             </div>
           </div>
