@@ -14,11 +14,6 @@
 
 @section('content')
 
-    {{--
-        TODO Confirm Approve/Reject Modal
-        TODO Go to applicant id (pre-fetch|ajax|optional), Go previous/next aapplicnt
-    --}}
-
     <div class="box box-solid box-info">
         <div class="box-header with-border">
             <h3 class="box-title">กล่องควบคุม</h3>
