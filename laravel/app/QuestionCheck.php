@@ -4,18 +4,14 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Staff extends Model
+class QuestionCheck extends Model
 {
-    public $timestamps = false;
-
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = [
-        'name', 'position', 'is_admin'
-    ];
+    protected $fillable = [];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -24,15 +20,16 @@ class Staff extends Model
      */
     protected $hidden = [];
 
-    public function user() {
-        return $this->belongsTo('App\User');
+    public function applicant() {
+        return $this->belongsTo('App\Applicant');
     }
 
     public function section() {
         return $this->belongsTo('App\Section');
     }
 
-    public function checks() {
-        return $this->hasMany('App\QuestionCheck');
+    public function staff() {
+        return $this->belongsTo('App\Staff');
     }
+
 }

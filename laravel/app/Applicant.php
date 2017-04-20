@@ -37,6 +37,10 @@ class Applicant extends Model
         return $this->hasMany('App\Answer');
     }
 
+    public function checks() {
+        return $this->hasMany('App\QuestionCheck');
+    }
+
     public function applicantDetails() {
         return $this->belongsToMany('App\ApplicantDetailKey')->withPivot('answer');
     }
