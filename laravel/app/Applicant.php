@@ -23,6 +23,8 @@ class Applicant extends Model
      */
     protected $hidden = [];
 
+    #region Foreign model
+
     public function user() {
         return $this->belongsTo('App\User');
     }
@@ -39,6 +41,10 @@ class Applicant extends Model
         return $this->belongsToMany('App\ApplicantDetailKey')->withPivot('answer');
     }
 
+    #endregion
+
+    #region Static method (counting)
+
     private static function createCountBaseSQL() {
         return DB::table('applicant_applicant_detail_key')
             ->select(DB::raw('count(*) as applicant_count'))
@@ -47,25 +53,65 @@ class Applicant extends Model
     }
 
     public static function getApplicantCount() {
-        return Applicant::all()->count();
+        return self::all()->count();
     }
 
     public static function getMaleCount() {
-        $query = Applicant::createCountBaseSQL()->where('answer', '{"value": "male"}')->first();
+        $query = self::createCountBaseSQL()->where('answer', '{"value": "male"}')->first();
         return $query != null ? $query->applicant_count : 0;
     }
 
     public static function getFemaleCount() {
-        $query = Applicant::createCountBaseSQL()->where('answer', '{"value": "female"}')->first();
+        $query = self::createCountBaseSQL()->where('answer', '{"value": "female"}')->first();
         return $query != null ? $query->applicant_count : 0;
     }
 
     public static function getCheckedCount() {
-        return Applicant::all()->whereIn('state', array('CHECKED', 'CONFIRM', 'SELECT', 'RESERVE', 'FAIL', 'REJECT'))->count();
+        return self::all()->whereIn('state', array('CHECKED', 'COMPLETE', 'SELECT', 'RESERVE', 'FAIL', 'CONFIRM_SELECT', 'CONFIRM_RESERVE', 'CANCEL_SELECT', 'CANCEL_RESERVE', 'REJECT'))->count();
     }
 
     public static function getApprovedCount() {
-        return Applicant::all()->whereIn('state', array('CHECKED', 'CONFIRM', 'SELECT', 'RESERVE', 'FAIL'))->count();
+        return self::all()->whereIn('state', array('CHECKED', 'COMPLETE', 'SELECT', 'RESERVE', 'FAIL', 'CONFIRM_SELECT', 'CONFIRM_RESERVE', 'CANCEL_SELECT', 'CANCEL_RESERVE'))->count();
     }
+
+    public static function getRejectedCount() {
+        return self::all()->whereIn('state', array('REJECT'))->count();
+    }
+
+    public static function getCompletedCount() {
+        return self::all()->whereIn('state', array('COMPLETE', 'SELECT', 'RESERVE', 'FAIL', 'CONFIRM_SELECT', 'CONFIRM_RESERVE', 'CANCEL_SELECT', 'CANCEL_RESERVE'))->count();
+    }
+
+    public static function getSelectedCount() {
+        return self::all()->whereIn('state', array('SELECT', 'CONFIRM_SELECT', 'CANCEL_SELECT'))->count();
+    }
+
+    public static function getReservedCount() {
+        return self::all()->whereIn('state', array('RESERVE', 'CONFIRM_RESERVE', 'CANCEL_RESERVE'))->count();
+    }
+
+    public static function getFailedCount() {
+        return self::all()->whereIn('state', array('FAIL'))->count();
+    }
+
+    #endregion
+
+    #region Accessor & Mutator
+
+    public function setStateAttribute($value) {
+        // TODO Case checking (prerequisite or prevent)
+
+        $this->attributes['state'] = $value;
+    }
+
+    #endregion
+
+    #region Helper method
+
+    public function isChecked() {
+        return in_array($this->state, array('CHECKED', 'CONFIRM', 'SELECT', 'RESERVE', 'FAIL', 'CONFIRM_SELECT', 'CONFIRM_RESERVE', 'CANCEL_SELECT', 'CANCEL_RESERVE', 'REJECT'));
+    }
+
+    #endregion
 
 }

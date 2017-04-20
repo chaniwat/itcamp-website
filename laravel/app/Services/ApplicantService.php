@@ -23,8 +23,6 @@ class ApplicantService
         $this->file = $fileService;
     }
 
-    // TODO Update applicant state
-
     /**
      * Register new applicant
      * @param Request $request

@@ -76,6 +76,9 @@ Route::group(['prefix' => 'backend', 'namespace' => 'Backend'], function () {
             Route::get('/', 'ApplicantController@showApplicants')->name('view.backend.applicants');
             Route::get('/{id}', 'ApplicantController@showApplicantDetail')->name('view.backend.applicants.detail');
 
+            Route::post('/', 'ApplicantController@goToApplicantID')->name('backend.applicants.go_to_id');
+            Route::post('/{id}/status', 'ApplicantController@approvingApplicant')->name('backend.applicants.update.state');
+
         });
 
         Route::group(['prefix' => 'stats'], function () {

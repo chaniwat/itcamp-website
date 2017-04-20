@@ -26,24 +26,84 @@
         <div class="box-body">
             <div class="row">
                 <div class="col-xs-12" style="margin-bottom: 1rem;">
-                    <div class="input-group" style="width: 250px; margin-bottom: 0.8rem;">
-                        <input type="text" class="form-control" placeholder="Applicant ID">
-                        <span class="input-group-btn">
-                            <button class="btn btn-primary" type="button">Go to ID</button>
-                        </span>
-                    </div>
-                    <button class="btn btn-primary" data-target="all"><< Previous Applicant</button>
-                    <button class="btn btn-primary" data-target="all">Next Applicant >></button>
+                    <form action="{{ route('backend.applicants.go_to_id') }}" method="post">
+                        {{ csrf_field() }}
+                        <div class="input-group" style="width: 250px; margin-bottom: 0.8rem;">
+                            <input type="text" class="form-control" placeholder="Applicant ID" name="id">
+                            <span class="input-group-btn">
+                                <button class="btn btn-primary" type="submit">Go to ID</button>
+                            </span>
+                        </div>
+                    </form>
+                    @if(isset($previousId))
+                        <a href="{{ route('view.backend.applicants.detail', ['id' => $previousId]) }}" class="btn btn-primary"><< Previous Applicant</a>
+                    @else
+                        <a href="javascript:;" class="btn btn-primary disabled"><< Previous Applicant</a>
+                    @endif
+                    @if(isset($nextId))
+                        <a href="{{ route('view.backend.applicants.detail', ['id' => $nextId]) }}" class="btn btn-primary">Next Applicant >></a>
+                    @else
+                        <a href="javascript:;" class="btn btn-primary disabled">Next Applicant >></a>
+                    @endif
                 </div>
                 <div class="col-xs-12">
                     <hr style="margin: 1rem 0; border-width: 3px;" />
                 </div>
                 <div class="col-xs-12">
-                    <h2 style="margin-top: 0;">Status: รอการสรวจสอบ (PENDING)</h2>
+                    <h2 style="margin-top: 0;">Status: @lang('applicant_state.'.$applicant->state)</h2>
                 </div>
                 <div class="col-xs-12">
-                    <button class="btn btn-success" data-target="all">Approve</button>
-                    <button class="btn btn-danger" data-target="all">Reject</button>
+                    @if(!$applicant->isChecked())
+                        <button class="btn btn-success" data-toggle="modal" data-target="#approveAlert">Approve</button>
+                        <button class="btn btn-danger" data-toggle="modal" data-target="#rejectAlert">Reject</button>
+                    @endif
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="approveAlert" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="modalLabel">Confirm</h4>
+                </div>
+                <div class="modal-body">
+                    ยืนยันการ Approve ใบสมัครนี้<br>
+                    เมื่อยืนยันแล้วจะไม่สามารถแก้ไขได้ โปรดตรวจสอบอีกครั้ง<br>
+                    ซึ่งเมื่อใบสมัครนี้ผ่านการยืนยันแล้วจะเข้าสู่ขั้นตอนการตรวจคำถาม
+                </div>
+                <div class="modal-footer">
+                    <form action="{{ route('backend.applicants.update.state', ["id" => $applicant->id]) }}" method="post">
+                        {{ csrf_field() }}
+
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
+                        <button type="submit" class="btn btn-success" name="state" value="CHECKED">ยืนยัน (Approve)</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="rejectAlert" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="modalLabel">Confirm</h4>
+                </div>
+                <div class="modal-body">
+                    ยืนยันการ Reject ใบสมัครนี้<br>
+                    เมื่อยืนยันแล้วจะไม่สามารถแก้ไขได้ โปรดตรวจสอบอีกครั้ง
+                </div>
+                <div class="modal-footer">
+                    <form action="{{ route('backend.applicants.update.state', ["id" => $applicant->id]) }}" method="post">
+                        {{ csrf_field() }}
+
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
+                        <button type="submit" class="btn btn-danger" name="state" value="REJECT">ยืนยัน (Reject)</button>
+                    </form>
                 </div>
             </div>
         </div>

@@ -80,7 +80,7 @@
                             <td>@lang("camp.".$applicant->camp->name)</td>
                             <td>{{ $applicant->state }}</td>
                             <td>{{ $applicant->created_at }}</td>
-                            <td><a href="{{ route('view.backend.applicants.detail', ['id' => $applicant->id]) }}" class="btn btn-info btn-flat btn-sm"><i class="fa fa-user" aria-hidden="true"></i> ดูรายลเอียด</a>
+                            <td><a href="{{ route('view.backend.applicants.detail', ['id' => $applicant->id]) }}" class="btn btn-info btn-flat btn-sm" target="_blank"><i class="fa fa-user" aria-hidden="true"></i> ดูรายลเอียด</a>
                             </td>
                         </tr>
                     @endforeach
@@ -112,7 +112,7 @@
 
             var check = {
                 "PENDING": '(PENDING)',
-                "CHECKED": '(COMPLETE|SELECT|RESERVE|FAIL)',
+                "CHECKED": '(COMPLETE|SELECT|RESERVE|FAIL|CONFIRM_SELECT|CONFIRM_RESERVE|CANCEL_SELECT|CANCEL_RESERVE)',
                 "REJECT": '(REJECT)',
             }
 
