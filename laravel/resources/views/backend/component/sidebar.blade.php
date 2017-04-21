@@ -19,9 +19,11 @@
                 </ul>
             </li>
             <li class="{{ $viewHelper->isActivePath(["backend/applicant", "backend/applicant/*"]) }}"><a href="{{ route('view.backend.applicants') }}"><i class="fa fa-book"></i> <span>ตรวจใบสมัคร</span></a></li>
-            <li class="{{ $viewHelper->isActivePath(["backend/answer", "backend/answer/*"]) }}"><a href="{{ route('view.backend.answers') }}"><i class="fa fa-book"></i> <span>ตรวจคำตอบ</span></a></li>
+            @can('check', \App\Answer::class)
+                <li class="{{ $viewHelper->isActivePath(["backend/answer", "backend/answer/*"]) }}"><a href="{{ route('view.backend.answers') }}"><i class="fa fa-book"></i> <span>ตรวจคำตอบ</span></a></li>
+            @endcan
             @can('view', \App\ApplicantDetailKey::class)
-            <li class="{{ $viewHelper->isActivePath(["backend/question/applicant", "backend/question/applicant/*"]) }}"><a href="{{ route('view.backend.question.applicant') }}"><i class="fa fa-book"></i> <span>ดูคำถามผู้สมัคร</span></a></li>
+                <li class="{{ $viewHelper->isActivePath(["backend/question/applicant", "backend/question/applicant/*"]) }}"><a href="{{ route('view.backend.question.applicant') }}"><i class="fa fa-book"></i> <span>ดูคำถามผู้สมัคร</span></a></li>
             @endcan
             @can('view', \App\Question::class)
                 <li class="{{ $viewHelper->isActivePath(["backend/question/camp", "backend/question/camp/*"]) }}"><a href="{{ route('view.backend.question.camp') }}"><i class="fa fa-book"></i> <span>ดูคำถามค่าย</span></a></li>
