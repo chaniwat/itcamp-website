@@ -18,7 +18,7 @@ class ApplicantController extends Controller
     public function approvingApplicant(Request $request, $id) {
         // Policies Check
         if (Gate::denies('update_state', Applicant::class)) {
-            return redirect()->route('view.backend.applicants.detail')->with('status', 'backend_not_enough_permission_to_update_applicant_state');
+            return redirect()->route('view.backend.applicants.detail', ["id" => $id])->with('status', 'backend_not_enough_permission_to_update_applicant_state');
         }
 
         if(($applicant = Applicant::find($id)) == null) {

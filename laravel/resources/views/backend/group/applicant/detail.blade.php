@@ -48,10 +48,12 @@
                     <h2 style="margin-top: 0;">Status: @lang('applicant_state.'.$applicant->state)</h2>
                 </div>
                 <div class="col-xs-12">
-                    @if(!$applicant->isChecked())
-                        <button class="btn btn-success" data-toggle="modal" data-target="#approveAlert">Approve</button>
-                        <button class="btn btn-danger" data-toggle="modal" data-target="#rejectAlert">Reject</button>
-                    @endif
+                    @can('update_state', \App\Applicant::class)
+                        @if(!$applicant->isChecked())
+                            <button class="btn btn-success" data-toggle="modal" data-target="#approveAlert">Approve</button>
+                            <button class="btn btn-danger" data-toggle="modal" data-target="#rejectAlert">Reject</button>
+                        @endif
+                    @endcan
                 </div>
             </div>
         </div>

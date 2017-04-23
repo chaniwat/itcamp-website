@@ -25,7 +25,7 @@ class ApplicantPolicy
      * @return bool
      */
     public function before(User $user, $ability) {
-        return true;
+        return null;
     }
 
     /**

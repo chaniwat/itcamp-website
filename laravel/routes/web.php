@@ -92,6 +92,7 @@ Route::group(['prefix' => 'backend', 'namespace' => 'Backend'], function () {
         Route::group(['prefix' => 'answer'], function () {
 
             Route::get('/', 'AnswerController@showIndex')->name('view.backend.answers');
+            Route::get('/overall', 'AnswerController@showOverall')->name('view.backend.answers.overall');
             Route::get('/check', 'AnswerController@showAnswer')->name('view.backend.answers.check');
 
             Route::post('/save', 'AnswerController@saveScore')->name('backend.answers.save.score');

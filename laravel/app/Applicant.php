@@ -47,6 +47,34 @@ class Applicant extends Model
 
     #endregion
 
+    #region Static method
+
+    public static function getApprovedApplicants() {
+        return self::all()->whereIn('state', array('CHECKED', 'COMPLETE', 'SELECT', 'RESERVE', 'FAIL', 'CONFIRM_SELECT', 'CONFIRM_RESERVE', 'CANCEL_SELECT', 'CANCEL_RESERVE'));
+    }
+
+    public static function getOnlyCompletedApplicants() {
+        return self::all()->whereIn('state', array('COMPLETE'));
+    }
+
+    public static function getOnlySelectedApplicants() {
+        return self::all()->whereIn('state', array('SELECT'));
+    }
+
+    public static function getOnlyReservedApplicants() {
+        return self::all()->whereIn('state', array('RESERVE'));
+    }
+
+    public static function getOnlyConfirmApplicants() {
+        return self::all()->whereIn('state', array('CONFIRM_SELECT', 'CONFIRM_RESERVE'));
+    }
+
+    public static function getOnlyCancelApplicants() {
+        return self::all()->whereIn('state', array('CANCEL_SELECT', 'CANCEL_RESERVE'));
+    }
+
+    #endregion
+
     #region Static method (counting)
 
     private static function createCountBaseSQL() {
@@ -104,16 +132,41 @@ class Applicant extends Model
 
     public function setStateAttribute($value) {
         // TODO Case checking (prerequisite or prevent)
-
         $this->attributes['state'] = $value;
     }
+
+
 
     #endregion
 
     #region Helper method
 
+    public function getDetailValue($key) {
+        $key = $this->applicantDetails->find($key);
+        $setting = json_decode($key->field_setting, True);
+        $answer = json_decode($key->pivot->answer, True)["value"];
+
+        if($key->field_type == "TEXT") {
+            return $answer;
+        } else if($key->field_type == "SELECT") {
+            foreach ($setting["lists"] as $item) {
+                if($answer == $item['key']) {
+                    return $item['text'];
+                }
+            }
+        }
+    }
+
+    public function getCheckedAnswerAmount($section_name) {
+        return $this->checks()->where("section_id", Section::where("name", $section_name)->first()->id)->count();
+    }
+
     public function isChecked() {
         return in_array($this->state, array('CHECKED', 'CONFIRM', 'SELECT', 'RESERVE', 'FAIL', 'CONFIRM_SELECT', 'CONFIRM_RESERVE', 'CANCEL_SELECT', 'CANCEL_RESERVE', 'REJECT'));
+    }
+
+    public function isComplete() {
+        return in_array($this->state, array('CONFIRM', 'SELECT', 'RESERVE', 'FAIL', 'CONFIRM_SELECT', 'CONFIRM_RESERVE', 'CANCEL_SELECT', 'CANCEL_RESERVE'));
     }
 
     #endregion

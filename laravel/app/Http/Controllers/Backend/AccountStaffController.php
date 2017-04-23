@@ -36,7 +36,7 @@ class AccountStaffController extends Controller
      */
     public function createStaff(Request $request) {
         // Policies Check
-        if (Gate::denies('view_backend', User::class)) {
+        if (Gate::denies('create_staff_account', User::class)) {
             return redirect()->route('view.backend.index')->with('status', 'backend_not_enough_permission_to_manage_staff');
         }
 
@@ -76,7 +76,7 @@ class AccountStaffController extends Controller
      */
     public function updateStaff(Request $request, $id) {
         // Policies Check
-        if (Gate::denies('view_backend', User::class)) {
+        if (Gate::denies('update_staff_account', User::class)) {
             return redirect()->route('view.backend.index')->with('status', 'backend_not_enough_permission_to_manage_staff');
         }
 
@@ -108,7 +108,7 @@ class AccountStaffController extends Controller
      */
     public function updateStaffPassword(Request $request, $id) {
         // Policies Check
-        if (Gate::denies('view_backend', User::class)) {
+        if (Gate::denies('update_staff_account', User::class)) {
             return redirect()->route('view.backend.index')->with('status', 'backend_not_enough_permission_to_manage_staff');
         }
 
@@ -135,7 +135,7 @@ class AccountStaffController extends Controller
      */
     public function showStaff() {
         // Policies Check
-        if (Gate::denies('view_backend', User::class)) {
+        if (Gate::denies('view_staff_account', User::class)) {
             return redirect()->route('view.backend.index')->with('status', 'backend_not_enough_permission_to_manage_staff');
         }
 
@@ -148,7 +148,7 @@ class AccountStaffController extends Controller
      */
     public function showCreateStaff() {
         // Policies Check
-        if (Gate::denies('view_backend', User::class)) {
+        if (Gate::denies('create_staff_account', User::class)) {
             return redirect()->route('view.backend.index')->with('status', 'backend_not_enough_permission_to_manage_staff');
         }
 
@@ -166,7 +166,7 @@ class AccountStaffController extends Controller
      */
     public function showUpdateStaff($id) {
         // Policies Check
-        if (Gate::denies('view_backend', User::class)) {
+        if (Gate::denies('update_staff_account', User::class)) {
             return redirect()->route('view.backend.index')->with('status', 'backend_not_enough_permission_to_manage_staff');
         }
 

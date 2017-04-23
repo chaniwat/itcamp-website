@@ -36,7 +36,7 @@ class ApplicantQuestionPolicy
                 // Current user is admin or web developer or head
                 ($staff->is_admin || $staff->section->name == 'web_developer' || $staff->section->name == 'head')
             ) {
-                return true;
+                return null;
             }
         }
 

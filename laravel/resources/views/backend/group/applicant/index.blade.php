@@ -58,30 +58,13 @@
                 </thead>
                 <tbody>
                     @foreach($applicants as $applicant)
-                        <?php
-
-                        $p_name = null;
-                        $p_name_key = json_decode($applicant->applicantDetails->find('p_name')->pivot->answer, True)['value'];
-                        $p_name_setting = json_decode(\App\ApplicantDetailKey::find('p_name')->field_setting, True)['lists'];
-                        foreach ($p_name_setting as $item) {
-                            if($p_name_key == $item['key']) {
-                                $p_name = $item['text'];
-                                break;
-                            }
-                        }
-
-                        $f_name = json_decode($applicant->applicantDetails->find('f_name')->pivot->answer, True)['value'];
-                        $l_name = json_decode($applicant->applicantDetails->find('l_name')->pivot->answer, True)['value'];
-                        ?>
-
                         <tr>
                             <td>{{ $applicant->id }}</td>
-                            <td>{{ ($p_name != 'อื่นๆ' ? $p_name : '').$f_name." ".$l_name }}</td>
+                            <td>{{ $applicant->getDetailValue("p_name").$applicant->getDetailValue("f_name")." ".$applicant->getDetailValue("l_name") }}</td>
                             <td>@lang("camp.".$applicant->camp->name)</td>
                             <td>{{ $applicant->state }}</td>
                             <td>{{ $applicant->created_at }}</td>
-                            <td><a href="{{ route('view.backend.applicants.detail', ['id' => $applicant->id]) }}" class="btn btn-info btn-flat btn-sm" target="_blank"><i class="fa fa-user" aria-hidden="true"></i> ดูรายลเอียด</a>
-                            </td>
+                            <td><a href="{{ route('view.backend.applicants.detail', ['id' => $applicant->id]) }}" class="btn btn-info btn-flat btn-sm" target="_blank"><i class="fa fa-user" aria-hidden="true"></i> ดูรายลเอียด</a></td>
                         </tr>
                     @endforeach
                 </tbody>

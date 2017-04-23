@@ -19,7 +19,7 @@
                 </ul>
             </li>
             <li class="{{ $viewHelper->isActivePath(["backend/applicant", "backend/applicant/*"]) }}"><a href="{{ route('view.backend.applicants') }}"><i class="fa fa-book"></i> <span>ตรวจใบสมัคร</span></a></li>
-            @can('check', \App\Answer::class)
+            @can('view_check_answer', \App\Answer::class)
                 <li class="{{ $viewHelper->isActivePath(["backend/answer", "backend/answer/*"]) }}"><a href="{{ route('view.backend.answers') }}"><i class="fa fa-book"></i> <span>ตรวจคำตอบ</span></a></li>
             @endcan
             @can('view', \App\ApplicantDetailKey::class)
