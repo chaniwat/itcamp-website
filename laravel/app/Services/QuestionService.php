@@ -46,19 +46,20 @@ class QuestionService
      * Create a new question
      * @param string|array $field_id_or_array
      * @param $question
-     * @param $require
+     * @param bool $require
      * @param $description
      * @param $section
      * @param $priority
      * @param $field_type
      * @param $field_class
      * @param $field_setting
+     * @param $has_score
+     * @param $min_score
+     * @param $max_score
      * @param $other
      * @return Question
-     * @throws FieldTypeNotAcceptException If field type is invalid or not accept
-     * @throws InvalidFieldFormatException If field setting is on invalid format to its type format
      */
-    public function createCampQuestion($field_id_or_array, $question = null, $require = false, $description = null, $section = null, $priority = null, $field_type = null, $field_class = null, $field_setting = null, $other = null)
+    public function createCampQuestion($field_id_or_array, $question = null, $require = false, $description = null, $section = null, $priority = null, $field_type = null, $field_class = null, $field_setting = null, $has_score = null, $min_score = null, $max_score = null, $other = null)
     {
         $object = new Question();
 
@@ -70,7 +71,7 @@ class QuestionService
         else
         {
             $object->id = $field_id_or_array;
-            $this->structCampQuestion($object, $question, $require, $description, $section, $priority, $field_type, $field_class, $field_setting, $other);
+            $this->structCampQuestion($object, $question, $require, $description, $section, $priority, $field_type, $field_class, $field_setting, $has_score, $min_score, $max_score, $other);
         }
 
         $object->save();
@@ -92,19 +93,20 @@ class QuestionService
      * Update the question
      * @param $field_id
      * @param string|array $question_or_array
-     * @param $require
+     * @param bool $require
      * @param $description
      * @param $section
      * @param $priority
      * @param $field_type
      * @param $field_class
      * @param $field_setting
+     * @param $has_score
+     * @param $min_score
+     * @param $max_score
      * @param $other
      * @return Question
-     * @throws FieldTypeNotAcceptException If field type is invalid or not accept
-     * @throws InvalidFieldFormatException If field setting is on invalid format to its type format
      */
-    public function updateCampQuestion($field_id, $question_or_array, $require = false, $description = null, $section = null, $priority = null, $field_type = null, $field_class = null, $field_setting = null, $other = null)
+    public function updateCampQuestion($field_id, $question_or_array, $require = false, $description = null, $section = null, $priority = null, $field_type = null, $field_class = null, $field_setting = null, $has_score = null, $min_score = null, $max_score = null, $other = null)
     {
         $object = Question::find($field_id);
 
@@ -114,7 +116,7 @@ class QuestionService
         }
         else
         {
-            $this->structCampQuestion($object, $question_or_array, $require, $description, $section, $priority, $field_type, $field_class, $field_setting, $other);
+            $this->structCampQuestion($object, $question_or_array, $require, $description, $section, $priority, $field_type, $field_class, $field_setting, $has_score, $min_score, $max_score, $other);
         }
 
         $object->save();
@@ -135,18 +137,19 @@ class QuestionService
      * Struct a question
      * @param Question $object
      * @param string|array $question_or_array
-     * @param $require
+     * @param bool $require
      * @param $description
      * @param $section
      * @param $priority
      * @param $field_type
      * @param $field_class
      * @param $field_setting
+     * @param $has_score
+     * @param $min_score
+     * @param $max_score
      * @param $other
-     * @throws FieldTypeNotAcceptException If field type is invalid or not accept
-     * @throws InvalidFieldFormatException If field setting is on invalid format to its type format
      */
-    private function structCampQuestion(Question $object, $question_or_array, $require = false, $description = null, $section = null, $priority = null, $field_type = null, $field_class = null, $field_setting = null, $other = null)
+    private function structCampQuestion(Question $object, $question_or_array, $require = false, $description = null, $section = null, $priority = null, $field_type = null, $field_class = null, $field_setting = null, $has_score = null, $min_score = null, $max_score = null, $other = null)
     {
         if (is_array($question_or_array))
         {
@@ -161,7 +164,12 @@ class QuestionService
             $object->field_type = $question_or_array['field_type'];
             $object->field_class = $question_or_array['field_class'];
             $object->field_setting = $question_or_array['field_setting'];
-            $object->other = isset($question_or_array['other']) && $question_or_array['other'] == 'on' ? true : false;
+            $object->has_score = isset($question_or_array['has_score']) && ($question_or_array['has_score'] == 'on' || $question_or_array['has_score'] == true);
+            if($object->has_score) {
+                $object->min_score = $question_or_array['min_score'];
+                $object->max_score = $question_or_array['max_score'];
+            }
+            $object->other = isset($question_or_array['other']) && ($question_or_array['other'] == 'on' || $question_or_array['other'] == true);
         }
         else
         {
@@ -176,7 +184,12 @@ class QuestionService
             $object->field_type = $field_type;
             $object->field_class = $field_class;
             $object->field_setting = $field_setting;
-            $object->other = $other == 'on' || $other === true ? true : false;
+            $object->has_score = $has_score === 'on' || $has_score === true;
+            if($object->has_score) {
+                $object->min_score = $min_score;
+                $object->max_score = $max_score;
+            }
+            $object->other = $other === 'on' || $other === true;
         }
     }
 
