@@ -3,6 +3,7 @@
 // Translate section key to section name (th)
 return [
     "head" => "ประธานค่าย",
+    "sub_head" => "รองประธานค่าย",
     "recreation" => "สันทนาการ",
     "knowledge" => "วิชาการ",
     "camp_game" => "ค่ายเกม",

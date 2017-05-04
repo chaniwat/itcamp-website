@@ -27,7 +27,7 @@ class UserPolicy
 
             if(
                 // Current user is admin or web developer or head
-                ($staff->is_admin || $staff->section->name == 'web_developer' || $staff->section->name == 'head' )
+                ($staff->is_admin || in_array($staff->section->name, ['web_developer', 'head', 'sub_head']))
             ) {
                 return true;
             }
@@ -50,7 +50,7 @@ class UserPolicy
 
             if(
                 // Current user is admin or web developer or head
-                ($staff->is_admin || $staff->section->name == 'web_developer' || $staff->section->name == 'head' )
+                ($staff->is_admin || in_array($staff->section->name, ['web_developer', 'head', 'sub_head']))
             ) {
                 return true;
             }
@@ -109,7 +109,7 @@ class UserPolicy
 
             if(
                 // Current user is admin or web developer or head
-                ($staff->is_admin || $staff->section->name == 'web_developer' || $staff->section->name == 'head' )
+                ($staff->is_admin || in_array($staff->section->name, ['web_developer', 'head', 'sub_head']))
             ) {
                 return true;
             }
