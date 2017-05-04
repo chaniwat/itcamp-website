@@ -58,9 +58,12 @@ class AccountService
      * @param $password
      * @return Staff Updated staff
      */
-    public function updateStaffPassword($id, $password)
+    public function updateStaffPassword($staff, $password)
     {
-        $staff = Staff::find($id);
+        if(is_numeric($staff)) {
+            $staff = Staff::find($staff);
+        }
+
         $staff->user->password = Hash::make($password);
         $staff->user->save();
 
