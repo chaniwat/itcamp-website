@@ -48,7 +48,7 @@ class AccountStaffController extends Controller
         return redirect()->route('view.backend.index')->with('status', 'backend_update_account_password_complete');
     }
 
-    public function showUpdateSelfPassword(Request $request) {
+    public function showUpdateSelfPassword() {
         return view('backend.update_password');
     }
 
