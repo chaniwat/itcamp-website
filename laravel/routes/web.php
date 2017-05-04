@@ -66,6 +66,9 @@ Route::group(['prefix' => 'backend', 'namespace' => 'Backend'], function () {
 
         Route::get('/', 'DashboardController@index')->name('view.backend.index');
 
+        Route::get('/self/password', 'AccountStaffController@showUpdateSelfPassword')->name('view.backend.self.password');
+        Route::post('/self/password', 'AccountStaffController@updateSelfPassword')->name('backend.self.password');
+
         Route::group(['prefix' => 'dashboard'], function () {
             Route::get('/register', 'DashboardController@showRegisterDashboard')->name('view.backend.dashboard.register');
             Route::get('/overview', 'DashboardController@showOverviewDashboard')->name('view.backend.dashboard.overview');
