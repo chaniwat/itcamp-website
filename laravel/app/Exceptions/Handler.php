@@ -48,6 +48,25 @@ class Handler extends ExceptionHandler
         if($e instanceof NotFoundHttpException)
         {
             return $this->NotFoundExceptionHandler($request, $e);
+        } else if(is_subclass_of($e, BaseException::class)) {
+            return $this->BaseExceptionHandler($request, $e);
+        }
+
+        return parent::render($request, $e);
+    }
+
+    /**
+     * Base exception handler (custom exception handler)
+     *
+     * @param $request
+     * @param BaseException $e
+     * @return \Illuminate\Http\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    protected function BaseExceptionHandler($request, BaseException $e) {
+        if($e->getRoute() != null) {
+            return redirect()->route($e->getRoute())->with([
+                'status' => $e->getStatus()
+            ]);
         }
 
         return parent::render($request, $e);
@@ -72,9 +91,7 @@ class Handler extends ExceptionHandler
                     if(!Auth::check()) {
                         return redirect()->route('view.backend.login');
                     } else {
-                        if($e instanceof NotFoundHttpException) {
-                            return response()->view("backend.error.404", [], 404);
-                        }
+                        return response()->view("backend.error.404")->withException($e);
                     }
                 }
             } else {

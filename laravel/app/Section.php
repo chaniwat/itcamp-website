@@ -4,6 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property int id
+ */
 class Section extends Model
 {
     public $timestamps = false;

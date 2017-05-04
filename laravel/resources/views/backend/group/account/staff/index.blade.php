@@ -39,12 +39,12 @@
                 <tbody>
                     @foreach($staffs as $staff)
                         <tr>
-                            <td>{{ $staff->user->id }}</td>
+                            <td>{{ $staff->id }}</td>
                             <td>{{ $staff->user->username }}</td>
                             <td>{{ $staff->name }}</td>
                             <td>@lang('section.'.$staff->section->name)</td>
                             <td>{{ $staff->is_head ? 'Head' : 'Staff' }}</td>
-                            <td>@if($staff->user->id != 1)<a href="{{ route('view.backend.account.staff.update', ['id' => $staff->user->id]) }}" class="btn btn-info btn-sm"><i class="fa fa-wrench" aria-hidden="true"></i> แก้ไข</a>@endif</td>
+                            <td>@if($staff->id != 1)<a href="{{ route('view.backend.account.staff.update', ['id' => $staff->id]) }}" class="btn btn-info btn-sm"><i class="fa fa-wrench" aria-hidden="true"></i> แก้ไข</a>@endif</td>
                         </tr>
                     @endforeach
                 </tbody>

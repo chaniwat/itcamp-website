@@ -34,6 +34,10 @@ class ValidatorService
         $this->formService = $formService;
     }
 
+    public function getValidator() {
+        return $this->validator;
+    }
+
     #region validate request's inputs
 
     public function setRules($rules)
@@ -43,23 +47,26 @@ class ValidatorService
 
     /**
      * Validate the request's input
-     * @param Request $request
+     * @param $inputs
      * @param $rules
+     * @param $message
      * @throws ValidatorNoRulesGivenException
      */
-    public function validate(Request $request, $rules = null)
+    public function validate($inputs, $rules = null, $message = [])
     {
-        if($rules != null)
-        {
+        if($inputs instanceof Request) {
+            $inputs = $inputs->all();
+        }
+
+        if($rules != null) {
             $this->setRules($rules);
         }
 
-        if($this->rules == null)
-        {
+        if($this->rules == null) {
             throw new ValidatorNoRulesGivenException();
         }
 
-        $this->validator = $this->validatorFactory->make($request->all(), $this->rules);
+        $this->validator = $this->validatorFactory->make($inputs, $this->rules, $message);
 
         $this->uniqueErrors = $this->validator->errors()->unique();
     }

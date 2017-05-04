@@ -11,52 +11,11 @@ class AccountService
 {
 
     /**
-     * Create a new account for staff
-     * @param $username
-     * @param $password
-     * @param $name
-     * @param $section_id
-     * @param $is_head
-     * @param $is_admin
-     * @return Staff Created staff
-     */
-    public function createStaff($username, $password, $name, $section_id, $is_head = false, $is_admin = false)
-    {
-        $staff = new Staff();
-        $staff->user()->associate(User::create([
-            'username' => $username,
-            'password' => Hash::make($password),
-            'type' => 'STAFF'
-        ]));
-        $this->structStaff($staff, $name, $section_id, $is_head, $is_admin);
-        $staff->save();
-
-        return $staff;
-    }
-
-    /**
-     * Update staff
-     * @param $id
-     * @param $name
-     * @param $section_id
-     * @param bool $is_head
-     * @param bool $is_admin
-     * @return Staff Updated staff
-     */
-    public function updateStaff($id, $name, $section_id, $is_head = false, $is_admin = false)
-    {
-        $staff = Staff::find($id);
-        $this->structStaff($staff, $name, $section_id, $is_head, $is_admin);
-        $staff->save();
-
-        return $staff;
-    }
-
-    /**
      * Update staff password
-     * @param $id
+     * @param $staff
      * @param $password
      * @return Staff Updated staff
+     * @internal param $id
      */
     public function updateStaffPassword($staff, $password)
     {
@@ -71,7 +30,7 @@ class AccountService
     }
 
     /**
-     * Struct a staff
+     * Fill value into staff
      * @param $staff
      * @param $name
      * @param $section_id

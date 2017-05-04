@@ -2,6 +2,8 @@
 
 namespace App\Services\View;
 
+use App\Exceptions\BaseException;
+
 class ViewHelperService implements ViewHelperInterface
 {
 
@@ -27,6 +29,11 @@ class ViewHelperService implements ViewHelperInterface
         return $this->status->makeAlertStatus($blade);
     }
 
+    public function makeAlertException(BaseException $exception, $blade)
+    {
+        return $this->status->makeAlertException($exception, $blade);
+    }
+
     public function isActivePath($paths)
     {
         return $this->path->isActivePath($paths);
@@ -36,5 +43,4 @@ class ViewHelperService implements ViewHelperInterface
     {
         return $this->formBuilder;
     }
-
 }

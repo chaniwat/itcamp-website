@@ -2,6 +2,8 @@
 
 namespace App\Services\View;
 
+use App\Exceptions\BaseException;
+
 class StatusViewService
 {
 
@@ -116,5 +118,25 @@ class StatusViewService
         }
 
         return "";
+    }
+
+    /**
+     * Make alert if have status (in session)
+     * @param BaseException $exception
+     * @param $blade blade component to show alert
+     * @return mixed
+     */
+    public function makeAlertException(BaseException $exception, $blade) {
+        if(!isset($blade)) {
+            $blade = 'backend.component.alert_new';
+        }
+
+        $status = $exception->status_message;
+        return view($blade)->with([
+            'class' => $this->convertToAlertClass($status),
+            'icon' => $this->convertToIconClass($status),
+            'title' => $this->convertToAlertTitle($status),
+            'message' => __('alert_status.'.$status)
+        ]);
     }
 }

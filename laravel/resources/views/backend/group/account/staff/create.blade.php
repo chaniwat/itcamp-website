@@ -49,7 +49,7 @@
                     <label for="inputSection" class="col-sm-2 control-label">ฝ่าย</label>
 
                     <div class="col-sm-10">
-                        <select class="form-control" id="inputSection" name="section">
+                        <select class="form-control" id="inputSection" name="section_id">
                             @foreach($data['sections'] as $section)
                                 <option value="{{ $section->id }}" {{ old('section') == $section->id ? "selected" : "" }}>@lang('section.'.$section->name)</option>
                             @endforeach
@@ -60,7 +60,7 @@
                     <div class="col-sm-offset-2 col-sm-10">
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox" name="head" {{ old('head') ? "checked" : "" }}> เป็นเฮดฝ่าย?
+                                <input type="checkbox" name="is_head" {{ old('head') ? "checked" : "" }}> เป็นเฮดฝ่าย?
                             </label>
                         </div>
                     </div>

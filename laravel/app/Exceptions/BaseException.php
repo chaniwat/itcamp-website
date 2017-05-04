@@ -2,29 +2,40 @@
 
 namespace App\Exceptions;
 
-use Exception;
-
 /**
  * Class BaseException<br>
  * Custom exception for status code and status message (use with StatusViewService)
  * @package App\Exceptions
  */
-class BaseException extends Exception
+class BaseException extends \Exception
 {
-    public $status_code;
-    public $status_message;
+
+    private $route;
+    private $status;
 
     /**
      * Exception constructor.
      * @param string $message
-     * @param int $status_code
-     * @param string $status_message
+     * @param string $status
+     * @param string $route
+     * @param int $code
      */
-    public function __construct($message, $status_code, $status_message)
+    public function __construct($message, $status, $route, $code = 0)
     {
-        parent::__construct($message);
-        $this->status_code = $status_code;
-        $this->status_message = $status_message;
+        parent::__construct($message, $code);
+        $this->code = $code;
+        $this->status = $status;
+        $this->route = $route;
+    }
+
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    public function getRoute()
+    {
+        return $this->route;
     }
 
 }

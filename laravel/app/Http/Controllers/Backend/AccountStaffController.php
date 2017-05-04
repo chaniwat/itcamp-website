@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Exceptions\BaseException;
+use App\Exceptions\StaffNotFound;
 use App\Section;
 use App\Services\AccountService;
 use App\Services\ValidatorService;
@@ -79,14 +81,7 @@ class AccountStaffController extends Controller
             return redirect()->back()->with('status', 'username_already_used')->withInput($request->all());
         }
 
-        $this->account->createStaff(
-            $request->input('username'),
-            $request->input('password'),
-            $request->input('name'),
-            $request->input('section'),
-            $request->input('head'),
-            $request->input('admin')
-        );
+        (new Staff())->fill($request->except('password_confirmation'))->save();
 
         return redirect()->route('view.backend.account.staff')->with('status', 'backend_add_account_success');
     }
@@ -95,30 +90,29 @@ class AccountStaffController extends Controller
      * Update staff account
      * @param Request $request
      * @param $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws StaffNotFound
      */
     public function updateStaff(Request $request, $id) {
         // Policies Check
-        if (Gate::denies('update_staff_account', User::class)) {
+        if(Gate::denies('update_staff_account', User::class)) {
             return redirect()->route('view.backend.index')->with('status', 'backend_not_enough_permission_to_manage_staff');
         }
 
-        $rules = [
-            'name' => 'required'
-        ];
-        $this->validator->validate($request, $rules);
+        // Check if staff exists
+        if(($staff = Staff::find($id)) == null) {
+            throw new StaffNotFound($id);
+        }
 
+        // Validating inputs
+        $rules = ['name' => 'required'];
+        $this->validator->validate($request, $rules);
         if($this->validator->containError('validation.required')) {
             return redirect()->back()->with('status', 'form_empty_field')->withInput($request->all());
         }
 
-        $this->account->updateStaff(
-            $id,
-            $request->input('name'),
-            $request->input('section'),
-            $request->input('head'),
-            $request->input('admin')
-        );
+        // Update staff
+        $staff->fill($request->all())->save();
 
         return redirect()->back()->with('status', 'backend_update_account_complete');
     }
@@ -185,7 +179,8 @@ class AccountStaffController extends Controller
     /**
      * Show view edit staff (update staff)
      * @param $id
-     * @return $this
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws StaffNotFound
      */
     public function showUpdateStaff($id) {
         // Policies Check
@@ -193,12 +188,15 @@ class AccountStaffController extends Controller
             return redirect()->route('view.backend.index')->with('status', 'backend_not_enough_permission_to_manage_staff');
         }
 
-        $data = [
-            'sections' => Section::all(),
-            'staff' => Staff::find($id)
-        ];
+        // Check if staff exists
+        if(($staff = Staff::find($id)) == null) {
+            throw new StaffNotFound($id);
+        }
 
-        return view('backend.group.account.staff.update')->with('data', $data);
+        return view('backend.group.account.staff.update')->with([
+            'sections' => Section::all(),
+            'staff' => $staff
+        ]);
     }
 
 }
