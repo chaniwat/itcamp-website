@@ -82,6 +82,7 @@
                     <tr>
                         <th style="padding: 8px;">สถานะ</th>
                         <th style="padding: 8px;">ประธาน</th>
+                        <th style="padding: 8px;">รองประธาน</th>
                         <th style="padding: 8px;">สันทนาการ</th>
                         <th style="padding: 8px;">ค่ายย่อย</th>
                     </tr>
@@ -103,21 +104,32 @@
                                 @endfor
                             </td>
                         @elseif($mode == "INSPECTOR")
+                            <?php
+                                $head_checked_amount = $applicant->getAnswerCheckerAmount($section['head']);
+                                $sub_head_checked_amount = $applicant->getAnswerCheckerAmount($section['sub_head']);
+                                $recreation_checked_amount = $applicant->getAnswerCheckerAmount($section['recreation']);
+                                $camp_checked_amount = $applicant->getAnswerCheckerAmount($applicant->camp->section);
+                            ?>
+
                             <td>@if($applicant->isComplete()) ตรวจครบ @else ตรวจยังไม่ครบ @endif</td>
+
                             <td>
-
-                                <?php
-                                    $head_checked_amount = $applicant->getAnswerCheckerAmount($section['head']);
-                                    $recreation_checked_amount = $applicant->getAnswerCheckerAmount($section['recreation']);
-                                    $camp_checked_amount = $applicant->getAnswerCheckerAmount($applicant->camp->section);
-                                ?>
-
                                 @for ($i = 0; $i < $head_checked_amount; $i++)
                                     <span class="answer-check head checked"></span>
                                 @endfor
 
                                 @for ($i = 0; $i < $checkers['head'] - $head_checked_amount; $i++)
                                     <span class="answer-check head"></span>
+                                @endfor
+                            </td>
+
+                            <td>
+                                @for ($i = 0; $i < $head_checked_amount; $i++)
+                                    <span class="answer-check subhead checked"></span>
+                                @endfor
+
+                                @for ($i = 0; $i < $checkers['sub_head'] - $head_checked_amount; $i++)
+                                    <span class="answer-check subhead"></span>
                                 @endfor
                             </td>
 
@@ -163,6 +175,7 @@
                 null,
                 null,
                 @if($mode == "INSPECTOR")
+                    { "orderable": false },
                     { "orderable": false },
                     { "orderable": false },
                     { "orderable": false },

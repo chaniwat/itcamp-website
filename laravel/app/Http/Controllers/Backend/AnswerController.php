@@ -143,9 +143,11 @@ class AnswerController extends Controller
             $data['checkers'][$section->name] = $section->checker_amount;
         }
 
+        $sections = Section::whereIn('name', ['head', 'sub_head', 'recreation'])->get();
         $data['section'] = [
-            'head' => Section::where('name', 'head')->first(),
-            'recreation' => Section::where('name', 'recreation')->first()
+            'head' => $sections->where('name', 'head')->first(),
+            'sub_head' => $sections->where('name', 'sub_head')->first(),
+            'recreation' => $sections->where('name', 'recreation')->first()
         ];
 
         return view('backend.group.answer.index')->with($data);
