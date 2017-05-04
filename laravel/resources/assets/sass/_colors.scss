@@ -2,8 +2,31 @@ $color-applicant-all: #3a6bb7;
 $color-applicant-checked: #549c48;
 $color-applicant-reject: #e72e49;
 
+$color-section-head: #c300c2;
+$color-recreation-head: #ff5205;
+
 $color-camp-app: #2471ff;
 $color-camp-game: #ffb923;
 $color-camp-network: #b6302d;
 $color-camp-iot: #68b34a;
 $color-camp-datasci: #692f9c;
+
+$backgrounds: (
+        'section-head': $color-section-head,
+        'section-recreation': $color-recreation-head,
+        'section-camp_app': $color-camp-app,
+        'section-camp_game': $color-camp-game,
+        'section-camp_network': $color-camp-network,
+        'section-camp_iot': $color-camp-iot,
+        'section-camp_datasci': $color-camp-datasci
+);
+@each $name, $value in $backgrounds {
+  .bg-#{$name} {
+    background-color: $value;
+    color: white;
+
+    &.small-box .progress-bar {
+      background-color: $value;
+    }
+  }
+}

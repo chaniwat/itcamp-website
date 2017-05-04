@@ -1,4 +1,4 @@
-<?php
+﻿<?php
   $lazyModeDir = env("APP_ROOT");
 ?>
 
@@ -140,7 +140,7 @@
             <div class="col-lg-3 offset-lg-0 col-md-5">
               <img src="{{ $lazyModeDir }}/assets/frontend/images/home-regis.png" />
               <h3>รับสมัคร</h3>
-              <span class="sub">20 มีนาคม - 1 พฤษภาคม 2560</span>
+              <span class="sub">20 มีนาคม - 8 พฤษภาคม 2560</span>
             </div>
             <div class="col-lg-3 col-md-5">
               <img src="{{ $lazyModeDir }}/assets/frontend/images/home-calendar.png" />
@@ -261,7 +261,7 @@
                   <span class="badge badge-pill badge-default">ค่ายย่อย Application Development</span>
                   <h2 class="camp-name">AppVira</h2>
                   <hr />
-                  <p><span class="space-4"></span>ฉีกตำราเดิม ๆ และมาสร้างสรรค์สิ่งใหม่ในโลกความรู้แอปพลิเคชั่นกับ AppVira ค่ายที่จะพาน้อง ๆ ไปสร้างแอปพลิเคชั่นด้วยฝีมือตัวเองด้วยสุดยอดโปรแกรมอย่าง Visual Studio 2015 บนระบบปฏิบัติการ Windows 10 แล้วจะพบว่าเราก็สามารถสร้างสรรค์สิ่งต่าง ๆ ได้อีกมากมายเพียงแค่น้องลงมือทำ! <br />
+                  <p><span class="space-4"></span>ฉีกตำราเดิม ๆ และมาสร้างสรรค์สิ่งใหม่ในโลกความรู้แอปพลิเคชั่นกับ AppVira ค่ายที่จะพาน้อง ๆ ไปสร้างแอปพลิเคชั่นด้วยฝีมือตัวเองด้วยสุดยอดโปรแกรมอย่าง XCode บนระบบปฏิบัติการ iOS แล้วจะพบว่าเราก็สามารถสร้างสรรค์สิ่งต่าง ๆ ได้อีกมากมายเพียงแค่น้องลงมือทำ! <br />
                     <span class="space-4"></span>โอ้โห! ได้สร้างแอปพลิเคชั่นใหม่ ๆ ด้วยตัวเองอย่างนี้แถมมีพี่ ๆ ที่พร้อมจะสอนน้อง ๆ ให้ได้ความรู้ด้วย จะรอช้าทำไมกดปุ่มสมัครเลย!</p>
                   <a href="{{ route('view.frontend.register', ['camp' => 'app']) }}" class="btn btn-regis-app">สมัครค่ายนี้</a>
                 </div>
@@ -370,18 +370,18 @@
             </div>
             <div class="timeline-2 col">
               <img src="{{ $lazyModeDir }}/assets/frontend/images/tv-2-wait.gif" height="200" />
-              <span class="timeline-date">1 พ.ค. 2560</span>
+              <span class="timeline-date">8 พ.ค. 2560</span>
               <span class="timeline-sub">วันปิดรับสมัคร</span>
             </div>
             <div class="w-100 hidden-xs-down hidden-md-up"></div>
             <div class="timeline-3 col">
               <img src="{{ $lazyModeDir }}/assets/frontend/images/tv-3-wait.gif" height="200" />
-              <span class="timeline-date">8 พ.ค. 2560</span>
+              <span class="timeline-date">15 พ.ค. 2560</span>
               <span class="timeline-sub">ประกาศผลและโอนเงินยืนยันสิทธิ์</span>
             </div>
             <div class="timeline-4 col">
               <img src="{{ $lazyModeDir }}/assets/frontend/images/tv-4-wait.gif" height="200" />
-              <span class="timeline-date">19 พ.ค. 2560</span>
+              <span class="timeline-date">22 พ.ค. 2560</span>
               <span class="timeline-sub">วันสุดท้ายของการยืนยันสิทธิ์</span>
             </div>
             <div class="w-100 hidden-xs-down hidden-md-up"></div>
@@ -681,5 +681,14 @@
     </section>
 
     <script type="text/javascript" src="assets/frontend/js/app.js?v={{ (int)microtime(true) }}"></script>
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-98361289-1', 'auto');
+        ga('send', 'pageview');
+    </script>
   </body>
 </html>

@@ -111,7 +111,7 @@
             <div class="box-body">
                 <div class="row">
                     @foreach($applicantQuestions as $question)
-                        {!! $viewHelper->formBuilder()->buildBackendInputField($question, $applicant) !!}
+                        {!! $viewHelper->formBuilder()->buildBackendInputField($question, $applicant, \App\ApplicantDetailKey::class) !!}
                     @endforeach
                 </div>
             </div>

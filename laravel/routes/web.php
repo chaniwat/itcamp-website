@@ -93,7 +93,7 @@ Route::group(['prefix' => 'backend', 'namespace' => 'Backend'], function () {
 
             Route::get('/', 'AnswerController@showIndex')->name('view.backend.answers');
             Route::get('/overall', 'AnswerController@showOverall')->name('view.backend.answers.overall');
-            Route::get('/check', 'AnswerController@showAnswer')->name('view.backend.answers.check');
+            Route::get('/check', 'AnswerController@showCheckAnswer')->name('view.backend.answers.check');
 
             Route::post('/save', 'AnswerController@saveScore')->name('backend.answers.save.score');
 
@@ -132,7 +132,7 @@ Route::group(['prefix' => 'backend', 'namespace' => 'Backend'], function () {
                 })->name('view.backend.account.applicant');
             });
 
-            Route::group(['prefix' => 'staff', 'middleware' => 'admin.backend'], function () {
+            Route::group(['prefix' => 'staff'], function () {
                 Route::get('/', 'AccountStaffController@showStaff')->name('view.backend.account.staff');
                 Route::get('create', 'AccountStaffController@showCreateStaff')->name('view.backend.account.staff.create');
                 Route::get('{id}/update', 'AccountStaffController@showUpdateStaff')->name('view.backend.account.staff.update');

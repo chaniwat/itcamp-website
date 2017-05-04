@@ -38,7 +38,7 @@ class Applicant extends Model
     }
 
     public function checks() {
-        return $this->hasMany('App\QuestionCheck');
+        return $this->hasMany('App\ApplicantQuestionCheck');
     }
 
     public function applicantDetails() {
@@ -51,6 +51,10 @@ class Applicant extends Model
 
     public static function getApprovedApplicants() {
         return self::all()->whereIn('state', array('CHECKED', 'COMPLETE', 'SELECT', 'RESERVE', 'FAIL', 'CONFIRM_SELECT', 'CONFIRM_RESERVE', 'CANCEL_SELECT', 'CANCEL_RESERVE'));
+    }
+
+    public static function getOnlyCheckedApplicants() {
+        return self::all()->whereIn('state', array('CHECKED'));
     }
 
     public static function getOnlyCompletedApplicants() {
@@ -157,16 +161,31 @@ class Applicant extends Model
         }
     }
 
-    public function getCheckedAnswerAmount($section_name) {
-        return $this->checks()->where("section_id", Section::where("name", $section_name)->first()->id)->count();
+    public function isChecked() {
+        return in_array($this->state, array('CHECKED', 'COMPLETE', 'CONFIRM', 'SELECT', 'RESERVE', 'FAIL', 'CONFIRM_SELECT', 'CONFIRM_RESERVE', 'CANCEL_SELECT', 'CANCEL_RESERVE', 'REJECT'));
     }
 
-    public function isChecked() {
-        return in_array($this->state, array('CHECKED', 'CONFIRM', 'SELECT', 'RESERVE', 'FAIL', 'CONFIRM_SELECT', 'CONFIRM_RESERVE', 'CANCEL_SELECT', 'CANCEL_RESERVE', 'REJECT'));
+    public function getAnswerCheckerAmount($section) {
+        if(is_string($section)) {
+            $section = Section::where("name", $section)->first();
+        }
+
+        return $this->checks()->where("section_id", $section->id)->count();
+    }
+
+    public function isAnswerCheckedByStaff(Staff $checker) {
+        $section = $checker->section;
+        $check = $this->checks()->where("section_id", $section->id)->get();
+
+        if ($check->count() >= 0 && $check->count() < $section->checker_amount && $check->where("staff_id", $checker->id)->first() == null) {
+            return false;
+        }
+
+        return true;
     }
 
     public function isComplete() {
-        return in_array($this->state, array('CONFIRM', 'SELECT', 'RESERVE', 'FAIL', 'CONFIRM_SELECT', 'CONFIRM_RESERVE', 'CANCEL_SELECT', 'CANCEL_RESERVE'));
+        return in_array($this->state, array('COMPLETE', 'CONFIRM', 'SELECT', 'RESERVE', 'FAIL', 'CONFIRM_SELECT', 'CONFIRM_RESERVE', 'CANCEL_SELECT', 'CANCEL_RESERVE'));
     }
 
     #endregion

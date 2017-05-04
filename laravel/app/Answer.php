@@ -33,6 +33,6 @@ class Answer extends Model
     }
 
     public function staffs() {
-        return $this->belongsToMany('App\Staff')->withPivot('score');
+        return $this->belongsToMany('App\Staff')->withPivot('score')->withTimestamps();
     }
 }

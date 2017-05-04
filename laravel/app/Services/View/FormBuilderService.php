@@ -2,6 +2,7 @@
 
 namespace App\Services\View;
 
+use App\Answer;
 use App\Applicant;
 use App\ApplicantDetailKey;
 use App\Question;
@@ -45,22 +46,33 @@ class FormBuilderService
         return view(FormBuilderService::FRONTEND_TEMPLATE_DIR.strtolower($data['field_type']))->with($data);
     }
 
-    public function buildBackendInputField($question, Applicant $answerer)
+    public function buildBackendInputField($question, Applicant $answerer, $mode)
     {
         $data = [
             'field_id' => $question->id,
             'field_type' => strtolower($question->field_type),
             'field_class' => $question->field_class,
             'title' => $question->question,
-//            'description' => in_array('show-description', explode(' ', $question->field_class)) ? $question->description : '',
             'description' => '',
             'require' => $question->require,
             'hideTitle' => in_array('hide-title', explode(' ', $question->field_class)),
         ];
 
-        if($answerKey = $answerer->applicantDetails->find($question->id))
+        if($mode == ApplicantDetailKey::class) {
+            $answers = $answerer->applicantDetails;
+            $answerKey = $answers->find($question->id);
+        } else if($mode == Answer::class) {
+            $answers = $answerer->answers;
+            $answerKey = $answers->where('question_id', $question->id)->first();
+        }
+
+        if($answerKey)
         {
-            $data['value'] = json_decode($answerKey->pivot->answer, True)['value'];
+            if($mode == ApplicantDetailKey::class) {
+                $data['value'] = json_decode($answerKey->pivot->answer, True)['value'];
+            } else if($mode == Answer::class) {
+                $data['value'] = json_decode($answerKey->answer, True)['value'];
+            }
         }
         else
         {

@@ -2,9 +2,11 @@
 
 namespace App\Services;
 
+use App\Applicant;
 use App\ApplicantDetailKey;
 use App\Question;
 use App\Section;
+use App\Staff;
 
 class QuestionService
 {
@@ -330,5 +332,33 @@ class QuestionService
             $object->other = $other === 'on' || $other === true;
         }
     }
+
+    #region answer check
+
+    public function randomUnfinishApplicant(Staff $checker) {
+        $checkerSection = $checker->section;
+
+        if ($checkerSection->is_camp) {
+            $checkedApplicants = Applicant::getOnlyCheckedApplicants()->where('camp_id', $checkerSection->camp->id);
+        } else if($checkerSection->has_question) {
+            $checkedApplicants = Applicant::getOnlyCheckedApplicants();
+        } else {
+            return redirect()->route('view.backend.index')->with('status', 'backend_your_section_not_have_question');
+        }
+
+        $selected = null;
+        while($checkedApplicants->count() > 0) {
+            $randomApplicant = $checkedApplicants->splice(rand(0, $checkedApplicants->count() - 1), 1)[0];
+
+            if (!$randomApplicant->isAnswerCheckedByStaff($checker)) {
+                $selected = $randomApplicant;
+                break;
+            }
+        }
+
+        return $selected;
+    }
+
+    #endregion
 
 }

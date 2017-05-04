@@ -95,41 +95,48 @@
                         <td>@lang("camp.".$applicant->camp->name)</td>
                         @if($mode == "CHECKER")
                             <td>
-                                @for ($i = 0; $i < $applicant->getCheckedAnswerAmount($section); $i++)
+                                @for ($i = 0; $i < $applicant->getAnswerCheckerAmount($section); $i++)
                                     <span class="answer-check {{ $section }} checked"></span>
                                 @endfor
-                                @for ($i = 0; $i < $checker_amount - $applicant->getCheckedAnswerAmount($section); $i++)
+                                @for ($i = 0; $i < $checker_amount - $applicant->getAnswerCheckerAmount($section); $i++)
                                     <span class="answer-check {{ $section }}"></span>
                                 @endfor
                             </td>
                         @elseif($mode == "INSPECTOR")
                             <td>@if($applicant->isComplete()) ตรวจครบ @else ตรวจยังไม่ครบ @endif</td>
                             <td>
-                                @for ($i = 0; $i < $applicant->getCheckedAnswerAmount('head'); $i++)
+
+                                <?php
+                                    $head_checked_amount = $applicant->getAnswerCheckerAmount($section['head']);
+                                    $recreation_checked_amount = $applicant->getAnswerCheckerAmount($section['recreation']);
+                                    $camp_checked_amount = $applicant->getAnswerCheckerAmount($applicant->camp->section);
+                                ?>
+
+                                @for ($i = 0; $i < $head_checked_amount; $i++)
                                     <span class="answer-check head checked"></span>
                                 @endfor
 
-                                @for ($i = 0; $i < $checkers['head'] - $applicant->getCheckedAnswerAmount('head'); $i++)
+                                @for ($i = 0; $i < $checkers['head'] - $head_checked_amount; $i++)
                                     <span class="answer-check head"></span>
                                 @endfor
                             </td>
 
                             <td>
-                                @for ($i = 0; $i < $applicant->getCheckedAnswerAmount('recreation'); $i++)
+                                @for ($i = 0; $i < $recreation_checked_amount; $i++)
                                     <span class="answer-check recreation checked"></span>
                                 @endfor
 
-                                @for ($i = 0; $i < $checkers['recreation'] - $applicant->getCheckedAnswerAmount('recreation'); $i++)
+                                @for ($i = 0; $i < $checkers['recreation'] - $recreation_checked_amount; $i++)
                                     <span class="answer-check recreation"></span>
                                 @endfor
                             </td>
 
                             <td>
-                                @for ($i = 0; $i < $applicant->getCheckedAnswerAmount($applicant->camp->section->name); $i++)
+                                @for ($i = 0; $i < $camp_checked_amount; $i++)
                                     <span class="answer-check {{ $applicant->camp->section->name }} checked"></span>
                                 @endfor
 
-                                @for ($i = 0; $i < $checkers[$applicant->camp->section->name] - $applicant->getCheckedAnswerAmount($applicant->camp->section->name); $i++)
+                                @for ($i = 0; $i < $checkers[$applicant->camp->section->name] - $camp_checked_amount; $i++)
                                     <span class="answer-check {{ $applicant->camp->section->name }}"></span>
                                 @endfor
                             </td>

@@ -3,14 +3,16 @@
         <ul class="sidebar-menu">
             <li class="header">NAVIGATION</li>
             <li class="{{ $viewHelper->isActivePath("backend") }}"><a href="{{ route('view.backend.index') }}"><i class="fa fa-book"></i> <span>หน้าแรก</span></a></li>
-            <li class="treeview {{ $viewHelper->isActivePath(["backend/stats", "backend/stats/*"]) }}">
-                <a href="{{ route('view.backend.index') }}"><i class="fa fa-book"></i> <span>สถิติการเข้าชม</span> <i class="fa fa-angle-left pull-right"></i></a>
-                <ul class="treeview-menu">
-                    <li class="{{ $viewHelper->isActivePath(["backend/stats"]) }}"><a href="{{ route('view.backend.stats') }}"><i class="fa fa-book"></i> <span>ภาพรวม</span></a></li>
-                    <li class="{{ $viewHelper->isActivePath(["backend/stats/view"]) }}"><a href="{{ route('view.backend.stats.view') }}"><i class="fa fa-book"></i> <span>จำนวนการเข้าชม</span></a></li>
-                    <li class="{{ $viewHelper->isActivePath(["backend/stats/error"]) }}"><a href="{{ route('view.backend.stats.error') }}"><i class="fa fa-book"></i> <span>ข้อผิดพลาด</span></a></li>
-                </ul>
-            </li>
+            @can('view_stats', \App\User::class)
+                <li class="treeview {{ $viewHelper->isActivePath(["backend/stats", "backend/stats/*"]) }}">
+                    <a href="{{ route('view.backend.index') }}"><i class="fa fa-book"></i> <span>สถิติการเข้าชม</span> <i class="fa fa-angle-left pull-right"></i></a>
+                    <ul class="treeview-menu">
+                        <li class="{{ $viewHelper->isActivePath(["backend/stats"]) }}"><a href="{{ route('view.backend.stats') }}"><i class="fa fa-book"></i> <span>ภาพรวม</span></a></li>
+                        <li class="{{ $viewHelper->isActivePath(["backend/stats/view"]) }}"><a href="{{ route('view.backend.stats.view') }}"><i class="fa fa-book"></i> <span>จำนวนการเข้าชม</span></a></li>
+                        <li class="{{ $viewHelper->isActivePath(["backend/stats/error"]) }}"><a href="{{ route('view.backend.stats.error') }}"><i class="fa fa-book"></i> <span>ข้อผิดพลาด</span></a></li>
+                    </ul>
+                </li>
+            @endcan
             <li class="treeview {{ $viewHelper->isActivePath(["backend/dashboard/register", "backend/dashboard/overview"]) }}">
                 <a href="{{ route('view.backend.index') }}"><i class="fa fa-book"></i> <span>ภาพรวม</span> <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">

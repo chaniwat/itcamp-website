@@ -20,6 +20,18 @@ $bg-navy-active: #001a35;
 }
 
 /*
+  BT4 to BT3 compatible
+ */
+.col-12 {
+  float: left;
+  position: relative;
+  min-height: 1px;
+  padding-right: 15px;
+  padding-left: 15px;
+  width: 100%;
+}
+
+/*
 * Addition 15 columns grid
 */
 .row {

@@ -4,14 +4,19 @@ return [
     'backend_add_account_success' => 'เพิ่มบัญชี Staff สำเร็จ', // add staff account
     'backend_add_applicant_question_success' => 'เพิ่มคำถามผู้สมัครสำเร็จ', // add applicant question
     'backend_add_question_success' => 'เพิ่มคำถามค่ายสำเร็จ', // add camp question
+    'backend_applicant_not_selected' => 'ไม่ได้ทำการเลือกผู้สมัคร', // no applicant selected
     'backend_applicant_not_found' => 'ไม่พบผู้สมัคร', // Applicant not found
     'backend_applicant_question_id_already_used' => 'field_id ของคำถามผู้สมัครนี้ถูกใช้แล้ว\'', // applicant question field_id already used
     'backend_applicant_question_not_found' => 'ไม่มีคำถามผู้สมัครที่ระบุ', // applicant question not found
     'backend_applicant_state_updated' => 'ทำการอัพเดท state สำเร็จ', // Applicant state updated
+    'backend_answer_score_not_complete' => 'กรอกคะแนนให้ครบ', // Score not complete to all answer
+    'backend_answer_check_score_saved' => 'บันทึกผลการให้คะแนนสำเร็จ', // Score answer saved
     'backend_camp_not_have_question' => 'ค่ายที่ระบุไม่สามารถตั้งคำถามได้', // camp not have question
     'backend_form_field_type_not_accept' => 'ระบุ field_type ผิด', // field type not accept (incorrect field type)
     'backend_incorrect_format_in_field_value' => 'field_value ไม่ตรงตามรูปแบบ', // incorrect format in field value setting of its type
+    'backend_no_applicant_to_check' => 'ไม่มีผู้สมัครที่ต้องตรวจคำตอบ (ตรวจครบแล้วสำหรับบัญชี staff นี้ หรือรอการ Approve เพิ่มเติม)', // no applicant left to check answer
     'backend_not_admin' => 'คุณไม่ได้เป็นผู้ดูแลระบบ (แอดมิน)', // not a admin (for backend staff)
+    'backend_not_enough_permission_to_check_answer' => 'คุณไม่มีสิทธิ์ในการตรวจคำตอบ', // not enough permission to check (scoring) applicant's answers
     'backend_not_enough_permission_to_create_applicant_question' => 'คุณไม่สามารถตั้งคำถามผู้สมัครใหม่่ได้', // not enough permission to create applicant question
     'backend_not_enough_permission_to_edit_applicant_question' => 'คุณไม่สามารถแก้ไขคำถามผู้สมัครนี้ได้', // not enough permission to edit applicant question
     'backend_not_enough_permission_to_remove_applicant_question' => 'คุณไม่สามารถลบคำถามผู้สมัครนี้ได้', // not enough permission to remove applicant question
@@ -20,6 +25,7 @@ return [
     'backend_not_enough_permission_to_remove_question' => 'คุณไม่สามารถลบคำถามค่ายนี้ได้', // not enough permission to remove camp question
     'backend_not_enough_permission_to_manage_staff' => 'คุณไม่มีสิทธิ์ในการจัดการบัญชี staff', // not enough permission to manage staff
     'backend_not_enough_permission_to_update_applicant_state' => 'คุณไม่สิทธิ์ในการเปลี่ยน state ของ applicant', // not enough permission to update applicant state
+    'backend_not_enough_permission_to_view_overall_answer' => 'คุณไม่มีสิทธิ์ในการดูภาพรวมของการตรวจคำตอบ', // not enough permission to view overall checking answers
     'backend_question_id_already_used' => 'field_id ของคำถามค่ายนี้ถูกใช้แล้ว', // field_id already used
     'backend_question_not_found' => 'ไม่มีคำถามค่ายที่ระบุ', // camp question not found
     'backend_remove_applicant_question_success' => 'ลบคำถามผู้สมัครสำเร็จ', // remove applicant question

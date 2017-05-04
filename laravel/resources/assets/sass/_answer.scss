@@ -8,8 +8,8 @@
 }
 
 $sections: (
-        "head": #3d3d3d,
-        "recreation": #abc6ff,
+        "head": $color-section-head,
+        "recreation": $color-recreation-head,
         "camp_app": $color-camp-app,
         "camp_game": $color-camp-game,
         "camp_network": $color-camp-network,

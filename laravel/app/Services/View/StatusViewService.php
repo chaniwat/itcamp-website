@@ -30,14 +30,19 @@ class StatusViewService
         'backend_add_account_success' => 'success', // add staff account
         'backend_add_applicant_question_success' => 'success', // add applicant question
         'backend_add_question_success' => 'success', // add camp question
+        'backend_applicant_not_selected' => 'warning', // no applicant selected
         'backend_applicant_not_found' => 'warning', // Applicant not found
         'backend_applicant_question_id_already_used' => 'warning', // applicant question field_id already used
         'backend_applicant_question_not_found' => 'warning', // applicant question not found
         'backend_applicant_state_updated' => 'success', // Applicant state updated
+        'backend_answer_score_not_complete' => 'danger', // Score not complete to all answer
+        'backend_answer_check_score_saved' => 'success', // Score answer saved
         'backend_camp_not_have_question' => 'danger', // camp not have question
         'backend_form_field_type_not_accept' => 'danger', // field type not accept (incorrect field type)
         'backend_incorrect_format_in_field_value' => 'danger', // incorrect format in field value setting of its type
+        'backend_no_applicant_to_check' => 'info', // no applicant left to check answer
         'backend_not_admin' => 'danger', // not a admin (for backend staff)
+        'backend_not_enough_permission_to_check_answer' => 'warning', // not enough permission to check (scoring) applicant's answers
         'backend_not_enough_permission_to_create_applicant_question' => 'warning', // not enough permission to create applicant question
         'backend_not_enough_permission_to_edit_applicant_question' => 'warning', // not enough permission to edit applicant question
         'backend_not_enough_permission_to_remove_applicant_question' => 'warning', // not enough permission to remove applicant question
@@ -46,6 +51,7 @@ class StatusViewService
         'backend_not_enough_permission_to_remove_question' => 'warning', // not enough permission to remove camp question
         'backend_not_enough_permission_to_manage_staff' => 'warning', // not enough permission to manage staff
         'backend_not_enough_permission_to_update_applicant_state' => 'warning', // not enough permission to update applicant state
+        'backend_not_enough_permission_to_view_overall_answer' => 'warning', // not enough permission to view overall checking answers
         'backend_question_id_already_used' => 'warning', // camp question field_id already used
         'backend_question_not_found' => 'warning', // camp question not found
         'backend_remove_applicant_question_success' => 'success', // remove applicant question

@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Applicant;
+use App\ApplicantQuestionCheck;
 use App\Camp;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
@@ -32,7 +34,10 @@ class DashboardController extends Controller
         /** @var Camp $camp_datasci */
         $camp_datasci = Camp::where('name', 'camp_datasci')->first();
 
+        $staff = Auth::user()->staff;
+
         $data = [
+            "staff" => $staff,
             "count" => [
                 "app" => [
                     "total" => $camp_app->getApplicantCount(),
@@ -71,6 +76,16 @@ class DashboardController extends Controller
                 "total" => $applicant_count
             ]
         ];
+
+        if($staff->section->has_question) {
+            $finishAmount = ApplicantQuestionCheck::where('section_id', $staff->section->id)
+                ->groupBy('applicant_id', 'section_id')
+                ->having(DB::raw('count(*)'), '>=', $staff->section->checker_amount)
+                ->get()
+                ->count();
+
+            $data["finish_amount"] = $finishAmount;
+        }
 
         return view('backend.group.dashboard.register')->with($data);
     }
