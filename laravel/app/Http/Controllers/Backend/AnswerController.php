@@ -112,17 +112,15 @@ class AnswerController extends Controller
             return redirect()->route('view.backend.answers.overall');
         }
 
-        $data = [];
-        if(in_array($staff->section->name, ["head", "recreation"])) {
-            $data['mode'] = "CHECKER";
-            $data['section'] = $staff->section;
+        $data = [
+            'mode' => 'CHECKER',
+            'section' => $staff->section,
+            'checker_amount' => $staff->section->checker_amount
+        ];
+        if(in_array($staff->section->name, ["head", "sub_head", "recreation"])) {
             $data['applicants'] = Applicant::getApprovedApplicants()->all();
-            $data['checker_amount'] = $staff->section->checker_amount;
         } else {
-            $data['mode'] = "CHECKER";
-            $data['section'] = $staff->section;
             $data['applicants'] = Applicant::getApprovedApplicants()->where("camp_id", $staff->section->camp->id);
-            $data['checker_amount'] = $staff->section->checker_amount;
         }
 
         return view('backend.group.answer.index')->with($data);
