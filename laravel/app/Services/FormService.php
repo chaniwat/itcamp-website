@@ -76,7 +76,7 @@ class FormService
     private function checkFileSettingFormat($arrayObject) {
         if(sizeof($arrayObject) == 2 && array_key_exists("directory", $arrayObject) && gettype($arrayObject['directory']) == 'string'
             && array_key_exists("acceptTypes", $arrayObject) && gettype($arrayObject['acceptTypes']) == 'string') {
-            if(in_array($arrayObject['acceptTypes'], self::ACCEPTS_FILE_TYPE)) {
+            if(in_array($arrayObject['acceptTypes'], FileService::ACCEPTS_FILE_TYPE)) {
                 return true;
             }
         }

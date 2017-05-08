@@ -21,6 +21,13 @@ Route::group(['namespace' => 'Frontend'], function () {
     #region register
 
     if(env('APP_OPEN')) {
+
+        Route::group(['prefix' => 'advertise'], function () {
+            Route::get('/', 'AdvertiseController@showForm')->name('view.frontend.advertise');
+            Route::get('/complete', 'AdvertiseController@showComplete')->name('view.frontend.advertise.complete');
+            Route::post('/', 'AdvertiseController@saveAdvertise')->name('frontend.advertise');
+        });
+
         Route::group(['prefix' => 'register'], function () {
             Route::get('/complete', 'RegisterController@showComplete')->name('view.frontend.register.complete');
             Route::get('/{camp}', 'RegisterController@showRegister')->name('view.frontend.register');
@@ -68,6 +75,17 @@ Route::group(['prefix' => 'backend', 'namespace' => 'Backend'], function () {
 
             Route::get('/', 'ApplicantController@showApplicants')->name('view.backend.applicants');
             Route::get('/{id}', 'ApplicantController@showApplicantDetail')->name('view.backend.applicants.detail');
+
+            Route::post('/', 'ApplicantController@goToApplicantID')->name('backend.applicants.go_to_id');
+            Route::post('/{id}/status', 'ApplicantController@approvingApplicant')->name('backend.applicants.update.state');
+
+        });
+
+        Route::group(['prefix' => 'stats'], function () {
+
+            Route::get('/', 'StatsController@showOverview')->name('view.backend.stats');
+            Route::get('/view', 'StatsController@showView')->name('view.backend.stats.view');
+            Route::get('/error', 'StatsController@showError')->name('view.backend.stats.error');
 
         });
 

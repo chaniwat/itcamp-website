@@ -25,5 +25,7 @@ class SectionsSeeder extends Seeder
             ['name' => 'register', 'has_question' => false, 'is_camp' => false],
             ['name' => 'web_developer', 'has_question' => false, 'is_camp' => false],
         ]);
+
+        $this->call(SetCheckerAmountSection::class);
     }
 }

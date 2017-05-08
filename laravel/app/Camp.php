@@ -63,8 +63,12 @@ class Camp extends Model
     }
 
     public function getApplicantApprovedCount() {
-        $query = $this->createCountBaseSQL()
-            ->whereIn('applicants.state', array('CHECKED', 'CONFIRM', 'SELECT', 'RESERVE', 'FAIL'))
+        $query = DB::table('camps')
+            ->join('applicants', 'applicants.camp_id', '=', 'camps.id')
+            ->select(DB::raw('count(*) as applicant_count'))
+            ->where('camps.id', $this->id)
+            ->groupBy('camps.id')
+            ->whereIn('applicants.state', array('CHECKED', 'COMPLETE', 'SELECT', 'RESERVE', 'FAIL', 'CONFIRM_SELECT', 'CONFIRM_RESERVE', 'CANCEL_SELECT', 'CANCEL_RESERVE'))
             ->first();
         return $query != null ? $query->applicant_count : 0;
     }

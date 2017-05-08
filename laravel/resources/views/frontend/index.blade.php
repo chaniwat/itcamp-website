@@ -152,7 +152,7 @@
               <h3>สถานที่</h3>
               <span class="sub font-weight-bold">IT<span class="text-orange">KMITL</span></span>
             </div>
-          </ul>
+          </div>
         </div>
       </section>
 
@@ -166,11 +166,31 @@
         </div>
         <div class="content">
           <h1 class="block-title">ผู้สนับสนุน</h1>
-          <div class="justify-content-center supporters-list">
-              <img class="img-thumbnail" src="{{ $lazyModeDir }}/assets/frontend/images/kmitl.jpg" />
-              <img class="img-thumbnail" src="{{ $lazyModeDir }}/assets/frontend/images/itkmitl.jpg" />
-            </div>
-          </div>
+
+            @if(count($sponsors['big']) > 0)
+                <div class="justify-content-center supporters-list">
+                    @foreach($sponsors['big'] as $img)
+                        <div class="supporter-img"><img class="img-thumbnail" src="{{ $lazyModeDir }}/assets/sponsor/{{ $img }}" /></div>
+                    @endforeach
+                </div>
+            @endif
+
+            @if(count($sponsors['medium']) > 0)
+                <div class="justify-content-center supporters-list medium">
+                    @foreach($sponsors['medium'] as $img)
+                        <div class="supporter-img"><img class="img-thumbnail" src="{{ $lazyModeDir }}/assets/sponsor/{{ $img }}" /></div>
+                    @endforeach
+                </div>
+            @endif
+
+            @if(count($sponsors['small']) > 0)
+                <div class="justify-content-center supporters-list small">
+                    @foreach($sponsors['small'] as $img)
+                        <div class="supporter-img"><img class="img-thumbnail" src="{{ $lazyModeDir }}/assets/sponsor/{{ $img }}" /></div>
+                    @endforeach
+                </div>
+            @endif
+
         </div>
         <div class="camp-connect" id="supporter-camp-connect-el"></div>
       </section>
@@ -181,6 +201,7 @@
         <!-- Camp navigation -->
         <nav class="camp-nav hide">
           <ul>
+            <li class="slide-link home" data-target="home"></li>
             <li class="slide-link app" data-target="app"></li>
             <li class="slide-link game" data-target="game"></li>
             <li class="slide-link network" data-target="network"></li>
@@ -195,7 +216,7 @@
         </div>
 
         <!-- Main slide -->
-        <div class="slide">
+        <div class="slide home" data-anchor="home">
           <div class="content">
             <h1 class="block-title">ค่ายย่อย</h1>
             <div class="camp-characters">
@@ -223,7 +244,7 @@
               </div>
             </div>
             <div class="camp-helper">
-              (ลองกดที่ตัวไวรัสดูสิ~)
+              (กดที่ตัวไวรัสเพื่อดูรายละเอียดค่ายและสมัครเข้าค่าย~)
             </div>
           </div>
         </div>
@@ -581,7 +602,7 @@
               </div>
               <div class="faq-answer">
                 <p>
-                  A: IoT (Internet of things) คือเทคโนโลยีที่เชื่อมทุกสิ่งทุกอย่างเข้าด้วยกันบนโลกอินเทอร์เน็ต ทำให้มนุษย์สามารถสั่งการ ควบคุมใช้งาน อุปกรณ์ต่างๆ ผ่านทางเครือข่ายอินเทอร์เน็ตได้ เช่น หากเราอยู่นอกบ้านแล้วอยากต้มน้ำร้อน  เราก็สามารถสั่งให้กาต้มน้ำเพิ่มอุณหภูมิผ่านโทรศัพท์มือถือเพื่อทำให้น้ำเดือดได้ โดยในค่าย IoT น้องๆ จะได้ลองเขียนโปรแกรมควบคุมอุปกรณ์เหล่านี้อีกด้วย
+                  A: IoT (Internet of things) คือเทคโนโลยีที่เชื่อมทุกสิ่งทุกอย่างเข้าด้วยกันบนโลกอินเทอร์เน็ต ทำให้มนุษย์สามารถสั่งการ ควบคุมใช้งาน อุปกรณ์ต่างๆ ผ่านทางเครือข่ายอินเทอร์เน็ตได้ เช่น หากเราอยู่นอกบ้านแล้วอยากต้มน้ำร้อน เราก็สามารถสั่งให้กาต้มน้ำเพิ่มอุณหภูมิผ่านโทรศัพท์มือถือเพื่อทำให้น้ำเดือดได้ โดยในค่าย IoT น้องๆ จะได้ลองเขียนโปรแกรมควบคุมอุปกรณ์เหล่านี้อีกด้วย
                 </p>
                 <div class="avatar"></div>
               </div>
@@ -595,7 +616,7 @@
               </div>
               <div class="faq-answer">
                 <p>
-                  A: Data Science หรือแปลเป็นไทยว่า วิทยาศาสตร์ข้อมูล คือ การขุดค้นหาองค์ความรู้ที่ซ่อนอยู่ในข้อมูลต่างๆ โดยใช้สถิติ อัลกอริทึม และสมการทางคณิตศาสตร์ ยกตัวอย่างเช่น แผนที่ Google Maps ที่รู้สภาพการจราจรจากระบบ GPS ในโทรศัพท์เรานี่แหละ ดังนั้นในค่ายนี้น้องๆ จะได้ทดลองขุดค้นหาองค์ความรู้ข้อมูลจากแหล่งข้อมูลจริงๆ ซึ่งใครจะรู้สิ่งที่น้องค้นพบในค่ายนี้อาจจะเปลี่ยนโลกของเราไปเลยก็ได้!
+                  A: Data Science หรือแปลเป็นไทยว่า วิทยาศาสตร์ข้อมูล คือ การขุดค้นหาองค์ความรู้ที่ซ่อนอยู่ในข้อมูลต่าง ๆ โดยใช้สถิติ อัลกอริทึม และสมการทางคณิตศาสตร์ ยกตัวอย่างเช่น แผนที่ Google Maps ที่รู้สภาพการจราจรจากระบบ GPS ในโทรศัพท์เรานี่แหละ ดังนั้นในค่ายนี้น้องๆ จะได้ทดลองขุดค้นหาองค์ความรู้ข้อมูลจากแหล่งข้อมูลจริงๆ ซึ่งใครจะรู้สิ่งที่น้องค้นพบในค่ายนี้อาจจะเปลี่ยนโลกของเราไปเลยก็ได้!
                 </p>
                 <div class="avatar"></div>
               </div>
@@ -628,8 +649,29 @@
             </div>
             <div class="row sharing-link">
               <div class="col-12">
-                <h3 class="block-title">ร่วมประชาสัมพันธ์กับเรา</h3>
-                <a href="javscript:;" class="btn btn-sharing-link disabled">เร็วๆนี้</a>
+                  <h3 class="block-title">ร่วมประชาสัมพันธ์กับเรา</h3>
+                  <a href="{{ route('view.frontend.advertise') }}" class="btn btn-sharing-link">คลิก</a>
+
+                  <hr />
+
+                  <h4>เว็บไซต์ที่ร่วมประชาสัมพันธ์</h4>
+
+                  @if(count($exchangers['banner']) > 0)
+                      <div class="justify-content-center exchangers-list-banner">
+                          @foreach($exchangers['banner'] as $exchanger)
+                            <a href="{{ $exchanger->url }}" target="_blank"><div class="exchanger"><img class="img-thumbnail" src="{{ $lazyModeDir }}/storage/{{ $exchanger->banner }}" /></div></a>
+                          @endforeach
+                      </div>
+                  @endif
+
+                  @if(count($exchangers['text']) > 0)
+                      <div class="justify-content-center exchangers-list-text">
+                          @foreach($exchangers['text'] as $exchanger)
+                            <a href="{{ $exchanger->url }}" target="_blank"><div class="exchanger">{{ $exchanger->title }}</div></a>
+                          @endforeach
+                      </div>
+                  @endif
+
               </div>
             </div>
           </div>

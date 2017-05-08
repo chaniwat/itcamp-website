@@ -48,14 +48,11 @@ function registerInputMasks() {
   });
 }
 
-function registerFileCheck() {
+function registerFileCheck(mode) {
   var pictures = ["image/jpeg", "image/gif", "image/png"];
   var documents = ["application/pdf", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"];
   var any = pictures.concat(documents);
 
-  var setupAllowedFile = function(elem, allowedExts) {
-    elem.change(checkInput.bind(this, allowedExts));
-  }
   var checkInput = function(allowedExts, event) {
     var elemO = $(event.target).get(0);
     var files = elemO.files;
@@ -84,6 +81,10 @@ function registerFileCheck() {
     } else {
       console.log('No file selected');
     }
+  }
+
+  var setupAllowedFile = function(elem, allowedExts) {
+    elem.change(checkInput.bind(this, allowedExts));
   }
 
   var registerShowPicture = function(fieldID) {
@@ -115,54 +116,106 @@ function registerFileCheck() {
     });
   }
 
-  setupAllowedFile($("#a_confirmcurrentgrade"), any);
-  setupAllowedFile($("#q_recreation_1_f"), pictures);
-  registerShowPicture("a_confirmcurrentgrade");
-  registerShowPicture("q_recreation_1_f");
-  if(GlobalOption.camp == 'camp_game') {
-    setupAllowedFile($("#q_game_5"), pictures);
-    registerShowPicture("q_game_5");
-  } else if(GlobalOption.camp == 'camp_iot') {
-    setupAllowedFile($("#q_iot_5"), pictures);
-    registerShowPicture("q_iot_5");
+  if(mode == "REGISTER") {
+    setupAllowedFile($("#a_confirmcurrentgrade"), any);
+    registerShowPicture("a_confirmcurrentgrade");
+
+    setupAllowedFile($("#q_recreation_1_f"), pictures);
+    registerShowPicture("q_recreation_1_f");
+
+    if(GlobalOption.camp == 'camp_game') {
+      setupAllowedFile($("#q_game_5"), pictures);
+      registerShowPicture("q_game_5");
+    } else if(GlobalOption.camp == 'camp_iot') {
+      setupAllowedFile($("#q_iot_5"), pictures);
+      registerShowPicture("q_iot_5");
+    }
+  } else if(mode == "ADVERTISE") {
+    setupAllowedFile($("#banner"), pictures);
+    registerShowPicture("banner");
   }
 }
 
-function registerValidateForm() {
+function registerValidateForm(elem) {
   var valid;
-  var file;
+  var firstInvalidElement = null;
+  var confirmModalOpen = false;
+  var submitting = false;
 
-  var textValidator = function(i, e) {
-    e = $(e);
+  var textValidator = function(e) {
     e.parent('.form-group').removeClass('has-danger');
 
-    if(!e[0].checkValidity()) {
+    if(!e[0].checkValidity() || e.val().replace(/^\s+|\s+$/g,'') == '') {
       e.parent('.form-group').addClass('has-danger');
       valid = false;
+
+      if(!firstInvalidElement) {
+        firstInvalidElement = e;
+      }
+    }
+
+    if(!e.is('input[type=file]'))  {
+      e.val(e.val().replace(/^\s+|\s+$/g,''));
     }
   }
-  var selectValidator = function(i, e) {
-    e = $(e);
+  var selectValidator = function(e) {
     e.parent('.form-group').removeClass('has-danger');
 
     if($(e).val() == null) {
       e.parent('.form-group').addClass('has-danger');
       valid = false;
+
+      if(!firstInvalidElement) {
+        firstInvalidElement = e;
+      }
     }
   }
 
-  $('#submitBtn').click(function() {
-    valid = true;
+  // for state changing
+  $("#confirmModal").on('shown.bs.modal', function() {
+    confirmModalOpen = true;
+  });
+  $("#confirmModal").on('hide.bs.modal', function() {
+    if(!submitting) {
+      confirmModalOpen = false;
+    }
+  });
+  $("#confirmModal").on('hidden.bs.modal', function() {
+    if(submitting) {
+      $("#savingModal").modal({
+          backdrop: 'static',
+          keyboard: false
+      });
+    }
+  });
 
-    $('input[required]').each(textValidator);
-    $('select[required]').each(selectValidator);
-    $('textarea[required]').each(textValidator);
+  elem.submit(function(e) {
+    if(!confirmModalOpen) {
+      e.preventDefault();
 
-    if(valid) {
-      $("#confirmModal").modal('show');
+      valid = true;
+      firstInvalidElement = null;
+
+      $('input[required], select[required], textarea[required]').each(function (i, e) {
+        e = $(e);
+
+        if(e.is('input') || e.is('textarea')) {
+          textValidator(e);
+        } else {
+          selectValidator(e);
+        }
+      });
+
+      if(valid) {
+        $("#confirmModal").modal('show');
+      } else {
+        $("#formAlert").modal('show');
+        firstInvalidElement.focus();
+      };
     } else {
-      $("#formAlert").modal('show');
-    };
+      submitting = true;
+      $("#confirmModal").modal('hide');
+    }
   });
 }
 
@@ -180,10 +233,15 @@ $(function(){
 });
 
 $(document).ready(function() {
+
+  registerFileCheck(GlobalOption.mode);
+
   if(GlobalOption.mode == "REGISTER") {
     registerOtherFieldHandler();
     registerInputMasks();
-    registerFileCheck();
-    registerValidateForm();
+
+    registerValidateForm($('#registerForm'));
+  } else if(GlobalOption.mode == "ADVERTISE") {
+    registerValidateForm($('#advertiseForm'));
   }
 });

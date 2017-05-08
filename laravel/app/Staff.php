@@ -31,4 +31,8 @@ class Staff extends Model
     public function section() {
         return $this->belongsTo('App\Section');
     }
+
+    public function checks() {
+        return $this->hasMany('App\QuestionCheck');
+    }
 }

@@ -15,6 +15,7 @@
     <title>ITCAMP 13 | Register</title>
 
     {{--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">--}}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="{{ asset('assets/frontend/css/app.css') }}?v={{ (int)microtime(true) }}" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker3.standalone.min.css" />
     <link rel="stylesheet" href="{{ asset('assets/frontend/register/style.css') }}?v={{ (int)microtime(true) }}" />
@@ -53,7 +54,7 @@
         </header>
 
         <section class="body">
-            <form id="registerForm" action="{{ route('frontend.register', ['camp' => $camp]) }}" method="POST" enctype="multipart/form-data">
+            <form id="registerForm" action="{{ route('frontend.register', ['camp' => $camp]) }}" method="POST" enctype="multipart/form-data" novalidate>
                 {{ csrf_field() }}
 
                 <h2>ส่วนที่ 1 : ข้อมูลทั่วไปของผู้สมัคร</h2>
@@ -106,7 +107,7 @@
                 <hr />
                 <div class="row">
                     <div class="col-12 offset-lg-4 col-lg-4">
-                        <button type="button" class="btn btn-block btn-success" id="submitBtn">สมัคร</button>
+                        <button type="submit" class="btn btn-block btn-success" id="submitBtn">สมัคร</button>
                     </div>
                 </div>
 
@@ -131,6 +132,17 @@
                 </div>
             </form>
         </section>
+    </div>
+
+    <div class="modal fade" id="savingModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body text-center">
+                    <i class="fa fa-cog fa-spin fa-3x fa-fw"></i>
+                    <h3>กำลังบันทึกข้อมูล</h3>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="modal fade" id="fileAlert" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">

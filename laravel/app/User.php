@@ -43,4 +43,14 @@ class User extends Authenticatable
     public function applicant() {
         return $this->hasOne('App\Applicant');
     }
+
+    public function getIsAdminAttribute()
+    {
+        if($this->isStaff() && ($this->staff->is_admin || in_array($this->staff->section->name, ['web_developer', 'head']))) {
+            return true;
+        }
+
+        return false;
+    }
+
 }

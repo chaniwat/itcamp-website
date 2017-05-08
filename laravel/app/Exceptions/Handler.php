@@ -61,8 +61,8 @@ class Handler extends ExceptionHandler
      */
     protected function NotFoundExceptionHandler($request, NotFoundHttpException $e)
     {
-        // If not the assets, handles it (Bypass assets)
-        if(!$request->is("assets/*")) {
+        // If not the assets or templates(for tracker) or banner(for link-exchange) or storage, handles it (Bypass assets)
+        if(!($request->is("assets/*") || $request->is("templates/*") || $request->is("banner/*") || $request->is("storage/*"))) {
 
             if($request->is("backend/*")) {
                 // Backend handle
