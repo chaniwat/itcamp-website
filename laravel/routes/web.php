@@ -28,8 +28,11 @@ Route::group(['namespace' => 'Frontend'], function () {
             Route::post('/', 'AdvertiseController@saveAdvertise')->name('frontend.advertise');
         });
 
-        Route::group(['prefix' => 'register'], function () {
+        Route::group(['prefix' => 'register', 'middleware' => 'web.registration'], function () {
+
             Route::get('/complete', 'RegisterController@showComplete')->name('view.frontend.register.complete');
+            Route::get('/close', 'RegisterController@showClose')->name('view.frontend.register.close');
+
             Route::get('/{camp}', 'RegisterController@showRegister')->name('view.frontend.register');
             Route::post('/{camp}', 'RegisterController@register')->name('frontend.register');
         });

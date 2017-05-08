@@ -244,7 +244,11 @@
               </div>
             </div>
             <div class="camp-helper">
-              (กดที่ตัวไวรัสเพื่อดูรายละเอียดค่ายและสมัครเข้าค่าย~)
+              @if(!$registrationEnd)
+                (กดที่ตัวไวรัสเพื่อดูรายละเอียดค่ายและสมัครเข้าค่าย~)
+              @else
+                (กดที่ตัวไวรัสเพื่อดูรายละเอียดค่าย~)
+              @endif
             </div>
           </div>
         </div>
@@ -263,7 +267,11 @@
                   <hr />
                   <p><span class="space-4"></span>ฉีกตำราเดิม ๆ และมาสร้างสรรค์สิ่งใหม่ในโลกความรู้แอปพลิเคชั่นกับ AppVira ค่ายที่จะพาน้อง ๆ ไปสร้างแอปพลิเคชั่นด้วยฝีมือตัวเองด้วยสุดยอดโปรแกรมอย่าง XCode บนระบบปฏิบัติการ iOS แล้วจะพบว่าเราก็สามารถสร้างสรรค์สิ่งต่าง ๆ ได้อีกมากมายเพียงแค่น้องลงมือทำ! <br />
                     <span class="space-4"></span>โอ้โห! ได้สร้างแอปพลิเคชั่นใหม่ ๆ ด้วยตัวเองอย่างนี้แถมมีพี่ ๆ ที่พร้อมจะสอนน้อง ๆ ให้ได้ความรู้ด้วย จะรอช้าทำไมกดปุ่มสมัครเลย!</p>
-                  <a href="{{ route('view.frontend.register', ['camp' => 'app']) }}" class="btn btn-regis-app">สมัครค่ายนี้</a>
+                  @if(!$registrationEnd)
+                    <a href="{{ route('view.frontend.register', ['camp' => 'app']) }}" class="btn btn-regis-app">สมัครค่ายนี้</a>
+                  @else
+                    <a class="btn btn-regis-app disabled">รอประกาศผลเร็วๆนี้</a>
+                  @endif
                 </div>
               </div>
             </div>
@@ -284,7 +292,11 @@
                   <hr />
                   <p><span class="space-4"></span>พร้อมกันหรือยัง? กับค่าย GamePersky ที่จะเปลี่ยนน้องจากผู้เล่นสู่ผู้สร้างบนเส้นทางแห่งสายเกมเมอร์ สร้างสรรค์เกมในแบบที่น้อง ๆ จินตนาการไว้ดั่งใจนึกด้วยโปรแกรม Construct 2 ที่จะช่วยน้องสรรสร้างเกมออกมาได้สุดแสนจะง่ายดายเพียงแค่คลิก ลากและวางเท่านั้น <br />
          	          <span class="space-4"></span>ว้าว! ได้ทั้งความรู้ ได้ทั้งประสบการณ์ในการทำเกมอีกอย่างนี้พลาดไม่ได้แล้ว! สมัครเลย แล้วมาร่วมกันเป็นผู้กล้าแห่ง GamePersky กันเถอะ</p>
-                  <a href="{{ route('view.frontend.register', ['camp' => 'game']) }}" class="btn btn-regis-game">สมัครค่ายนี้</a>
+                  @if(!$registrationEnd)
+                    <a href="{{ route('view.frontend.register', ['camp' => 'game']) }}" class="btn btn-regis-game">สมัครค่ายนี้</a>
+                  @else
+                    <a class="btn btn-regis-game disabled">รอประกาศผลเร็วๆนี้</a>
+                  @endif
                 </div>
               </div>
             </div>
@@ -305,7 +317,11 @@
                   <hr />
                   <p><span class="space-4"></span>ท่องระบบเครือข่ายกับค่าย NetworkTon พาน้อง ๆ มาค้นหาและทำความเข้าใจความลับต่าง ๆ ของการทำงานบนโครงสร้างเครือข่ายที่ซับซ้อนกันอย่างง่ายดาย อีกทั้งยังได้ใช้โปรแกรมสุดเจ๋งอย่าง Cisco Packet Tracer โปรแกรมจำลองสร้างระบบเครือข่ายอย่างง่ายอีกด้วย <br />
                     <span class="space-4"></span>โห! ได้ความรู้ในระดับมหาวิทยาลัยที่เข้าใจง่ายอย่างนี้ อีกทั้งยังมีพี่ ๆ ที่สุดแสนจะน่ารักคอยช่วยสอนและยังได้ทดลองสร้างระบบจำลองด้วยตัวเองอีก ประสบการณ์อย่างนี้หาไม่ได้จากที่ไหนอีกแล้วอย่ารอช้าเลย! รีบมาสมัครกัน</p>
-                  <a href="{{ route('view.frontend.register', ['camp' => 'network']) }}" class="btn btn-regis-network">สมัครค่ายนี้</a>
+                  @if(!$registrationEnd)
+                    <a href="{{ route('view.frontend.register', ['camp' => 'network']) }}" class="btn btn-regis-network">สมัครค่ายนี้</a>
+                  @else
+                    <a class="btn btn-regis-network disabled">รอประกาศผลเร็วๆนี้</a>
+                  @endif
                 </div>
               </div>
             </div>
@@ -326,7 +342,11 @@
                   <hr />
                   <p><span class="space-4"></span>ร่วมมือกันสร้างไอเดียชิ้นใหม่เพื่อต่อต้านไวรัสในโลกไซเบอร์ด้วยเทคโนโลยี Internet of Things มาสร้างสรรค์ไอเดียเจ๋ง ๆ กันได้ที่ค่าย IoTSecure ที่จะพาน้องๆ เรียนรู้ในสิ่งประดิษฐ์ที่ทันสมัยไม่ซ้ำใคร รวมถึงได้ทดลองใช้อุปกรณ์เสริมไม่ว่าจะเป็น Arduino Uno R3, ESP8266 และอื่น ๆ อีกมากมาย <br />
                     <span class="space-4"></span>ว้าว! มีอุปกรณ์แปลกๆ ให้เล่นด้วย แถมยังได้สร้างสิ่งประดิษฐ์จากไอเดียเจ๋ง ๆ อีก รู้อย่างนี้แล้วรีบกดปุ่มสมัครแล้วเอาไอเดียของน้องมาแชร์ให้โลกได้รู้กันเถอะ!</p>
-                  <a href="{{ route('view.frontend.register', ['camp' => 'iot']) }}" class="btn btn-regis-iot">สมัครค่ายนี้</a>
+                  @if(!$registrationEnd)
+                    <a href="{{ route('view.frontend.register', ['camp' => 'iot']) }}" class="btn btn-regis-iot">สมัครค่ายนี้</a>
+                  @else
+                    <a class="btn btn-regis-iot disabled">รอประกาศผลเร็วๆนี้</a>
+                  @endif
                 </div>
               </div>
             </div>
@@ -347,7 +367,11 @@
                   <hr />
                   <p><span class="space-4"></span>ค่ายน้องใหม่ไฟแรงอย่างค่าย DataScan จะพาน้อง ๆ มาช่วยกันไขความลับแห่งข้อมูลที่ซุกซ่อนอยู่รอบตัวน้อง ๆ ด้วยตัวช่วยสุดเจ๋งอย่างโปรแกรม Rapid miner อีกทั้งยังมีพี่ ๆ ที่พร้อมจะให้คำปรึกษาและสอนน้อง ๆ ในปัญหาที่น้องสงสัยอีกมากมายเลยล่ะ แล้วน้องจะค้นพบว่าข้อมูลที่อยู่รอบตัวน้องนั้นมีประโยชน์มากกว่าที่น้องเคยคิด! <br />
 	                   <span class="space-4"></span>พลาดไม่ได้! อย่างนี้ต้องลองมาเรียนแล้ว มาร่วมเป็นส่วนหนึ่งไปกับการขุดค้นหาข้อมูลกับค่าย DataScan กันเถอะ อย่ารอช้ากดปุ่มสมัครกันได้เลย!</p>
-                  <a href="{{ route('view.frontend.register', ['camp' => 'datasci']) }}" class="btn btn-regis-datasci">สมัครค่ายนี้</a>
+                  @if(!$registrationEnd)
+                    <a href="{{ route('view.frontend.register', ['camp' => 'datasci']) }}" class="btn btn-regis-datasci">สมัครค่ายนี้</a>
+                  @else
+                    <a class="btn btn-regis-datasci disabled">รอประกาศผลเร็วๆนี้</a>
+                  @endif
                 </div>
               </div>
             </div>
@@ -369,24 +393,40 @@
               <span class="timeline-sub">วันรับสมัคร</span>
             </div>
             <div class="timeline-2 col">
-              <img src="{{ $lazyModeDir }}/assets/frontend/images/tv-2-wait.gif" height="200" />
+              @if(!$timeline['registration'])
+                <img src="{{ $lazyModeDir }}/assets/frontend/images/tv-2-wait.gif" height="200" />
+              @else
+                <img src="{{ $lazyModeDir }}/assets/frontend/images/tv-2.png" height="200" />
+              @endif
               <span class="timeline-date">8 พ.ค. 2560</span>
               <span class="timeline-sub">วันปิดรับสมัคร</span>
             </div>
             <div class="w-100 hidden-xs-down hidden-md-up"></div>
             <div class="timeline-3 col">
-              <img src="{{ $lazyModeDir }}/assets/frontend/images/tv-3-wait.gif" height="200" />
+              @if(!$timeline['announce'])
+                <img src="{{ $lazyModeDir }}/assets/frontend/images/tv-3-wait.gif" height="200" />
+              @else
+                <img src="{{ $lazyModeDir }}/assets/frontend/images/tv-3.png" height="200" />
+              @endif
               <span class="timeline-date">15 พ.ค. 2560</span>
               <span class="timeline-sub">ประกาศผลและโอนเงินยืนยันสิทธิ์</span>
             </div>
             <div class="timeline-4 col">
-              <img src="{{ $lazyModeDir }}/assets/frontend/images/tv-4-wait.gif" height="200" />
+              @if(!$timeline['confirm'])
+                <img src="{{ $lazyModeDir }}/assets/frontend/images/tv-4-wait.gif" height="200" />
+              @else
+                <img src="{{ $lazyModeDir }}/assets/frontend/images/tv-4.png" height="200" />
+              @endif
               <span class="timeline-date">22 พ.ค. 2560</span>
               <span class="timeline-sub">วันสุดท้ายของการยืนยันสิทธิ์</span>
             </div>
             <div class="w-100 hidden-xs-down hidden-md-up"></div>
             <div class="timeline-5 col">
-              <img src="{{ $lazyModeDir }}/assets/frontend/images/tv-5-wait.gif" height="200" />
+              @if(!$timeline['camp_day'])
+                <img src="{{ $lazyModeDir }}/assets/frontend/images/tv-5-wait.gif" height="200" />
+              @else
+                <img src="{{ $lazyModeDir }}/assets/frontend/images/tv-5.png" height="200" />
+              @endif
               <span class="timeline-date">8-12 มิ.ย. 2560</span>
               <span class="timeline-sub force-fredoka">ITCAMP13 Day!</span>
             </div>

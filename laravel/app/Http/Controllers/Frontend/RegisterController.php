@@ -65,4 +65,8 @@ class RegisterController extends Controller
         }
     }
 
+    public function showClose() {
+        return view('frontend.reg_close');
+    }
+
 }
