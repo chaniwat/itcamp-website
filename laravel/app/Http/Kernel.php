@@ -37,6 +37,10 @@ class Kernel extends HttpKernel
             \PragmaRX\Tracker\Vendor\Laravel\Middlewares\Tracker::class,
         ],
 
+        'web.registration' => [
+            \App\Http\Middleware\RegistrationControl::class,
+        ],
+
         'api' => [
             'throttle:60,1',
             'bindings',

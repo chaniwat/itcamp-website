@@ -33,10 +33,10 @@
                 <div class="col-12" style="margin-bottom: 1rem;">
                     <div class="text-center" style="margin: 0; font-size: 20px;">
                         <img src="{{ asset('assets/frontend/images/logo.png') }}" width="300" style="margin-bottom: 0.8rem;" />
-                        <h1 style="font-weight: bold; margin-bottom: 0.8rem;">สมัครเสร็จสิ้น</h1>
+                        <h1 style="font-weight: bold; margin-bottom: 0.8rem;">สิ้นสุดการเปิดรับสมัครแล้ว</h1>
                         ประกาศผู้ผ่านการคัดเลือกในวันที่ 15 พฤษภาคม 2560 นี้ <br />
-                        และอย่าลืม เข้ามาร่วมพูดคุยกับพี่ๆ และเพื่อนคนอื่นๆ ได้ในกรุ๊ป <a href="https://www.facebook.com/groups/ITCampSociety/" target="_blank">ITCAMP Society &#64; ITKMITL</a> นะครับ <br />
-                        ติดตามรายละเอียดเพิ่มเติมได้ที่ <a href="https://www.facebook.com/itcampKMITL" target="_blank">facebook.com/itcampKMITL</a> หรือ Twitter <a href="https://twitter.com/ITCAMP" target="_blank">&#64;ITCAMP</a> <br />
+                        ติดตามการประกาศผลผ่านทางหน้าเว็บไซต์ เฟซบุ๊ก <a href="https://www.facebook.com/itcampKMITL" target="_blank">facebook.com/itcampKMITL</a> หรือทวิตเตอร์ <a href="https://twitter.com/ITCAMP" target="_blank">&#64;ITCAMP</a> <br />
+                        น้องๆ สามารถเข้าไปพูดคุยกับพี่ๆ เพื่อนๆ ได้ที่กรุ๊ปเฟซบุ๊ก <a href="https://www.facebook.com/groups/ITCampSociety/" target="_blank">ITCAMP Society &#64; ITKMITL</a> นะครับ <br />
                     </div>
                 </div>
                 <div class="col-12 offset-lg-4 col-lg-4">
@@ -53,7 +53,7 @@
     <script src="{{ asset('assets/frontend/register/jquery.maskedinput.min.js') }}" type="text/javascript"></script>
     <script type="text/javascript">
       var GlobalOption = {};
-      GlobalOption.mode = 'COMPLETE';
+      GlobalOption.mode = 'CLOSE';
     </script>
     <script src="{{ asset('assets/frontend/register/script.js') }}?v={{ (int)microtime(true) }}" type="text/javascript"></script>
 </body>
