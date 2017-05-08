@@ -33,10 +33,10 @@ class ApplicantQuestionPolicy
             $staff = $user->staff;
 
             if(
-                // Current user is admin or web developer or head
-                ($staff->is_admin || $staff->section->name == 'web_developer' || $staff->section->name == 'head')
+                // Current user is admin or web developer or head or sub head
+                ($staff->is_admin || in_array($staff->section->name, ['web_developer', 'head', 'sub_head']))
             ) {
-                return true;
+                return null;
             }
         }
 

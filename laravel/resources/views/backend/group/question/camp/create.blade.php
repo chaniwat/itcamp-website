@@ -103,6 +103,32 @@
                         <pre id="FieldTypeDescribe"></pre>
                     </div>
                 </div>
+
+                <div class="form-group">
+                    <label for="inputFieldClass" class="col-sm-2 control-label">Scoring</label>
+
+                    <div class="col-sm-10">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" id="inputHasScore" name="has_score" checked> คำถามนี้มีคะแนน
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputFieldClass" class="col-sm-2 control-label">Min Score</label>
+
+                    <div class="col-sm-10">
+                        <input type="number" class="form-control" id="inputMinScore" name="min_score" placeholder="Min Score" value="{{ old('min_score') ? old('min_score') : 0 }}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputFieldClass" class="col-sm-2 control-label">Max Score</label>
+
+                    <div class="col-sm-10">
+                        <input type="number" class="form-control" id="inputMaxScore" name="max_score" placeholder="Max Score" value="{{ old('max_score') ? old('max_score') : 1 }}">
+                    </div>
+                </div>
             </div>
 
             <div class="box-footer">
@@ -119,6 +145,7 @@
 <script type="text/javascript">
     $(document).ready(function() {
         initFieldTypeSettingDescribe($('#inputFieldType'), $('#inputFieldSetting'), $('#FieldTypeDescribe'), $('#other'));
+        initCheckScore($('#inputHasScore'), $('#inputMinScore'), $('#inputMaxScore'));
     });
 </script>
 @endsection

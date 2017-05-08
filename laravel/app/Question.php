@@ -29,14 +29,24 @@ class Question extends Model
         return $this->belongsTo('App\Section');
     }
 
+    public function answers() {
+        return $this->hasMany('App\Answer');
+    }
+
     public function parent() {
         return $this->belongsTo('App\Question');
     }
 
-    public static function getCampQuestion($camp)
-    {
-        $campSectionID = Camp::where('name', $camp)->first()->section->id;
+    public static function getSectionQuestion($section) {
+        if($section instanceof Section) {
+            $section = $section->id;
+        }
 
+        return self::where('section_id', $section)->orderBy('priority', 'desc')->get();
+    }
+
+    public static function getCampQuestion($camp) {
+        $campSectionID = Camp::where('name', $camp)->first()->section->id;
         return Question::whereIn('section_id', array(2, 3, $campSectionID))->orderBy('priority', 'desc')->get();
     }
 

@@ -56,3 +56,18 @@ function initFieldTypeSettingDescribe(fieldType, fieldValue, describeField, othe
 
     if(fieldValue && fieldValue.data('default')) this.fieldValue.html(fieldValue.data('default').replace(/'/g, ""));
 }
+
+function initCheckScore(checkelem, minelem, maxelem) {
+    checkelem.change(function (e) {
+
+        if(!checkelem.is(":checked")) {
+            minelem.attr('disabled', true);
+            maxelem.attr('disabled', true);
+        } else {
+            minelem.removeAttr('disabled');
+            maxelem.removeAttr('disabled');
+        }
+    });
+
+    checkelem.trigger('change');
+}

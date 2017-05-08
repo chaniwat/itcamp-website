@@ -9,6 +9,7 @@ use App\Staff;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
 class AccountStaffController extends Controller
@@ -29,6 +30,28 @@ class AccountStaffController extends Controller
         $this->account = $accountService;
     }
 
+    public function updateSelfPassword(Request $request) {
+        $rules = [
+            'password' => 'required|confirmed',
+            'password_confirmation' => 'required'
+        ];
+        $this->validator->validate($request, $rules);
+
+        if($this->validator->containError('validation.required')) {
+            return redirect()->back()->with('status', 'form_empty_field');
+        } else if($this->validator->containError('validation.confirmed')) {
+            return redirect()->back()->with('status', 'confirm_password_not_match');
+        }
+
+        $this->account->updateStaffPassword(Auth::user()->staff, $request->input('password'));
+
+        return redirect()->route('view.backend.index')->with('status', 'backend_update_account_password_complete');
+    }
+
+    public function showUpdateSelfPassword() {
+        return view('backend.update_password');
+    }
+
     /**
      * Create new staff account
      * @param Request $request
@@ -36,7 +59,7 @@ class AccountStaffController extends Controller
      */
     public function createStaff(Request $request) {
         // Policies Check
-        if (Gate::denies('view_backend', User::class)) {
+        if (Gate::denies('create_staff_account', User::class)) {
             return redirect()->route('view.backend.index')->with('status', 'backend_not_enough_permission_to_manage_staff');
         }
 
@@ -76,7 +99,7 @@ class AccountStaffController extends Controller
      */
     public function updateStaff(Request $request, $id) {
         // Policies Check
-        if (Gate::denies('view_backend', User::class)) {
+        if (Gate::denies('update_staff_account', User::class)) {
             return redirect()->route('view.backend.index')->with('status', 'backend_not_enough_permission_to_manage_staff');
         }
 
@@ -108,7 +131,7 @@ class AccountStaffController extends Controller
      */
     public function updateStaffPassword(Request $request, $id) {
         // Policies Check
-        if (Gate::denies('view_backend', User::class)) {
+        if (Gate::denies('update_staff_account', User::class)) {
             return redirect()->route('view.backend.index')->with('status', 'backend_not_enough_permission_to_manage_staff');
         }
 
@@ -135,7 +158,7 @@ class AccountStaffController extends Controller
      */
     public function showStaff() {
         // Policies Check
-        if (Gate::denies('view_backend', User::class)) {
+        if (Gate::denies('view_staff_account', User::class)) {
             return redirect()->route('view.backend.index')->with('status', 'backend_not_enough_permission_to_manage_staff');
         }
 
@@ -148,7 +171,7 @@ class AccountStaffController extends Controller
      */
     public function showCreateStaff() {
         // Policies Check
-        if (Gate::denies('view_backend', User::class)) {
+        if (Gate::denies('create_staff_account', User::class)) {
             return redirect()->route('view.backend.index')->with('status', 'backend_not_enough_permission_to_manage_staff');
         }
 
@@ -166,7 +189,7 @@ class AccountStaffController extends Controller
      */
     public function showUpdateStaff($id) {
         // Policies Check
-        if (Gate::denies('view_backend', User::class)) {
+        if (Gate::denies('update_staff_account', User::class)) {
             return redirect()->route('view.backend.index')->with('status', 'backend_not_enough_permission_to_manage_staff');
         }
 

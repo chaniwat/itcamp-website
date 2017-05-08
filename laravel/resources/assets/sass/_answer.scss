@@ -1,0 +1,29 @@
+@mixin generate-answer-check-circle($name, $color) {
+  &.#{$name} {
+
+    &.checked {
+      background-color: $color;
+    }
+  }
+}
+
+$sections: (
+        "head": $color-section-head,
+        "recreation": $color-recreation-head,
+        "camp_app": $color-camp-app,
+        "camp_game": $color-camp-game,
+        "camp_network": $color-camp-network,
+        "camp_iot": $color-camp-iot,
+        "camp_datasci": $color-camp-datasci,
+);
+.answer-check {
+  display: inline-block;
+  width: 25px;
+  height: 25px;
+  background: grey;
+  border-radius: 30px;
+
+  @each $name, $color in $sections {
+    @include generate-answer-check-circle($name, $color);
+  }
+}

@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Backend;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use PragmaRX\Tracker\Support\Minutes;
 use PragmaRX\Tracker\Vendor\Laravel\Facade as Tracker;
 use PragmaRX\Tracker\Vendor\Laravel\Models\Error;
@@ -14,6 +16,11 @@ class StatsController extends Controller
 {
 
     public function showOverview() {
+        // Policies Check
+        if (Auth::user()->can('view_stats')) {
+            return redirect()->route('view.backend.index')->with('status', 'backend_not_enough_permission_to_view_stats');
+        }
+
         // Log from 7 days past
         $range = new Minutes();
         $range->setStart(Carbon::now()->subDays(7));
@@ -29,10 +36,20 @@ class StatsController extends Controller
     }
 
     public function showView() {
+        // Policies Check
+        if (Auth::user()->can('view_stats')) {
+            return redirect()->route('view.backend.index')->with('status', 'backend_not_enough_permission_to_view_stats');
+        }
+
         abort(404);
     }
 
     public function showError() {
+        // Policies Check
+        if (Auth::user()->can('view_stats')) {
+            return redirect()->route('view.backend.index')->with('status', 'backend_not_enough_permission_to_view_stats');
+        }
+
         abort(404);
     }
 

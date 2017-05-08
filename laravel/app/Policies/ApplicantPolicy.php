@@ -25,7 +25,7 @@ class ApplicantPolicy
      * @return bool
      */
     public function before(User $user, $ability) {
-        return true;
+        return null;
     }
 
     /**
@@ -41,8 +41,8 @@ class ApplicantPolicy
             $staff = $user->staff;
 
             if(
-                // Current user is admin or web developer or head
-                ($staff->is_admin || $staff->section->name == 'web_developer' || $staff->section->name == 'head' || $staff->section->name == 'register' )
+                // Current user is admin or web developer or head or sub head or register
+                ($staff->is_admin || in_array($staff->section->name, ['web_developer', 'head', 'sub_head', 'register']))
             ) {
                 return true;
             }

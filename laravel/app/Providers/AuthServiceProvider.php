@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Answer;
 use App\ApplicantDetailKey;
 use App\Policies\ApplicantQuestionPolicy;
+use App\Policies\CheckAnswerPolicy;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -27,6 +29,7 @@ class AuthServiceProvider extends ServiceProvider
         ApplicantDetailKey::class => ApplicantQuestionPolicy::class,
         Question::class => CampQuestionPolicy::class,
         User::class => UserPolicy::class,
+        Answer::class => CheckAnswerPolicy::class,
     ];
 
     /**

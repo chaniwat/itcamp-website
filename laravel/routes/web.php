@@ -28,8 +28,11 @@ Route::group(['namespace' => 'Frontend'], function () {
             Route::post('/', 'AdvertiseController@saveAdvertise')->name('frontend.advertise');
         });
 
-        Route::group(['prefix' => 'register'], function () {
+        Route::group(['prefix' => 'register', 'middleware' => 'web.registration'], function () {
+
             Route::get('/complete', 'RegisterController@showComplete')->name('view.frontend.register.complete');
+            Route::get('/close', 'RegisterController@showClose')->name('view.frontend.register.close');
+
             Route::get('/{camp}', 'RegisterController@showRegister')->name('view.frontend.register');
             Route::post('/{camp}', 'RegisterController@register')->name('frontend.register');
         });
@@ -66,6 +69,9 @@ Route::group(['prefix' => 'backend', 'namespace' => 'Backend'], function () {
 
         Route::get('/', 'DashboardController@index')->name('view.backend.index');
 
+        Route::get('/self/password', 'AccountStaffController@showUpdateSelfPassword')->name('view.backend.self.password');
+        Route::post('/self/password', 'AccountStaffController@updateSelfPassword')->name('backend.self.password');
+
         Route::group(['prefix' => 'dashboard'], function () {
             Route::get('/register', 'DashboardController@showRegisterDashboard')->name('view.backend.dashboard.register');
             Route::get('/overview', 'DashboardController@showOverviewDashboard')->name('view.backend.dashboard.overview');
@@ -90,9 +96,13 @@ Route::group(['prefix' => 'backend', 'namespace' => 'Backend'], function () {
         });
 
         Route::group(['prefix' => 'answer'], function () {
-            Route::get('/', function () {
-                abort(404);
-            })->name('view.backend.answers');
+
+            Route::get('/', 'AnswerController@showIndex')->name('view.backend.answers');
+            Route::get('/overall', 'AnswerController@showOverall')->name('view.backend.answers.overall');
+            Route::get('/check', 'AnswerController@showCheckAnswer')->name('view.backend.answers.check');
+
+            Route::post('/save', 'AnswerController@saveScore')->name('backend.answers.save.score');
+
         });
 
         Route::group(['prefix' => 'question'], function () {
@@ -128,7 +138,7 @@ Route::group(['prefix' => 'backend', 'namespace' => 'Backend'], function () {
                 })->name('view.backend.account.applicant');
             });
 
-            Route::group(['prefix' => 'staff', 'middleware' => 'admin.backend'], function () {
+            Route::group(['prefix' => 'staff'], function () {
                 Route::get('/', 'AccountStaffController@showStaff')->name('view.backend.account.staff');
                 Route::get('create', 'AccountStaffController@showCreateStaff')->name('view.backend.account.staff.create');
                 Route::get('{id}/update', 'AccountStaffController@showUpdateStaff')->name('view.backend.account.staff.update');

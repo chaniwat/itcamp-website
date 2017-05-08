@@ -29,6 +29,9 @@
                             </p>
                         </li>
                         <li class="user-footer">
+                            <div class="pull-left">
+                                <a href="{{ route('view.backend.self.password') }}" class="btn btn-default btn-flat">Change password</a>
+                            </div>
                             <div class="pull-right">
                                 <a href="{{ route('backend.auth.logout') }}" class="btn btn-default btn-flat">Sign out</a>
                             </div>

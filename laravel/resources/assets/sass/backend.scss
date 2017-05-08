@@ -1,5 +1,6 @@
 @import "./colors";
 @import "./buttons";
+@import "./answer";
 
 $bg-navy-active: #001a35;
 
@@ -16,6 +17,18 @@ $bg-navy-active: #001a35;
       background-color: $bg-navy-active;
     }
   }
+}
+
+/*
+  BT4 to BT3 compatible
+ */
+.col-12 {
+  float: left;
+  position: relative;
+  min-height: 1px;
+  padding-right: 15px;
+  padding-left: 15px;
+  width: 100%;
 }
 
 /*

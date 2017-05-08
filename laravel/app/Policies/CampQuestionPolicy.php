@@ -30,7 +30,7 @@ class CampQuestionPolicy
             // Current logged user is staff
             $user->isStaff()
         ) {
-            return true;
+            return null;
         }
 
         return false;

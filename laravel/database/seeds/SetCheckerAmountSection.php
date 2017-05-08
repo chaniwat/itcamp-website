@@ -13,7 +13,7 @@ class SetCheckerAmountSection extends Seeder
     {
         $camps = [
             "head" => "2",
-            "recreation" => "2",
+            "recreation" => "3",
             "camp_app" => "3",
             "camp_game" => "3",
             "camp_network" => "3",

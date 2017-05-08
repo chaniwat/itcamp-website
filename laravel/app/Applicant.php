@@ -38,11 +38,43 @@ class Applicant extends Model
     }
 
     public function checks() {
-        return $this->hasMany('App\QuestionCheck');
+        return $this->hasMany('App\ApplicantQuestionCheck');
     }
 
     public function applicantDetails() {
         return $this->belongsToMany('App\ApplicantDetailKey')->withPivot('answer');
+    }
+
+    #endregion
+
+    #region Static method
+
+    public static function getApprovedApplicants() {
+        return self::all()->whereIn('state', array('CHECKED', 'COMPLETE', 'SELECT', 'RESERVE', 'FAIL', 'CONFIRM_SELECT', 'CONFIRM_RESERVE', 'CANCEL_SELECT', 'CANCEL_RESERVE'));
+    }
+
+    public static function getOnlyCheckedApplicants() {
+        return self::all()->whereIn('state', array('CHECKED'));
+    }
+
+    public static function getOnlyCompletedApplicants() {
+        return self::all()->whereIn('state', array('COMPLETE'));
+    }
+
+    public static function getOnlySelectedApplicants() {
+        return self::all()->whereIn('state', array('SELECT'));
+    }
+
+    public static function getOnlyReservedApplicants() {
+        return self::all()->whereIn('state', array('RESERVE'));
+    }
+
+    public static function getOnlyConfirmApplicants() {
+        return self::all()->whereIn('state', array('CONFIRM_SELECT', 'CONFIRM_RESERVE'));
+    }
+
+    public static function getOnlyCancelApplicants() {
+        return self::all()->whereIn('state', array('CANCEL_SELECT', 'CANCEL_RESERVE'));
     }
 
     #endregion
@@ -104,16 +136,56 @@ class Applicant extends Model
 
     public function setStateAttribute($value) {
         // TODO Case checking (prerequisite or prevent)
-
         $this->attributes['state'] = $value;
     }
+
+
 
     #endregion
 
     #region Helper method
 
+    public function getDetailValue($key) {
+        $key = $this->applicantDetails->find($key);
+        $setting = json_decode($key->field_setting, True);
+        $answer = json_decode($key->pivot->answer, True)["value"];
+
+        if($key->field_type == "TEXT") {
+            return $answer;
+        } else if($key->field_type == "SELECT") {
+            foreach ($setting["lists"] as $item) {
+                if($answer == $item['key']) {
+                    return $item['text'];
+                }
+            }
+        }
+    }
+
     public function isChecked() {
-        return in_array($this->state, array('CHECKED', 'CONFIRM', 'SELECT', 'RESERVE', 'FAIL', 'CONFIRM_SELECT', 'CONFIRM_RESERVE', 'CANCEL_SELECT', 'CANCEL_RESERVE', 'REJECT'));
+        return in_array($this->state, array('CHECKED', 'COMPLETE', 'CONFIRM', 'SELECT', 'RESERVE', 'FAIL', 'CONFIRM_SELECT', 'CONFIRM_RESERVE', 'CANCEL_SELECT', 'CANCEL_RESERVE', 'REJECT'));
+    }
+
+    public function getAnswerCheckerAmount($section) {
+        if(is_string($section)) {
+            $section = Section::where("name", $section)->first();
+        }
+
+        return $this->checks()->where("section_id", $section->id)->count();
+    }
+
+    public function isAnswerCheckedByStaff(Staff $checker) {
+        $section = $checker->section;
+        $check = $this->checks()->where("section_id", $section->id)->get();
+
+        if ($check->count() >= 0 && $check->count() < $section->checker_amount && $check->where("staff_id", $checker->id)->first() == null) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function isComplete() {
+        return in_array($this->state, array('COMPLETE', 'CONFIRM', 'SELECT', 'RESERVE', 'FAIL', 'CONFIRM_SELECT', 'CONFIRM_RESERVE', 'CANCEL_SELECT', 'CANCEL_RESERVE'));
     }
 
     #endregion
