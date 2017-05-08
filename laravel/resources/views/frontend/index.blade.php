@@ -244,7 +244,7 @@
               </div>
             </div>
             <div class="camp-helper">
-              @if(!$timeline['registration'])
+              @if(!$registrationEnd)
                 (กดที่ตัวไวรัสเพื่อดูรายละเอียดค่ายและสมัครเข้าค่าย~)
               @else
                 (กดที่ตัวไวรัสเพื่อดูรายละเอียดค่าย~)
