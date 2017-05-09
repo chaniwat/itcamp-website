@@ -124,11 +124,11 @@
                             </td>
 
                             <td>
-                                @for ($i = 0; $i < $head_checked_amount; $i++)
+                                @for ($i = 0; $i < $sub_head_checked_amount; $i++)
                                     <span class="answer-check sub_head checked"></span>
                                 @endfor
 
-                                @for ($i = 0; $i < $checkers['sub_head'] - $head_checked_amount; $i++)
+                                @for ($i = 0; $i < $checkers['sub_head'] - $sub_head_checked_amount; $i++)
                                     <span class="answer-check sub_head"></span>
                                 @endfor
                             </td>
