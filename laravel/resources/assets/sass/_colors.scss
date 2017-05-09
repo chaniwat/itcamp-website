@@ -3,6 +3,7 @@ $color-applicant-checked: #549c48;
 $color-applicant-reject: #e72e49;
 
 $color-section-head: #c300c2;
+$color-section-subhead: #569da2;
 $color-recreation-head: #ff5205;
 
 $color-camp-app: #2471ff;
@@ -13,6 +14,7 @@ $color-camp-datasci: #692f9c;
 
 $backgrounds: (
         'section-head': $color-section-head,
+        'section-sub_head': $color-section-subhead,
         'section-recreation': $color-recreation-head,
         'section-camp_app': $color-camp-app,
         'section-camp_game': $color-camp-game,
