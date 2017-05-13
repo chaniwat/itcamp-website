@@ -85,7 +85,7 @@ class DashboardController extends Controller
                 ->count();
 
             if($staff->section->is_camp) {
-                $data["section_total_amount"] = $staff->section->camp->getApplicantCount();
+                $data["section_total_amount"] = $staff->section->camp->getApplicantApprovedCount();
             } else {
                 $data["section_total_amount"] = $data["count"]["approve"];
             }
