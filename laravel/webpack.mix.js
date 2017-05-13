@@ -18,4 +18,4 @@ mix.webpackConfig({
   }
 });
 
-mix.sass('resources/assets/sass/backend.scss', 'assets/backend/css/app.css');
+// mix.sass('resources/assets/sass/backend/backend.scss', 'assets/backend/css/app.css');
