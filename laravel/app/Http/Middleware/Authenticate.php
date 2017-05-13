@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 
-class RedirectIfAuthenticated
+class Authenticate
 {
     /**
      * Handle an incoming request.
@@ -16,8 +16,14 @@ class RedirectIfAuthenticated
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::guard('web')->check()) {
-            return redirect()->route('view.frontend.applicant.index');
+        config()->set('auth.defaults.guard', 'web');
+
+        if (Auth::guest()) {
+            if ($request->ajax() || $request->wantsJson()) {
+                return response('Unauthorized.', 401);
+            }
+
+            return redirect()->route('view.frontend.index');
         }
 
         return $next($request);
