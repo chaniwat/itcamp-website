@@ -181,7 +181,7 @@
                                 <!-- small box -->
                                 <div class="small-box bg-section-{{ $staff->section->name }}" style="margin-bottom: 0;">
                                     <div class="inner">
-                                        <h3>{{ $finish_amount }} / {{ $count['approve'] }}</h3>
+                                        <h3>{{ $finish_amount }} / {{ $section_total_amount }}</h3>
 
                                         <p>จำนวนที่ตรวจคำตอบแล้ว / จำนวนผู้สมัครที่ใบสมัครผ่าน</p>
                                         <h4><span class="label bg-black">@lang('section.'.$staff->section->name)</span></h4>
@@ -192,7 +192,7 @@
                                     <div class="small-box-footer" style="padding: 0; border-top: 5px solid whitesmoke;">
                                         <div class="progress progress-ms bg-gray active" style="margin-bottom: 0;">
                                             <div class="progress-bar progress-bar-striped progress-bar-fCamp" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: {{ sprintf("%.2f", $count['approve'] != 0 ? ($finish_amount / $count['approve']) * 100 : 0) }}%;">
-                                                <span class="progress-bar-text">{{ sprintf("%.2f", $count['approve'] != 0 ? ($finish_amount / $count['approve']) * 100 : 0) }}%</span>
+                                                <span class="progress-bar-text">{{ sprintf("%.2f", $section_total_amount != 0 ? ($finish_amount / $section_total_amount) * 100 : 0) }}%</span>
                                             </div>
                                         </div>
                                     </div>
