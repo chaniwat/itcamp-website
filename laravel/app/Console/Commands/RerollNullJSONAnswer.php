@@ -85,7 +85,7 @@ class RerollNullJSONAnswer extends Command
 
             $bar->finish();
 
-            $this->info("Done fix: section id => ".$sectionId);
+            $this->info(" Done fix: section id => ".$sectionId);
         }
     }
 }
