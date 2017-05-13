@@ -47,7 +47,7 @@ class Question extends Model
 
     public static function getCampQuestion($camp) {
         $campSectionID = Camp::where('name', $camp)->first()->section->id;
-        return Question::whereIn('section_id', array(2, 3, $campSectionID))->orderBy('priority', 'desc')->get();
+        return Question::whereIn('section_id', array(2, 3, 12, $campSectionID))->orderBy('priority', 'desc')->get();
     }
 
 }

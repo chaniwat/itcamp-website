@@ -37,7 +37,7 @@ class ApplicantService
         // Get IDs
         $camp = Camp::where('name', $camp)->first();
         $applicantDetailIDs = DB::table('applicant_detail_keys')->pluck('id')->all();
-        $questionIDs = DB::table('questions')->whereIn('section_id', array(2, 3, $camp->section->id))->pluck('id')->all();
+        $questionIDs = DB::table('questions')->whereIn('section_id', array(2, 3, 12, $camp->section->id))->pluck('id')->all();
 
         // Extract Answer
         $applicantDetailAnswers = $request->only($applicantDetailIDs);
