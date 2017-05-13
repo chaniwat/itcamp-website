@@ -1,0 +1,57 @@
+.navbar-applicant {
+  justify-content: left;
+  transform: none;
+  transition: none;
+
+  .logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 0.55rem;
+    height: 100%;
+    background-color: #1e1f20;
+
+    img {
+      height: 40px;
+    }
+  }
+
+  .nav-menu {
+    display: flex;
+    justify-content: flex-start;
+    height: 100%;
+    font-size: 18px;
+
+    .nav-linker {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0.85rem;
+      color: white;
+
+      $active-color: #484a4b;
+
+      &.active {
+        background-color: $active-color;
+      }
+
+      &:hover {
+        cursor: pointer;
+        background-color: $active-color;
+      }
+    }
+  }
+
+  .nav-control {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem;
+    margin-left: auto;
+    height: 100%;
+
+    a.btn {
+      color: white;
+    }
+  }
+}

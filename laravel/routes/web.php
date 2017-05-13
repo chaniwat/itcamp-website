@@ -25,7 +25,7 @@ Route::group(['namespace' => 'Frontend'], function () {
         Route::group(['prefix' => 'applicant', 'namespace' => 'Applicant'], function () {
 
             Route::group(['middleware' => 'web'], function () {
-                Route::get('/', function () { return "login!"; })->name('view.frontend.applicant.index');
+                Route::get('/', 'HomeController@showIndex')->name('view.frontend.applicant.index');
             });
 
             Route::group(['middleware' => 'guest'], function () {

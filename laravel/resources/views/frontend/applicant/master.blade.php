@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html>
     <head>
         <title>Applicant Control | ITCAMP#13</title>
@@ -16,10 +15,19 @@
         <link rel="stylesheet" href="{{ asset('assets/frontend/css/app.css') }}?v={{ (int)microtime(true) }}" />
         <link rel="stylesheet" href="{{ asset('assets/frontend/applicant/style.css') }}?v={{ (int)microtime(true) }}" />
 
+        <style>
+            @if(isset($applicant))
+                body {
+                    background: url('{{ asset('assets/frontend/register/bg-'.$applicant->camp->name.'.png') }}') repeat fixed;
+                }
+            @endif
+        </style>
         @yield('style')
     </head>
 
     <body>
+        @include('frontend.applicant.navigation')
+
         @yield('body')
 
         <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
@@ -39,5 +47,6 @@
                 }
             });
         </script>
+        @yield('script')
     </body>
 </html>

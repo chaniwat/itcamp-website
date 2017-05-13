@@ -1,8 +1,16 @@
+@import "./navbar";
+
 html {
-  font-size: 16px;
+  font-size: 20px;
   min-width: 580px;
 }
 
 body {
-  height: auto;
+  padding-top: 60px;
+}
+
+.container {
+  height: 100%;
+  background-color: #ebebeb;
+  padding: 25px;
 }

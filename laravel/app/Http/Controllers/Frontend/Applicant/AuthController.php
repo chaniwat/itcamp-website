@@ -25,7 +25,7 @@ class AuthController extends Controller
             return redirect()->route('view.frontend.applicant.index');
         }
 
-        return redirect()->route('view.frontend.applicant.login')->with('status', 'login_failed');
+        return redirect()->route('view.frontend.applicant.login')->with('status', 'login_incorrect_detail');
     }
 
     public function logout() {
