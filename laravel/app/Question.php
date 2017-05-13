@@ -46,6 +46,7 @@ class Question extends Model
     }
 
     public static function getCampQuestion($camp) {
+        // TODO Fix fetch questions more independent
         $campSectionID = Camp::where('name', $camp)->first()->section->id;
         return Question::whereIn('section_id', array(2, 3, 12, $campSectionID))->orderBy('priority', 'desc')->get();
     }
