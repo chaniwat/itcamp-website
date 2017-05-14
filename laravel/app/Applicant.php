@@ -150,7 +150,7 @@ class Applicant extends Model
         $setting = json_decode($key->field_setting, True);
         $answer = json_decode($key->pivot->answer, True)["value"];
 
-        if($key->field_type == "TEXT") {
+        if(in_array($key->field_type, ["TEXT", "FILE"])) {
             return $answer;
         } else if($key->field_type == "SELECT") {
             foreach ($setting["lists"] as $item) {
