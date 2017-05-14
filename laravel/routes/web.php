@@ -26,6 +26,8 @@ Route::group(['namespace' => 'Frontend'], function () {
 
             Route::group(['middleware' => 'web'], function () {
                 Route::get('/', 'HomeController@showIndex')->name('view.frontend.applicant.index');
+                Route::post('/disclaim', 'HomeController@disclaimCamp')->name('frontend.applicant.disclaim');
+                Route::post('/upload/evidence', 'HomeController@uploadEvidenceSlip')->name('frontend.applicant.upload_evidence');
             });
 
             Route::group(['middleware' => 'guest'], function () {
@@ -95,12 +97,6 @@ Route::group(['prefix' => 'backend', 'namespace' => 'Backend'], function () {
         Route::group(['prefix' => 'dashboard'], function () {
             Route::get('/register', 'DashboardController@showRegisterDashboard')->name('view.backend.dashboard.register');
             Route::get('/overview', 'DashboardController@showOverviewDashboard')->name('view.backend.dashboard.overview');
-        });
-
-        Route::group(['prefix' => 'applicant/select'], function () {
-
-            Route::get('/', 'SelectApplicantController@showIndex')->name('view.backend.applicant.select');
-
         });
 
         Route::group(['prefix' => 'applicant'], function () {
@@ -175,6 +171,13 @@ Route::group(['prefix' => 'backend', 'namespace' => 'Backend'], function () {
                 Route::post('{id}/update', 'AccountStaffController@updateStaff')->name('backend.account.staff.update');
                 Route::post('{id}/update/password', 'AccountStaffController@updateStaffPassword')->name('backend.account.staff.update.password');
             });
+
+        });
+
+        Route::group(['prefix' => '/select'], function () {
+
+            Route::get('/', 'SelectApplicantController@showIndex')->name('view.backend.applicant.select');
+            Route::post('/{id}/state', 'SelectApplicantController@saveSelectState')->name('backend.applicant.select.state');
 
         });
 

@@ -8,7 +8,14 @@ use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
-    //
+
+    public function uploadEvidenceSlip() {
+        // TODO Keep file from upload
+    }
+
+    public function disclaimCamp() {
+        // TODO Update state (disclaim-cancel)
+    }
 
     public function showIndex() {
         $user = Auth::user();

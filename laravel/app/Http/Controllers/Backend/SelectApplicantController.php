@@ -9,6 +9,10 @@ use App\Http\Controllers\Controller;
 class SelectApplicantController extends Controller
 {
 
+    public function saveSelectState($id) {
+
+    }
+
     public function showIndex() {
         return view('backend.group.select.index')->with('applicants', SelectApplicant::all());
     }

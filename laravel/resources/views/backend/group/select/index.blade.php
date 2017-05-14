@@ -70,12 +70,20 @@
                             } else if($applicant->subhead_no_q) {
                                 $class = 'info';
                             }
+
+                            $states = ["SELECT", "RESERVE", "REJECT"];
                         ?>
                         <tr class="{{ $class }}">
                             <td>{{ $applicant->applicant->id }}</td>
                             <td>{{ $applicant->applicant->getDetailValue("p_name").$applicant->applicant->getDetailValue("f_name")." ".$applicant->applicant->getDetailValue("l_name") }}</td>
                             <td>@lang("camp.".$applicant->applicant->camp->name)</td>
-                            <td>{{ $applicant->state }}</td>
+                            <td>
+                                <select class="form-control">
+                                    @foreach($states as $state)
+                                        <option value="{{ $state }}" {{ $applicant->state == $state ? 'selected' : '' }}>{{ $state }}</option>
+                                    @endforeach
+                                </select>
+                            </td>
                             <td>{{ number_format($applicant->head_score, 2) }}</td>
                             <td>{{ number_format($applicant->subhead_score, 2) }}</td>
                             <td>{{ number_format($applicant->recreation_score, 2) }}</td>
