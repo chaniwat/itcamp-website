@@ -12,6 +12,7 @@ const { mix } = require('laravel-mix');
  |
  */
 
+mix.disableNotifications();
 mix.webpackConfig({
   output: {
     path: path.resolve(__dirname, '../public_html')
