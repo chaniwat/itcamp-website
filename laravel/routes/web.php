@@ -107,6 +107,7 @@ Route::group(['prefix' => 'backend', 'namespace' => 'Backend'], function () {
 
         });
 
+        /*
         Route::group(['prefix' => 'stats'], function () {
 
             Route::get('/', 'StatsController@showOverview')->name('view.backend.stats');
@@ -114,6 +115,7 @@ Route::group(['prefix' => 'backend', 'namespace' => 'Backend'], function () {
             Route::get('/error', 'StatsController@showError')->name('view.backend.stats.error');
 
         });
+        */
 
         Route::group(['prefix' => 'answer'], function () {
 

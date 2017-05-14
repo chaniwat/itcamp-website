@@ -3,6 +3,7 @@
         <ul class="sidebar-menu">
             <li class="header">NAVIGATION</li>
             <li class="{{ $viewHelper->isActivePath("backend") }}"><a href="{{ route('view.backend.index') }}"><i class="fa fa-book"></i> <span>หน้าแรก</span></a></li>
+            {{--
             @can('view_stats', \App\User::class)
                 <li class="treeview {{ $viewHelper->isActivePath(["backend/stats", "backend/stats/*"]) }}">
                     <a href="{{ route('view.backend.index') }}"><i class="fa fa-book"></i> <span>สถิติการเข้าชม</span> <i class="fa fa-angle-left pull-right"></i></a>
@@ -13,6 +14,7 @@
                     </ul>
                 </li>
             @endcan
+            --}}
             <li class="treeview {{ $viewHelper->isActivePath(["backend/dashboard/register", "backend/dashboard/overview"]) }}">
                 <a href="{{ route('view.backend.index') }}"><i class="fa fa-book"></i> <span>ภาพรวม</span> <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
