@@ -43,6 +43,9 @@
                     </ul>
                 </li>
             @endcan
+            @can('select_applicant', \App\User::class)
+                <li class="{{ $viewHelper->isActivePath(["backend/applicant/select"]) }}"><a href="{{ route('view.backend.applicant.select') }}"><i class="fa fa-book"></i> <span>คัดเลือกผู้สมัคร</span></a></li>
+            @endcan
             <li class="header">SYSTEM</li>
             <li><a href="{{ route('backend.auth.logout') }}"><i class="fa fa-circle-o text-red"></i> <span>ออกจากระบบ</span></a></li>
             <li><a href="{{ route('view.frontend.index') }}"><i class="fa fa-circle-o text-blue"></i> <span>กลับหน้าแรก</span></a></li>

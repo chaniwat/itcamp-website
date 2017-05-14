@@ -57,7 +57,7 @@ class CalculateApplicantAnswerScore extends Command
                     ', subhead: '.$selectApplicant->subhead_score.
                     ', recreation: '.$selectApplicant->recreation_score.
                     ', camp: '.$selectApplicant->camp_score.
-                    ', total: '.array_sum($selectApplicant->only('head_score', 'subhead_score', 'recreation_score', 'camp_score')).
+                    ', total: '.($selectApplicant->head_score + $selectApplicant->subhead_score + $selectApplicant->recreation_score + $selectApplicant->camp_score).
                     ' | subhead_no_q: '.($selectApplicant->subhead_no_q ? 'true' : 'false')
                 );
 

@@ -18,6 +18,24 @@ class UserPolicy
         //
     }
 
+    public function select_applicant(User $user) {
+        if(
+            // Current logged user is staff
+        $user->isStaff()
+        ) {
+            $staff = $user->staff;
+
+            if(
+                // Current user is admin or web developer or head
+            ($staff->is_admin || in_array($staff->section->name, ['web_developer', 'head', 'sub_head']))
+            ) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public function view_stats(User $user) {
         if(
             // Current logged user is staff

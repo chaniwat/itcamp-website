@@ -97,6 +97,12 @@ Route::group(['prefix' => 'backend', 'namespace' => 'Backend'], function () {
             Route::get('/overview', 'DashboardController@showOverviewDashboard')->name('view.backend.dashboard.overview');
         });
 
+        Route::group(['prefix' => 'applicant/select'], function () {
+
+            Route::get('/', 'SelectApplicantController@showIndex')->name('view.backend.applicant.select');
+
+        });
+
         Route::group(['prefix' => 'applicant'], function () {
 
             Route::get('/', 'ApplicantController@showApplicants')->name('view.backend.applicants');
