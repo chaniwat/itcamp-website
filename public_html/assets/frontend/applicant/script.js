@@ -184,4 +184,13 @@ $(document).ready(function () {
         registerFileCheck();
         registerValidateForm($('#evidence_slip_form'));
     }
+
+    $('#disclaimForm').submit(function (e) {
+        if($("#d_password").val().trim() == "") {
+            e.preventDefault();
+            alert('กรุณาใส่รหัสผ่าน');
+        } else {
+            return confirm('น้องต้องการยืนยันการสละสิทธิ์ใช่หรือไม่?');
+        }
+    });
 })

@@ -1,7 +1,7 @@
 <h3 style="margin-bottom: 1rem;"><b>การส่งหลักฐาน</b></h3>
 <p>หลังจากที่น้องแนบเอกสารมาเรียบร้อยแล้ว ให้น้องรอประมาณ 3 - 5 วัน เพื่อให้พี่ๆ ทีมงานได้ทำการตรวจสอบเอกสารนะครับ ในระหว่างนี้น้องสามารถเข้ามาร่วมพูดคุยกับเพื่อนๆ ที่สมัคร ITCAMP ครั้งที่ 13 และเพื่อนๆ ที่เคยมาค่ายไอทีแคมป์ปีก่อนๆ ได้ในกรุ๊ป <a href="https://www.facebook.com/groups/ITCampSociety/" target="_blank">ITCAMP Society @ ITKMITL</a></p>
 
-<h5 style="margin-bottom: 0.75rem;"><b>หลักฐานใบ ปพ. 1</b></h5>
+<h5 style="margin-bottom: 0.75rem;"><b>หลักฐานยืนยันระดับชั้นที่เรียนในปัจจุบัน</b></h5>
 <b>สถานะการส่งหลักฐาน:</b> เสร็จสิ้น<br />
 <a href="{{ asset('storage/'.$applicant->getDetailValue('a_confirmcurrentgrade')) }}" class="btn btn-primary" target="_blank" style="color: white;">ดูไฟล์ที่แนบ</a><span class="break"></span>
 
@@ -51,7 +51,7 @@
                     กรุณาเลือกไฟล์ก่อนทำการอัพโหลด
                 </div>
                 <div class="modal-footer">
-                    <button type="indbutton" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
                 </div>
             </div>
         </div>

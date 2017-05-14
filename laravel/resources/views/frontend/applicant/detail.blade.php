@@ -31,3 +31,8 @@
     <dt class="col-3 col-lg-2 text-right">สาขา</dt>
     <dd class="col-9 col-lg-10">สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง</dd>
 </dl>
+
+<h5><b>หากสงสัย สามารถสอบถามเพิ่มเติมได้ที่</b></h5>
+<a href="https://www.facebook.com/groups/ITCampSociety" target="_blank">fb.com/groups/ITCampSociety</a><br />
+หรือโทร 081-585-6504 (พี่รีฟ)<br />
+หรือโทร 099-217-8354 (พี่กรณ์)

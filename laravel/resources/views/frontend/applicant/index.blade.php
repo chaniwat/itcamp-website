@@ -20,6 +20,26 @@
                 body {
                     background: url('{{ asset('assets/frontend/register/bg-'.$applicant->camp->name.'.png') }}') repeat fixed;
                 }
+
+                .badge-default {
+                    background-color: {{ $colors[0] }};
+                }
+
+                .custom-control-input:checked ~ .custom-control-indicator {
+                    background-color: {{ $colors[0] }};
+                }
+
+                .custom-control-input:active ~ .custom-control-indicator {
+                    background-color: {{ $colors[1] }};
+                }
+
+                .custom-control-input:focus ~ .custom-control-indicator {
+                    box-shadow: 0 0 0 1px #fff, 0 0 0 3px {{ $colors[0] }};
+                }
+
+                .form-control:focus {
+                    border-color: {{ $colors[1] }};
+                }
             @endif
         </style>
         @yield('style')
@@ -72,15 +92,21 @@
         <section class="body">
             <div class="container">
                 <div class="tab-content">
-                    <div class="tab-pane fade" id="detail" role="tabpanel">
+                    <div class="tab-pane fade show active" id="detail" role="tabpanel">
                         @include('frontend.applicant.detail')
                     </div>
-                    <div class="tab-pane fade show active" id="evidence" role="tabpanel">
+                    <div class="tab-pane fade" id="evidence" role="tabpanel">
                         @include('frontend.applicant.evidence')
                     </div>
-                    <div class="tab-pane fade" id="download" role="tabpanel">oh</div>
-                    <div class="tab-pane fade" id="prepare" role="tabpanel">wow</div>
-                    <div class="tab-pane fade" id="disclaim" role="tabpanel">haha</div>
+                    <div class="tab-pane fade" id="download" role="tabpanel">
+                        @include('frontend.applicant.download')
+                    </div>
+                    <div class="tab-pane fade" id="prepare" role="tabpanel">
+                        @include('frontend.applicant.prepare')
+                    </div>
+                    <div class="tab-pane fade" id="disclaim" role="tabpanel">
+                        @include('frontend.applicant.disclaim')
+                    </div>
                 </div>
             </div>
         </section>
