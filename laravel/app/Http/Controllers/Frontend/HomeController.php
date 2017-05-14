@@ -28,7 +28,7 @@ class HomeController extends Controller
 
             $now = Carbon::now()->subSeconds(env('APP_TIME_OFFSET', 0));
             $registrationEnd = Carbon::createFromFormat('d/m/Y H:i:s', env('APP_REGISTRATION_END').' 00:00:00');
-            $announceEnd = Carbon::createFromFormat('d/m/Y H:i:s', "15/05/2017 00:00:00");
+            $announceEnd = Carbon::createFromFormat('d/m/Y H:i:s', "15/05/2017 20:00:00");
             $confirmEnd = Carbon::createFromFormat('d/m/Y H:i:s', "22/05/2017 00:00:00");
             $campEnd = Carbon::createFromFormat('d/m/Y H:i:s', "08/06/2017 00:00:00");
 
