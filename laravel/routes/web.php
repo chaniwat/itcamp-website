@@ -22,6 +22,21 @@ Route::group(['namespace' => 'Frontend'], function () {
 
     if(env('APP_OPEN')) {
 
+        Route::group(['prefix' => 'applicant', 'namespace' => 'Applicant'], function () {
+
+            Route::group(['middleware' => 'web'], function () {
+                Route::get('/', 'HomeController@showIndex')->name('view.frontend.applicant.index');
+            });
+
+            Route::group(['middleware' => 'guest'], function () {
+                Route::get('/login', 'AuthController@showLogin')->name('view.frontend.applicant.login');
+            });
+
+            Route::post('login', 'AuthController@login')->name('frontend.applicant.auth.login');
+            Route::get('logout', 'AuthController@logout')->name('frontend.applicant.auth.logout');
+
+        });
+
         Route::group(['prefix' => 'advertise'], function () {
             Route::get('/', 'AdvertiseController@showForm')->name('view.frontend.advertise');
             Route::get('/complete', 'AdvertiseController@showComplete')->name('view.frontend.advertise.complete');

@@ -22,9 +22,9 @@ class ViewHelperService implements ViewHelperInterface
         $this->formBuilder = $formBuilderService;
     }
 
-    public function makeAlertStatus($blade)
+    public function makeAlertStatus($blade, $mode = null)
     {
-        return $this->status->makeAlertStatus($blade);
+        return $this->status->makeAlertStatus($blade, $mode);
     }
 
     public function isActivePath($paths)
