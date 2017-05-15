@@ -6,9 +6,9 @@
 <a href="{{ asset('storage/'.$applicant->getDetailValue('a_confirmcurrentgrade')) }}" class="btn btn-primary" target="_blank" style="color: white;">ดูไฟล์ที่แนบ</a><span class="break"></span>
 
 <h5 style="margin-bottom: 0.75rem;"><b>หลักฐานการโอนเงิน</b></h5>
-<b>สถานะการส่งหลักฐาน:</b> ยังไม่ส่งหลักฐาน<br />
-@if(true)
-    <form id="evidence_slip_form" method="POST" enctype="multipart/form-data" novalidate>
+<b>สถานะการส่งหลักฐาน:</b> @lang('evidence_state.'.$evidence_state)<br />
+@if($evidence_state == "NOT_SEND")
+    <form action="{{ route('frontend.applicant.upload_evidence') }}" id="evidence_slip_form" method="POST" enctype="multipart/form-data" novalidate>
         {{ csrf_field() }}
 
         <div class="form-group">
@@ -106,5 +106,5 @@
         </div>
     </div>
 @else
-    <a {{-- href="{{ asset('storage/'.$applicant->getDetailValue('a_confirmcurrentgrade')) }}" --}} class="btn btn-primary" target="_blank" style="color: white;">ดูไฟล์ที่แนบ</a>
+    <a href="{{ asset('storage/'.$evidence->file) }}" class="btn btn-primary" target="_blank" style="color: white;">ดูไฟล์ที่แนบ</a>
 @endif

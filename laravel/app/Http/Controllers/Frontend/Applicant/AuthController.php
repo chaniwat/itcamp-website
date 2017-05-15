@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend\Applicant;
 use App\Services\AuthenticateService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -21,7 +22,17 @@ class AuthController extends Controller
     }
 
     public function login(Request $request) {
-        if($this->auth->login($request->input('username'), $request->input('password'))) {
+        if($user = $this->auth->login($request->input('username'), $request->input('password'))) {
+            $user = Auth::user();
+
+            if(in_array($user->applicant->state, ['CANCEL_SELECT', 'CANCEL_RESERVE'])) {
+                $this->auth->logout();
+                return redirect()->route('view.frontend.applicant.login')->with('status', 'login_disclaim');
+            } else if($user->applicant->state == 'RESERVE' && !$user->active) {
+                $this->auth->logout();
+                return redirect()->route('view.frontend.applicant.login')->with('status', 'login_reserve');
+            }
+
             return redirect()->route('view.frontend.applicant.index');
         }
 

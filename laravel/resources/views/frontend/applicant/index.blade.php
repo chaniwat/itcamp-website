@@ -85,7 +85,7 @@
                 <b>วันที่สมัคร:</b> {{ \Carbon\Carbon::parse($applicant->created_at)->format('d/m/Y') }} <br />
                 <b>สถานะปัจจุบัน:</b> @lang('frontend_applicant_state.'.$applicant->state) <br />
                 <b>สถานะการส่งหลักฐานยืนยันระดับชั้นที่เรียนในปัจจุบัน:</b> เสร็จสิ้น <br />
-                <b>สถานะการส่งหลักฐานยืนยันการโอนเงิน:</b> ยังไม่ส่งหลักฐาน
+                <b>สถานะการส่งหลักฐานยืนยันการโอนเงิน:</b> @lang('evidence_state.'.$evidence_state)
             </div>
         </header>
 
@@ -111,12 +111,36 @@
             </div>
         </section>
 
+        <div class="modal fade" id="uploadComplete" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalLabel"><b class="text-success">Success</b></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        อัพโหลดหลักฐานการยืนยันสำเร็จ
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
         <script type="text/javascript">
             var GlobalOption = {};
             GlobalOption.evidence = false;
+            @if(session('status'))
+                GlobalOption.modal = '{{ session('status') }}';
+            @else
+                GlobalOption.modal = null;
+            @endif
         </script>
         <script src="{{ asset('assets/frontend/applicant/script.js') }}" type="text/javascript"></script>
     </body>

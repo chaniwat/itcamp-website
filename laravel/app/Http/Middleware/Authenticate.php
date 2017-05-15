@@ -23,7 +23,7 @@ class Authenticate
                 return response('Unauthorized.', 401);
             }
 
-            return redirect()->route('view.frontend.index');
+            return redirect()->route('view.frontend.applicant.login');
         }
 
         return $next($request);

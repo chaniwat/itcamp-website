@@ -79,13 +79,15 @@
                         <div class="form-group col-12">
                             <label class="form-control-label" for="username"> ชื่อผู้ใช้<span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="username" name="username" placeholder="Username" required>
+                            <small class="form-text text-muted" style="font-size: 1rem;">ชื่อผู้ใช้งานของน้องๆ จะได้มาจาก username หน้าชื่อน้อง <b>ในหน้าประกาศผล</b></small>
                         </div>
                         <div class="form-group col-12">
                             <label class="form-control-label" for="password"> รหัสผ่าน<span class="text-danger">*</span></label>
                             <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+                            <small class="form-text text-muted" style="font-size: 1rem;">รหัสผ่านเป็น <b>หมายเลขบัตรประชาชน</b> ที่น้องใช้ในการสมัครเข้ามา</small>
                         </div>
                         <div class="col-12" style="margin-top: 1rem;">
-                            <button type="submit" class="btn btn-block btn-success" id="submitBtn">เข้าสู่ระบบ</button>
+                            <button type="submit" class="btn btn-block btn-success force-cloud" id="submitBtn">เข้าสู่ระบบ</button>
                         </div>
                     </div>
                 </form>

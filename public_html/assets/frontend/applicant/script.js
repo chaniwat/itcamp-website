@@ -126,7 +126,7 @@ function registerValidateForm(elem) {
             valid = true;
             firstInvalidElement = null;
 
-            $('input[required], select[required], textarea[required]').each(function (i, e) {
+            $('elem input[required], elem select[required], elem textarea[required]').each(function (i, e) {
                 e = $(e);
 
                 if(e.is('input') || e.is('textarea')) {
@@ -183,6 +183,12 @@ $(document).ready(function () {
         // Register event
         registerFileCheck();
         registerValidateForm($('#evidence_slip_form'));
+    }
+
+    if(window.GlobalOption.modal != null) {
+        if(window.GlobalOption.modal == 'evidence_upload_complete') {
+            $("#uploadComplete").modal('show');
+        }
     }
 
     $('#disclaimForm').submit(function (e) {

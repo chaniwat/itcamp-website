@@ -4,7 +4,7 @@
 <button type="button" class="btn btn-danger" style="font-size:18px;" data-toggle="modal" data-target="#disclaimFormModal"><i class="fa fa-sign-out"></i> สละสิทธิ์</button>
 
 <div class="modal fade" id="disclaimFormModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-    <form action="#" method="POST" id="disclaimForm" novalidate>
+    <form action="{{ route('frontend.applicant.disclaim') }}" method="POST" id="disclaimForm" novalidate>
         {{ csrf_field() }}
 
         <div class="modal-dialog" role="document">

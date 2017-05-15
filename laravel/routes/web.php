@@ -22,9 +22,13 @@ Route::group(['namespace' => 'Frontend'], function () {
 
     if(env('APP_OPEN')) {
 
+        Route::group(['prefix' => 'announce'], function () {
+            Route::get('/{camp}', 'AnnounceApplicantController@showAnnounce')->name('view.frontend.announce');
+        });
+
         Route::group(['prefix' => 'applicant', 'namespace' => 'Applicant'], function () {
 
-            Route::group(['middleware' => 'web'], function () {
+            Route::group(['middleware' => 'auth'], function () {
                 Route::get('/', 'HomeController@showIndex')->name('view.frontend.applicant.index');
                 Route::post('/disclaim', 'HomeController@disclaimCamp')->name('frontend.applicant.disclaim');
                 Route::post('/upload/evidence', 'HomeController@uploadEvidenceSlip')->name('frontend.applicant.upload_evidence');
@@ -156,10 +160,7 @@ Route::group(['prefix' => 'backend', 'namespace' => 'Backend'], function () {
         Route::group(['prefix' => 'account'], function () {
 
             Route::group(['prefix' => 'applicant'], function () {
-                // TODO Applicant Account Management (For applicant to login into system when have been selected)
-                Route::get('/', function () {
-                    abort(404);
-                })->name('view.backend.account.applicant');
+                Route::get('/', 'AccountApplicantController@showApplicant')->name('view.backend.account.applicant');
             });
 
             Route::group(['prefix' => 'staff'], function () {
