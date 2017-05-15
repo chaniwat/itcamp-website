@@ -74,7 +74,7 @@ class FormBuilderService
 //                $data['value'] = json_decode($answerKey->answer, True)['value'];
 //            }
             if($mode == ApplicantDetailKey::class) {
-                $data['value'] = str_replace('"}', '', str_replace('{"value": "', '', $answerKey->pivot->answer));
+                $data['value'] = json_decode($answerKey->pivot->answer, True)['value'];
             } else if($mode == Answer::class) {
                 $data['value'] = str_replace('"}', '', str_replace('{"value": "', '', $answerKey->answer));
             }

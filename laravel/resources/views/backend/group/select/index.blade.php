@@ -43,9 +43,49 @@
         </div>
     </div>
 
-    <div class="box box-default">
+    <div class="box box-solid box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">จำนวนปัจจุบัน</h3>
+        </div>
         <div class="box-body">
             <table class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th>Camp</th>
+                    <th>Application</th>
+                    <th>Game</th>
+                    <th>Network</th>
+                    <th>IoT</th>
+                    <th>Datasci</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>SELECT</td>
+                    @foreach($camps as $camp)
+                        <td class="{{ $camp->name }}-select">{{ $count[$camp->name][0] }}</td>
+                    @endforeach
+                </tr>
+                <tr>
+                    <td>RESERVE</td>
+                    @foreach($camps as $camp)
+                        <td class="{{ $camp->name }}-reserve">{{ $count[$camp->name][1] }}</td>
+                    @endforeach
+                </tr>
+                <tr>
+                    <td>REJECT</td>
+                    @foreach($camps as $camp)
+                        <td class="{{ $camp->name }}-reject">{{ $count[$camp->name][2] }}</td>
+                    @endforeach
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="box box-default">
+        <div class="box-body">
+            <table class="table table-bordered table-hover applicant-table">
                 <thead>
                     <tr>
                         <th width="60">ID</th>
@@ -75,10 +115,10 @@
                         ?>
                         <tr class="{{ $class }}">
                             <td>{{ $applicant->applicant->id }}</td>
-                            <td>{{ $applicant->applicant->getDetailValue("p_name").$applicant->applicant->getDetailValue("f_name")." ".$applicant->applicant->getDetailValue("l_name") }}</td>
+                            <td><a href="{{ route('view.backend.applicants.detail', ['id' => $applicant->applicant->id]) }}" target="_blank">{{ $applicant->applicant->getDetailValue("p_name").$applicant->applicant->getDetailValue("f_name")." ".$applicant->applicant->getDetailValue("l_name") }}</a></td>
                             <td>@lang("camp.".$applicant->applicant->camp->name)</td>
                             <td>
-                                <select class="form-control">
+                                <select class="form-control update-app-state" data-applicantid="{{ $applicant->applicant->id }}" data-camp="{{ $applicant->applicant->camp->name }}" data-state="{{ $applicant->state }}">
                                     @foreach($states as $state)
                                         <option value="{{ $state }}" {{ $applicant->state == $state ? 'selected' : '' }}>{{ $state }}</option>
                                     @endforeach
@@ -100,7 +140,26 @@
 
 @section('script')
     <script type="text/javascript">
-        var dTable = $("table.table").DataTable({
+        $('select.update-app-state').change(function (e) {
+            var el = $(e.target);
+
+            $.post('{{ url('backend/select') }}/' + el.data('applicantid') + '/state', { state: el.val() })
+            .done(function() {
+                var o = $("." + el.data('camp') + "-" + el.data('state').toLowerCase());
+                o.html(Number(o.html()) - 1);
+                var u = $("." + el.data('camp') + "-" + el.val().toLowerCase());
+                u.html(Number(u.html()) + 1);
+
+                el.data('state', el.val());
+                console.log('Applicant id:' + el.data('applicantid') + ", " + el.val());
+            })
+            .fail(function() {
+                el.val(el.data('state'));
+                console.error('Error, Applicant id: ' + el.data('applicantid'));
+            })
+        });
+
+        var dTable = $("table.applicant-table").DataTable({
             "paging": true,
             "lengthChange": false,
             "ordering": true,
