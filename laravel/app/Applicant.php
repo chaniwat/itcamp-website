@@ -148,7 +148,13 @@ class Applicant extends Model
     public function getDetailValue($key) {
         $key = $this->applicantDetails->find($key);
         $setting = json_decode($key->field_setting, True);
-        $answer = json_decode($key->pivot->answer, True)["value"];
+//        $answer = json_decode($key->pivot->answer, True)["value"];
+
+        if(in_array($key->field_type, ['CHECKBOX', 'SELECT_MULTIPLE'])) {
+            $answer = json_decode($key->pivot->answer, True)['value'];
+        } else {
+            $answer = str_replace('"}', '', str_replace('{"value": "', '', $key->pivot->answer));
+        }
 
         if(in_array($key->field_type, ["TEXT", "FILE"])) {
             return $answer;

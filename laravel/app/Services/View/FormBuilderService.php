@@ -74,7 +74,11 @@ class FormBuilderService
 //                $data['value'] = json_decode($answerKey->answer, True)['value'];
 //            }
             if($mode == ApplicantDetailKey::class) {
-                $data['value'] = json_decode($answerKey->pivot->answer, True)['value'];
+                if(in_array($question->field_type, ['CHECKBOX', 'SELECT_MULTIPLE'])) {
+                    $data['value'] = json_decode($answerKey->pivot->answer, True)['value'];
+                } else {
+                    $data['value'] = str_replace('"}', '', str_replace('{"value": "', '', $answerKey->pivot->answer));
+                }
             } else if($mode == Answer::class) {
                 $data['value'] = str_replace('"}', '', str_replace('{"value": "', '', $answerKey->answer));
             }

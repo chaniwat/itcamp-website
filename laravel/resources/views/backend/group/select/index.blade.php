@@ -80,6 +80,9 @@
                 </tr>
                 </tbody>
             </table>
+            <span class="text-info"><b>*แถบสีฟ้า</b></span> ไม่ได้ตอบคำถามรองประธาน <br />
+            <span class="text-warning"><b>*แถบสีเหลือง</b></span> เด็กแคมป์เก่า <br />
+            <span class="text-danger"><b>*แถบสีแดง</b></span> เด็กแคมป์เก่าและไม่ได้ตอบคำถาม <br />
         </div>
     </div>
 

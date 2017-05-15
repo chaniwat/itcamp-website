@@ -3,6 +3,7 @@
 namespace App\Console;
 
 use App\Console\Commands\CalculateApplicantAnswerScore;
+use App\Console\Commands\GenerateUserForApplicant;
 use App\Console\Commands\MatchingOldApplicant;
 use App\Console\Commands\RerollNullJSONAnswer;
 use Illuminate\Console\Scheduling\Schedule;
@@ -18,7 +19,8 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         RerollNullJSONAnswer::class,
         CalculateApplicantAnswerScore::class,
-        MatchingOldApplicant::class
+        MatchingOldApplicant::class,
+        GenerateUserForApplicant::class
     ];
 
     /**
