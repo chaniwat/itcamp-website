@@ -110,6 +110,7 @@ Route::group(['prefix' => 'backend', 'namespace' => 'Backend'], function () {
 
             Route::post('/', 'ApplicantController@goToApplicantID')->name('backend.applicants.go_to_id');
             Route::post('/{id}/status', 'ApplicantController@approvingApplicant')->name('backend.applicants.update.state');
+            Route::post('/{id}/evidence/status', 'ApplicantController@approvingApplicantEvidence')->name('backend.applicants.evidence.update.state');
 
         });
 
@@ -161,6 +162,13 @@ Route::group(['prefix' => 'backend', 'namespace' => 'Backend'], function () {
 
             Route::group(['prefix' => 'applicant'], function () {
                 Route::get('/', 'AccountApplicantController@showApplicant')->name('view.backend.account.applicant');
+                Route::get('/{id}/update', 'AccountApplicantController@showUpdateApplicant')->name('view.backend.account.applicant.update');
+
+                Route::get('/{id}/active', 'AccountApplicantController@activeAccount')->name('backend.account.applicant.active');
+                Route::get('/{id}/deactive', 'AccountApplicantController@deactiveAccount')->name('backend.account.applicant.deactive');
+
+                Route::post('/{id}/update', 'AccountApplicantController@updateApplicant')->name('backend.account.applicant.update');
+                Route::post('{id}/update/password', 'AccountApplicantController@updateApplicantPassword')->name('backend.account.applicant.update.password');
             });
 
             Route::group(['prefix' => 'staff'], function () {

@@ -32,6 +32,7 @@
                         <th>Username</th>
                         <th>Name</th>
                         <th>ค่าย</th>
+                        <th>การส่งหลักฐาน</th>
                         <th>state</th>
                         <th>แก้ไข</th>
                     </tr>
@@ -43,8 +44,9 @@
                             <td>{{ $applicant->user->username }}</td>
                             <td><a href="{{ route('view.backend.applicants.detail', ['id' => $applicant->id]) }}" target="_blank">{{ $applicant->getDetailValue("p_name").$applicant->getDetailValue("f_name")." ".$applicant->getDetailValue("l_name") }}</a></td>
                             <td>@lang('camp.'.$applicant->camp->name)</td>
+                            <td>{{ $applicant->evidences->count() > 0 ? __('evidence_state.'.$applicant->evidences->first()->state) : 'ยังไม่ส่ง' }}</td>
                             <td>{{ $applicant->state }}</td>
-                            <td><a href="#" class="btn btn-info btn-sm disabled"><i class="fa fa-wrench" aria-hidden="true"></i> แก้ไขบัญชี</a></td>
+                            <td><a href="{{ route('view.backend.account.applicant.update', ['id' => $applicant->id]) }}" class="btn btn-info btn-sm" target="_blank"><i class="fa fa-wrench" aria-hidden="true"></i> แก้ไขบัญชี</a></td>
                         </tr>
                     @endforeach
                 </tbody>

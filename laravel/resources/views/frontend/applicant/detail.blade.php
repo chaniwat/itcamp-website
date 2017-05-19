@@ -1,4 +1,4 @@
-<h3 style="margin-bottom: 1rem;"><b>รายละเอียดการยืนยันสิทธิ์</b></h3>
+﻿<h3 style="margin-bottom: 1rem;"><b>รายละเอียดการยืนยันสิทธิ์</b></h3>
 
 น้้องๆ จะต้องยืนยันสิทธิ์โดยการแนบเอกสารดังนี้
 <ol style="margin-bottom: 0.25rem;">
@@ -23,10 +23,10 @@
     <dd class="col-9 col-lg-10">ออมทรัพย์</dd>
 
     <dt class="col-3 col-lg-2 text-right">ชื่อบัญชี</dt>
-    <dd class="col-9 col-lg-10">คณะไอทีลาดกระบัง</dd>
+    <dd class="col-9 col-lg-10">โครงการพิเศษคณะเทคโนโลยีสารสนเทศ สจล.</dd>
 
     <dt class="col-3 col-lg-2 text-right">เลขที่บัญชี</dt>
-    <dd class="col-9 col-lg-10">088-251953-4</dd>
+    <dd class="col-9 col-lg-10">088-259832-6</dd>
 
     <dt class="col-3 col-lg-2 text-right">สาขา</dt>
     <dd class="col-9 col-lg-10">สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง</dd>

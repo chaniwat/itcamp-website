@@ -198,6 +198,14 @@ class Applicant extends Model
         return in_array($this->state, array('COMPLETE', 'CONFIRM', 'SELECT', 'RESERVE', 'FAIL', 'CONFIRM_SELECT', 'CONFIRM_RESERVE', 'CANCEL_SELECT', 'CANCEL_RESERVE'));
     }
 
+    public function isSelect() {
+        return in_array($this->state, array('SELECT'));
+    }
+
+    public function isReserve() {
+        return in_array($this->state, array('RESERVE'));
+    }
+
     #endregion
 
 }

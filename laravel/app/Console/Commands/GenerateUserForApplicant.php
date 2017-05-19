@@ -114,7 +114,7 @@ class GenerateUserForApplicant extends Command
 
                     $password = implode("", explode("-", $applicant->getDetailValue('citizen_numid')));
                     $applicant->user()->associate(User::create([
-                        "username" => $data["username"], "password" => Hash::make($password), "type" => "APPLICANT", "active" => 0
+                        "username" => $data["username"], "password" => Hash::make($password), "type" => "APPLICANT", "active" => false
                     ]));
                     $applicant->state = "RESERVE";
 

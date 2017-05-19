@@ -121,7 +121,7 @@
                             <td><a href="{{ route('view.backend.applicants.detail', ['id' => $applicant->applicant->id]) }}" target="_blank">{{ $applicant->applicant->getDetailValue("p_name").$applicant->applicant->getDetailValue("f_name")." ".$applicant->applicant->getDetailValue("l_name") }}</a></td>
                             <td>@lang("camp.".$applicant->applicant->camp->name)</td>
                             <td>
-                                <select class="form-control update-app-state" data-applicantid="{{ $applicant->applicant->id }}" data-camp="{{ $applicant->applicant->camp->name }}" data-state="{{ $applicant->state }}">
+                                <select class="form-control update-app-state" data-applicantid="{{ $applicant->applicant->id }}" data-camp="{{ $applicant->applicant->camp->name }}" data-state="{{ $applicant->state }}" disabled>
                                     @foreach($states as $state)
                                         <option value="{{ $state }}" {{ $applicant->state == $state ? 'selected' : '' }}>{{ $state }}</option>
                                     @endforeach
