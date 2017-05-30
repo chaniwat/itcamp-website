@@ -132,7 +132,9 @@ class AccountApplicantController extends Controller
                         $count[$camps->find($campId)->name][0]++;
                     } else if(in_array($applicant->state, ['RESERVE', 'CONFIRM_RESERVE', 'CANCEL_RESERVE'])) {
                         $count[$camps->find($campId)->name][1]++;
-                    } else if(in_array($applicant->state, ['CANCEL_SELECT', 'CANCEL_RESERVE'])) {
+                    }
+
+                    if(in_array($applicant->state, ['CANCEL_SELECT', 'CANCEL_RESERVE'])) {
                         $count[$camps->find($campId)->name][4]++;
                         $flag = false;
                     }
