@@ -88,7 +88,8 @@
                         <th>Name</th>
                         <th>ค่าย</th>
                         <th>การส่งหลักฐาน</th>
-                        <th>state</th>
+                        <th>สถานะการสมัคร</th>
+                        <th>สถานะบัญชี</th>
                         <th>แก้ไข</th>
                     </tr>
                 </thead>
@@ -101,6 +102,7 @@
                             <td>@lang('camp.'.$applicant->camp->name)</td>
                             <td>{{ $applicant->evidences->count() > 0 ? __('evidence_state.'.$applicant->evidences->first()->state) : 'ยังไม่ส่ง' }}</td>
                             <td>{{ $applicant->state }}</td>
+                            <td>{{ $applicant->user->active ? 'เปิด' : 'ปิด' }}</td>
                             <td><a href="{{ route('view.backend.account.applicant.update', ['id' => $applicant->id]) }}" class="btn btn-info btn-sm" target="_blank"><i class="fa fa-wrench" aria-hidden="true"></i> แก้ไขบัญชี</a></td>
                         </tr>
                     @endforeach
