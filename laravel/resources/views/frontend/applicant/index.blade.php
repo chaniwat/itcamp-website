@@ -54,10 +54,10 @@
                 <img src="{{ asset('/assets/frontend/images/logo-only-text.png') }}" />
             </div>
             <div class="nav-menu hidden-md-down">
-                <a class="nav-linker active" data-toggle="tab" href="#detail" role="tab">รายละเอียด</a>
-                <a class="nav-linker" data-toggle="tab" href="#evidence" role="tab">ส่งหลักฐาน</a>
+                <a class="nav-linker active" data-toggle="tab" href="#prepare" role="tab">เตรียมพร้อมพจญภัย</a>
                 <a class="nav-linker" data-toggle="tab" href="#download" role="tab">ดาวน์โหลดเอกสาร</a>
-                <a class="nav-linker" data-toggle="tab" href="#prepare" role="tab">เตรียมพร้อมพจญภัย</a>
+                <a class="nav-linker" data-toggle="tab" href="#detail" role="tab">รายละเอียด</a>
+                <a class="nav-linker" data-toggle="tab" href="#evidence" role="tab">ส่งหลักฐาน</a>
                 <a class="nav-linker" data-toggle="tab" href="#disclaim" role="tab">สละสิทธิ์</a>
             </div>
             <div class="nav-control">
@@ -65,10 +65,10 @@
             </div>
             <div class="nav-mobile bg-inverse collapse" id="mobileMenu">
                 <div class="nav-mobile-menu">
-                    <a class="nav-linker active" data-toggle="tab" href="#detail" role="tab">รายละเอียด</a>
-                    <a class="nav-linker" data-toggle="tab" href="#evidence" role="tab">ส่งหลักฐาน</a>
+                    <a class="nav-linker active" data-toggle="tab" href="#prepare" role="tab">เตรียมพร้อม</a>
                     <a class="nav-linker" data-toggle="tab" href="#download" role="tab">ดาวน์โหลด</a>
-                    <a class="nav-linker" data-toggle="tab" href="#prepare" role="tab">เตรียมพร้อม</a>
+                    <a class="nav-linker" data-toggle="tab" href="#detail" role="tab">รายละเอียด</a>
+                    <a class="nav-linker" data-toggle="tab" href="#evidence" role="tab">ส่งหลักฐาน</a>
                     <a class="nav-linker" data-toggle="tab" href="#disclaim" role="tab">สละสิทธิ์</a>
                 </div>
             </div>
@@ -92,7 +92,7 @@
         <section class="body">
             <div class="container">
                 <div class="tab-content">
-                    <div class="tab-pane fade show active" id="detail" role="tabpanel">
+                    <div class="tab-pane fade" id="detail" role="tabpanel">
                         @include('frontend.applicant.detail')
                     </div>
                     <div class="tab-pane fade" id="evidence" role="tabpanel">
@@ -101,7 +101,7 @@
                     <div class="tab-pane fade" id="download" role="tabpanel">
                         @include('frontend.applicant.download')
                     </div>
-                    <div class="tab-pane fade" id="prepare" role="tabpanel">
+                    <div class="tab-pane fade show active" id="prepare" role="tabpanel">
                         @include('frontend.applicant.prepare')
                     </div>
                     <div class="tab-pane fade" id="disclaim" role="tabpanel">
@@ -130,6 +130,30 @@
             </div>
         </div>
 
+        <div class="modal fade" id="invitedModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalLabel"><b>สวัสดีจ้าน้อง</b></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <b>ยินดีด้วย!!</b> น้องได้รับบัตรเชิญ<b>เข้าร่วมกิจกรรมภายในค่าย ITCAMP13</b> กิจกรรมสุดหฤหรรษ์ที่จะพาน้องๆ เข้าสู่ประตูแห่งช่วงเวลาของค่ำคืนมหัศจรรย์... ตะลุย <b>"พิพิธภัณฑ์ Virus 4.0"</b> พิพิธภัณฑ์ไฮเทคสุดพิลึกที่ไม่เคยปรากฏที่ไหนมาก่อน จะเกิดอะไรขึ้นในค่าย <b>ITCAMP13</b> ต้องมาพบกัน!! <span class="break"></span>
+
+                        <b>*คำเตือน - อย่าลืมเตรียมเครื่องแต่งกาย หรือเครื่องประดับที่<u>สะท้อนแสงในที่มืด</u>มาด้วยล่ะ</b> <span class="break"></span>
+
+                        และน้อง ๆ อย่าลืม<b>ดาวน์โหลดเอกสารใบตอบรับผู้ปกครอง</b> ในหน้า<a href="#download" role="tab" data-toggle="tab" onclick="$('#invitedModal').modal('hide');"><b>ดาวน์โหลดเอกสาร</b></a> <br>
+                        ให้น้อง ๆ กรอกข้อมูลให้เรียบร้อยแล้วนำมาส่งในวันค่ายที่โต๊ะลงทะเบียนจ้า
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
@@ -141,6 +165,8 @@
             @else
                 GlobalOption.modal = null;
             @endif
+
+            $('#invitedModal').modal('show');
         </script>
         <script src="{{ asset('assets/frontend/applicant/script.js') }}" type="text/javascript"></script>
     </body>
