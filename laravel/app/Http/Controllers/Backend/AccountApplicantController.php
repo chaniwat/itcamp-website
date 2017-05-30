@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Applicant;
+use App\Camp;
 use App\Services\ValidatorService;
 use App\User;
 use Illuminate\Http\Request;
@@ -113,7 +114,49 @@ class AccountApplicantController extends Controller
     }
 
     public function showApplicant() {
-        return view('backend.group.account.applicant.index')->with('applicants', Applicant::whereNotNull('user_id')->get());
+        $applicants = Applicant::whereNotNull('user_id')->get();
+
+        $camps = Camp::all();
+        $campIds = $camps->pluck('id')->all();
+
+        $count = [];
+
+        foreach($campIds as $campId) {
+            $count[$camps->find($campId)->name] = [0, 0, 0, 0, 0];
+
+            foreach ($applicants as $applicant) {
+                if($applicant->camp_id == $campId) {
+                    $flag = true;
+
+                    if(in_array($applicant->state, ['SELECT', 'CONFIRM_SELECT', 'CANCEL_SELECT'])) {
+                        $count[$camps->find($campId)->name][0]++;
+                    } else if(in_array($applicant->state, ['RESERVE', 'CONFIRM_RESERVE', 'CANCEL_RESERVE'])) {
+                        $count[$camps->find($campId)->name][1]++;
+                    } else if(in_array($applicant->state, ['CANCEL_SELECT', 'CANCEL_RESERVE'])) {
+                        $count[$camps->find($campId)->name][4]++;
+                        $flag = false;
+                    }
+
+                    if($flag) {
+                        if($applicant->evidences->count() > 0) {
+                            if($applicant->evidences->first()->state == "PENDING") {
+                                $count[$camps->find($campId)->name][2]++;
+                            } else if($applicant->evidences->first()->state == "COMPLETE") {
+                                $count[$camps->find($campId)->name][3]++;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        $data = [
+            'applicants' => $applicants,
+            'count' => $count,
+            'camps' => $camps
+        ];
+
+        return view('backend.group.account.applicant.index')->with($data);
     }
 
 }

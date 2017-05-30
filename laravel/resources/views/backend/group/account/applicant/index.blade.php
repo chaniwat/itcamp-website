@@ -23,9 +23,64 @@
         </div>
     </div>
 
+    <div class="box box-solid box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">จำนวนปัจจุบัน</h3>
+        </div>
+        <div class="box-body">
+            <table class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th>Camp</th>
+                    <th>Application</th>
+                    <th>Game</th>
+                    <th>Network</th>
+                    <th>IoT</th>
+                    <th>Datasci</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>SELECT</td>
+                    @foreach($camps as $camp)
+                        <td class="{{ $camp->name }}-select">{{ $count[$camp->name][0] }}</td>
+                    @endforeach
+                </tr>
+                <tr>
+                    <td>RESERVE</td>
+                    @foreach($camps as $camp)
+                        <td class="{{ $camp->name }}-reserve">{{ $count[$camp->name][1] }}</td>
+                    @endforeach
+                </tr>
+                <tr>
+                    <td>EVIDENCE_PENDING</td>
+                    @foreach($camps as $camp)
+                        <td class="{{ $camp->name }}-confirm">{{ $count[$camp->name][2] }}</td>
+                    @endforeach
+                </tr>
+                <tr>
+                    <td>CONFIRM</td>
+                    @foreach($camps as $camp)
+                        <td class="{{ $camp->name }}-confirm">{{ $count[$camp->name][3] }}</td>
+                    @endforeach
+                </tr>
+                <tr>
+                    <td>CANCEL</td>
+                    @foreach($camps as $camp)
+                        <td class="{{ $camp->name }}-cancel">{{ $count[$camp->name][4] }}</td>
+                    @endforeach
+                </tr>
+                </tbody>
+            </table>
+            <span class="text-info"><b>*แถบสีฟ้า</b></span> ไม่ได้ตอบคำถามรองประธาน <br />
+            <span class="text-warning"><b>*แถบสีเหลือง</b></span> เด็กแคมป์เก่า <br />
+            <span class="text-danger"><b>*แถบสีแดง</b></span> เด็กแคมป์เก่าและไม่ได้ตอบคำถาม <br />
+        </div>
+    </div>
+
     <div class="box box-default">
         <div class="box-body">
-            <table class="table table-bordered">
+            <table class="table table-bordered applicant-accounts">
                 <thead>
                     <tr>
                         <th width="50">ID</th>
@@ -58,7 +113,7 @@
 
 @section('script')
     <script type="text/javascript">
-        var dTable = $("table.table").DataTable({
+        var dTable = $("table.table.applicant-accounts").DataTable({
             "paging": true,
             "lengthChange": false,
             "ordering": true,

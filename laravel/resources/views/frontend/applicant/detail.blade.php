@@ -1,4 +1,4 @@
-﻿<h3 style="margin-bottom: 1rem;"><b>รายละเอียดการยืนยันสิทธิ์</b></h3>
+<h3 style="margin-bottom: 1rem;"><b>รายละเอียดการยืนยันสิทธิ์</b></h3>
 
 น้้องๆ จะต้องยืนยันสิทธิ์โดยการแนบเอกสารดังนี้
 <ol style="margin-bottom: 0.25rem;">
