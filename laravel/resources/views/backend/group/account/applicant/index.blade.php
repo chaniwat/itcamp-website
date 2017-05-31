@@ -30,10 +30,13 @@
                     <button class="btn btn-primary btn-campiot" data-target="camp_iot"><i class="fa fa-bars" aria-hidden="true"></i> แสดงค่าย @lang('camp.camp_iot')</button>
                     <button class="btn btn-primary btn-campdatasci" data-target="camp_datasci"><i class="fa fa-bars" aria-hidden="true"></i> แสดงค่าย @lang('camp.camp_datasci')</button>
                 </div>
-                <div class="col-xs-12" id="status-control">
+                <div class="col-xs-12" id="status-control" style="margin-bottom: 0.8rem;">
                     <button class="btn btn-primary btn-applicant-select" data-target="SELECT"><i class="fa fa-bars" aria-hidden="true"></i> แสดงผู้สมัครที่ผ่านการคัดตัวจริง</button>
                     <button class="btn btn-primary btn-applicant-reserve" data-target="RESERVE"><i class="fa fa-bars" aria-hidden="true"></i> แสดงผู้สมัครที่ผ่านการคัดตัวสำรอง</button>
                     <button class="btn btn-primary btn-applicant-cancel" data-target="CANCEL"><i class="fa fa-bars" aria-hidden="true"></i> แสดงผู้สมัครที่สละสิทธิ์ (ตัวจริง)</button>
+                </div>
+                <div class="col-xs-12" id="evidence-control">
+                    <button class="btn btn-primary btn-evidence-pending" data-target="PENDING"><i class="fa fa-bars" aria-hidden="true"></i> แสดงผู้สมัครที่รอการตรวจหลักฐาน</button>
                 </div>
             </div>
         </div>
@@ -160,6 +163,10 @@
                 "CANCEL": '(CANCEL_SELECT|CANCEL_RESERVE)',
             }
 
+            var evidence = {
+                "PENDING": '(รอการตรวจสอบ)'
+            }
+
             var clearSearch = function() {
                 dTable.column(3).search('').draw();
                 dTable.column(5).search('').draw();
@@ -182,6 +189,14 @@
                 e.click(function() {
                     clearSearch();
                     dTable.column(5).search(check[e.data('target')], true).draw();
+                });
+            });
+
+            $("#evidence-control button.btn").each(function(i, e) {
+                e = $(e);
+                e.click(function() {
+                    clearSearch();
+                    dTable.column(4).search(evidence[e.data('target')], true).draw();
                 });
             });
         });
