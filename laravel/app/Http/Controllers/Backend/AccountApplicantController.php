@@ -122,7 +122,7 @@ class AccountApplicantController extends Controller
         $count = [];
 
         foreach($campIds as $campId) {
-            $count[$camps->find($campId)->name] = [0, 0, 0, 0, 0];
+            $count[$camps->find($campId)->name] = [0, 0, 0, 0, 0, 0];
 
             foreach ($applicants as $applicant) {
                 if($applicant->camp_id == $campId) {
@@ -146,6 +146,8 @@ class AccountApplicantController extends Controller
                             } else if($applicant->evidences->first()->state == "COMPLETE") {
                                 $count[$camps->find($campId)->name][3]++;
                             }
+                        } else {
+                            $count[$camps->find($campId)->name][5]++;
                         }
                     }
                 }

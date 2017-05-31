@@ -81,6 +81,39 @@
         </form>
     </div>
 
+    <div class="box box-success">
+        <div class="box-header with-border">
+            <h3 class="box-title">เปลี่ยนสถานะผู้สมัคร</h3>
+        </div>
+        <form class="form-horizontal" action="{{ route("backend.applicants.update.state", ['id' => $applicant->id]) }}" method="post">
+            {{ csrf_field() }}
+
+            <div class="box-body">
+                <div class="form-group">
+                    <label for="inputState" class="col-sm-2 control-label">สถานะผู้สมัคร</label>
+
+                    <div class="col-sm-10">
+                        <select type="password" class="form-control" id="inputState" name="state">
+                            @if(in_array($applicant->state, ['SELECT', 'CANCEL_SELECT']))
+                                @foreach(['SELECT', 'CANCEL_SELECT'] as $state)
+                                    <option value="{{ $state }}" {{ $applicant->state == $state ? 'selected' : ''}}>{{ $state }}</option>
+                                @endforeach
+                            @elseif(in_array($applicant->state, ['RESERVE', 'CANCEL_RESERVE']))
+                                @foreach(['RESERVE', 'CANCEL_RESERVE'] as $state)
+                                    <option value="{{ $state }}" {{ $applicant->state == $state ? 'selected' : ''}}>{{ $state }}</option>
+                                @endforeach
+                            @endif
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="box-footer">
+                <button type="submit" class="btn btn-info pull-right">อัพเดทสถานะผู้สมัคร</button>
+            </div>
+        </form>
+    </div>
+
     <div class="box box-danger">
         <div class="box-header with-border">
             <h3 class="box-title">เปลี่ยนรหัสผ่าน</h3>

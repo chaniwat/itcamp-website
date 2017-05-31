@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'backend_active_applicant_account_complete' => 'เปิดการใช้งานบัญชีสำเร็จ', // activated account success
     'backend_add_account_success' => 'เพิ่มบัญชี Staff สำเร็จ', // add staff account
     'backend_add_applicant_question_success' => 'เพิ่มคำถามผู้สมัครสำเร็จ', // add applicant question
     'backend_add_question_success' => 'เพิ่มคำถามค่ายสำเร็จ', // add camp question
@@ -12,6 +13,7 @@ return [
     'backend_answer_score_not_complete' => 'กรอกคะแนนให้ครบ', // Score not complete to all answer
     'backend_answer_check_score_saved' => 'บันทึกผลการให้คะแนนสำเร็จ', // Score answer saved
     'backend_camp_not_have_question' => 'ค่ายที่ระบุไม่สามารถตั้งคำถามได้', // camp not have question
+    'backend_deactive_applicant_account_complete' => 'ปิดการใช้งานบัญชีสำเร็จ', // deactivated account success
     'backend_form_field_type_not_accept' => 'ระบุ field_type ผิด', // field type not accept (incorrect field type)
     'backend_incorrect_format_in_field_value' => 'field_value ไม่ตรงตามรูปแบบ', // incorrect format in field value setting of its type
     'backend_no_applicant_to_check' => 'ไม่มีผู้สมัครที่ต้องตรวจคำตอบ (ตรวจครบแล้วสำหรับบัญชี staff นี้ หรือรอการ Approve เพิ่มเติม)', // no applicant left to check answer

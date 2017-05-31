@@ -39,6 +39,7 @@ class StatusViewService
     ];
 
     private $codeLevelTranslate = [
+        'backend_active_applicant_account_complete' => 'success', // activated account success
         'backend_add_account_success' => 'success', // add staff account
         'backend_add_applicant_question_success' => 'success', // add applicant question
         'backend_add_question_success' => 'success', // add camp question
@@ -50,6 +51,7 @@ class StatusViewService
         'backend_answer_score_not_complete' => 'danger', // Score not complete to all answer
         'backend_answer_check_score_saved' => 'success', // Score answer saved
         'backend_camp_not_have_question' => 'danger', // camp not have question
+        'backend_deactive_applicant_account_complete' => 'success', // deactivated account success
         'backend_form_field_type_not_accept' => 'danger', // field type not accept (incorrect field type)
         'backend_incorrect_format_in_field_value' => 'danger', // incorrect format in field value setting of its type
         'backend_no_applicant_to_check' => 'info', // no applicant left to check answer

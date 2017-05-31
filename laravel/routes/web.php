@@ -109,7 +109,7 @@ Route::group(['prefix' => 'backend', 'namespace' => 'Backend'], function () {
             Route::get('/{id}', 'ApplicantController@showApplicantDetail')->name('view.backend.applicants.detail');
 
             Route::post('/', 'ApplicantController@goToApplicantID')->name('backend.applicants.go_to_id');
-            Route::post('/{id}/status', 'ApplicantController@approvingApplicant')->name('backend.applicants.update.state');
+            Route::post('/{id}/status', 'ApplicantController@updateApplicantState')->name('backend.applicants.update.state');
             Route::post('/{id}/evidence/status', 'ApplicantController@approvingApplicantEvidence')->name('backend.applicants.evidence.update.state');
 
         });
