@@ -100,6 +100,7 @@
                         <th>สันทนาการ</th>
                         <th>ค่ายย่อย</th>
                         <th>รวม</th>
+                        <th>User</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -132,6 +133,11 @@
                             <td>{{ number_format($applicant->recreation_score, 2) }}</td>
                             <td>{{ number_format($applicant->camp_score, 2) }}</td>
                             <td>{{ number_format($applicant->head_score + $applicant->subhead_score + $applicant->recreation_score + $applicant->camp_score, 2) }}</td>
+                            @if(isset($applicant->applicant->user_id))
+                                <td><a href="{{ route('view.backend.account.applicant.update', ["id" => $applicant->applicant->id]) }}" class="btn btn-success" target="_blank">ดู User</a></td>
+                            @else
+                                <td><a href="{{ route('backend.account.applicant.new', ["id" => $applicant->applicant->id]) }}" class="btn btn-primary">สร้าง User</a></td>
+                            @endif
                         </tr>
                     @endforeach
                 </tbody>

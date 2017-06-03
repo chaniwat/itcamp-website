@@ -10,6 +10,7 @@ return [
     'backend_applicant_question_id_already_used' => 'field_id ของคำถามผู้สมัครนี้ถูกใช้แล้ว\'', // applicant question field_id already used
     'backend_applicant_question_not_found' => 'ไม่มีคำถามผู้สมัครที่ระบุ', // applicant question not found
     'backend_applicant_state_updated' => 'ทำการอัพเดท state สำเร็จ', // Applicant state updated
+    'backend_applicant_user_created' => 'สร้าง User Applicant สำเร็จ', // Applicant user created
     'backend_answer_score_not_complete' => 'กรอกคะแนนให้ครบ', // Score not complete to all answer
     'backend_answer_check_score_saved' => 'บันทึกผลการให้คะแนนสำเร็จ', // Score answer saved
     'backend_camp_not_have_question' => 'ค่ายที่ระบุไม่สามารถตั้งคำถามได้', // camp not have question

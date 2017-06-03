@@ -24,6 +24,32 @@ class AccountApplicantController extends Controller
         $this->validator = $validatorService;
     }
 
+    public function generateNewAccount($id) {
+        if(!($applicant = Applicant::find($id))) {
+            return redirect()->route('view.backend.applicant.select')->with('status', 'backend_applicant_user_not_found');
+        }
+
+        // Get last camp user count
+        $camp_name = strtolower(__('camp.'.$applicant->camp->name));
+        $last_username = User::where([
+            ['type', '=', 'APPLICANT'],
+            ['username', 'LIKE', $camp_name.'%']
+        ])->orderBy('username', 'DESC')->first()->username;
+        $last_count = substr($last_username, -3, 3);
+
+        $new_username = sprintf('%s%03d', $camp_name, $last_count + 1);
+        $new_password = implode("", explode("-", $applicant->getDetailValue('citizen_numid')));
+
+        $applicant->user()->associate(User::create([
+            "username" => $new_username, "password" => Hash::make($new_password), "type" => "APPLICANT", "active" => true
+        ]));
+        $applicant->state = "RESERVE";
+
+        $applicant->save();
+
+        return redirect()->route('view.backend.account.applicant.update', ['id' => $applicant->id])->with('status', 'backend_applicant_user_created');
+    }
+
     public function showUpdateApplicant($id) {
         if(!($applicant = Applicant::find($id)) || $applicant->user == null) {
             return redirect()->route('view.backend.account.applicant')->with('status', 'backend_applicant_user_not_found');

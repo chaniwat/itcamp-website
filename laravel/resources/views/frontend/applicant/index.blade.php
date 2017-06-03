@@ -56,7 +56,7 @@
             <div class="nav-menu hidden-md-down">
                 <a class="nav-linker active" data-toggle="tab" href="#prepare" role="tab">เตรียมพร้อมพจญภัย</a>
                 <a class="nav-linker" data-toggle="tab" href="#download" role="tab">ดาวน์โหลดเอกสาร</a>
-                <a class="nav-linker" data-toggle="tab" href="#detail" role="tab">รายละเอียด</a>
+                <a class="nav-linker" data-toggle="tab" href="#detail" role="tab">ยืนยันสิทธิ์</a>
                 <a class="nav-linker" data-toggle="tab" href="#evidence" role="tab">ส่งหลักฐาน</a>
                 <a class="nav-linker" data-toggle="tab" href="#disclaim" role="tab">สละสิทธิ์</a>
             </div>
@@ -67,7 +67,7 @@
                 <div class="nav-mobile-menu">
                     <a class="nav-linker active" data-toggle="tab" href="#prepare" role="tab">เตรียมพร้อม</a>
                     <a class="nav-linker" data-toggle="tab" href="#download" role="tab">ดาวน์โหลด</a>
-                    <a class="nav-linker" data-toggle="tab" href="#detail" role="tab">รายละเอียด</a>
+                    <a class="nav-linker" data-toggle="tab" href="#detail" role="tab">ยืนยันสิทธิ์</a>
                     <a class="nav-linker" data-toggle="tab" href="#evidence" role="tab">ส่งหลักฐาน</a>
                     <a class="nav-linker" data-toggle="tab" href="#disclaim" role="tab">สละสิทธิ์</a>
                 </div>

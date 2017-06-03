@@ -167,6 +167,8 @@ Route::group(['prefix' => 'backend', 'namespace' => 'Backend'], function () {
                 Route::get('/{id}/active', 'AccountApplicantController@activeAccount')->name('backend.account.applicant.active');
                 Route::get('/{id}/deactive', 'AccountApplicantController@deactiveAccount')->name('backend.account.applicant.deactive');
 
+                Route::get('/{id}/new', 'AccountApplicantController@generateNewAccount')->name('backend.account.applicant.new');
+
                 Route::post('/{id}/update', 'AccountApplicantController@updateApplicant')->name('backend.account.applicant.update');
                 Route::post('{id}/update/password', 'AccountApplicantController@updateApplicantPassword')->name('backend.account.applicant.update.password');
             });

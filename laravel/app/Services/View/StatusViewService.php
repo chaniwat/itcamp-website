@@ -48,6 +48,7 @@ class StatusViewService
         'backend_applicant_question_id_already_used' => 'warning', // applicant question field_id already used
         'backend_applicant_question_not_found' => 'warning', // applicant question not found
         'backend_applicant_state_updated' => 'success', // Applicant state updated
+        'backend_applicant_user_created' => 'success', // Applicant user created
         'backend_answer_score_not_complete' => 'danger', // Score not complete to all answer
         'backend_answer_check_score_saved' => 'success', // Score answer saved
         'backend_camp_not_have_question' => 'danger', // camp not have question
