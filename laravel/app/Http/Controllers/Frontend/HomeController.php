@@ -17,7 +17,7 @@ class HomeController extends Controller
             $data = [
                 "sponsors" => [
                     "big" => ["kmitl.jpg", "itkmitl.jpg"],
-                    "medium" => ["camphub.png"],
+                    "medium" => ["Datacube.png", "logo10year_dek-d.gif", "camphub.png", "LogoPantip20th_3.jpg"],
                     "small" => []
                 ],
                 "exchangers" => [

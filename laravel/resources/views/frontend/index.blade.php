@@ -29,6 +29,16 @@
     <link rel="stylesheet" href="assets/frontend/css/app.css?v={{ (int)microtime(true) }}">
   </head>
 
+  <style>
+    section.supporter-block .content .supporters-list {
+      margin-bottom: 0 !important;
+    }
+
+    section.supporter-block .content .supporters-list .supporter-img {
+      margin-bottom: 1rem !important;
+    }
+  </style>
+
   <body>
     <!-- Loading Screen -->
     <div class="loading-overlay" id="loadingScreen">
