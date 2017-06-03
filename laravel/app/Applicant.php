@@ -151,18 +151,58 @@ class Applicant extends Model
 
     public function getDetailValue($key) {
         $key = $this->applicantDetails->find($key);
-        $setting = json_decode($key->field_setting, True);
+
+        if($key != null) {
+            $setting = json_decode($key->field_setting, True);
 //        $answer = json_decode($key->pivot->answer, True)["value"];
 
-        if(in_array($key->field_type, ['CHECKBOX', 'SELECT_MULTIPLE'])) {
-            $answer = json_decode($key->pivot->answer, True)['value'];
-        } else {
-            $answer = str_replace('"}', '', str_replace('{"value": "', '', $key->pivot->answer));
+            if(in_array($key->field_type, ['CHECKBOX', 'SELECT_MULTIPLE'])) {
+                $answer = json_decode($key->pivot->answer, True)['value'];
+            } else {
+                $answer = str_replace('"}', '', str_replace('{"value": "', '', $key->pivot->answer));
+            }
+
+            if(in_array($key->field_type, ["TEXT", "TEXTAREA", "FILE", "DATE"])) {
+                return $answer;
+            } else if(in_array($key->field_type, ["SELECT"])) {
+                foreach ($setting["lists"] as $item) {
+                    if($answer == $item['key']) {
+                        return $item['text'];
+                    }
+                }
+            } else if(in_array($key->field_type, ["CHECKBOX"])) {
+                $answer_text = [];
+
+                foreach($answer as $ans) {
+                    foreach ($setting["lists"] as $item) {
+                        if($ans == $item['key']) {
+                            array_push($answer_text, $item['text']);
+                            break;
+                        }
+                    }
+                }
+
+                return implode(",", $answer_text);
+            }
         }
 
-        if(in_array($key->field_type, ["TEXT", "FILE"])) {
+        return null;
+    }
+
+    public function getAnswerValue($key) {
+        $key = $this->answers->where('question_id', $key)->first();
+        $setting = json_decode($key->question->field_setting, True);
+//        $answer = json_decode($key->pivot->answer, True)["value"];
+
+        if(in_array($key->question->field_type, ['CHECKBOX', 'SELECT_MULTIPLE'])) {
+            $answer = json_decode($key->answer, True)['value'];
+        } else {
+            $answer = str_replace('"}', '', str_replace('{"value": "', '', $key->answer));
+        }
+
+        if(in_array($key->question->field_type, ["TEXT", "TEXTAREA", "FILE"])) {
             return $answer;
-        } else if($key->field_type == "SELECT") {
+        } else if(in_array($key->question->field_type, ["SELECT", "CHECKBOX"])) {
             foreach ($setting["lists"] as $item) {
                 if($answer == $item['key']) {
                     return $item['text'];
