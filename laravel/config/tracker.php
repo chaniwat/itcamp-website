@@ -5,7 +5,7 @@ return [
     /*
      * Enable it?
      */
-    'enabled' => true,
+    'enabled' => false,
 
     /*
      * Enable cache?
@@ -35,7 +35,9 @@ return [
     'do_not_track_routes' => [
         'tracker.stats.*',
         'view.backend.*',
-        'backend.*'
+        'backend.*',
+        'view.frontend.applicant.*',
+        'frontend.applicant.*'
     ],
 
     /*

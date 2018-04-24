@@ -12,10 +12,12 @@ const { mix } = require('laravel-mix');
  |
  */
 
+mix.disableNotifications();
 mix.webpackConfig({
   output: {
     path: path.resolve(__dirname, '../public_html')
   }
 });
 
-mix.sass('resources/assets/sass/backend.scss', 'assets/backend/css/app.css');
+// mix.sass('resources/assets/sass/backend/backend.scss', 'assets/backend/css/app.css');
+mix.sass('resources/assets/sass/frontend/applicant/applicant.scss', 'assets/frontend/applicant/style.css');

@@ -3,6 +3,7 @@
         <ul class="sidebar-menu">
             <li class="header">NAVIGATION</li>
             <li class="{{ $viewHelper->isActivePath("backend") }}"><a href="{{ route('view.backend.index') }}"><i class="fa fa-book"></i> <span>หน้าแรก</span></a></li>
+            {{--
             @can('view_stats', \App\User::class)
                 <li class="treeview {{ $viewHelper->isActivePath(["backend/stats", "backend/stats/*"]) }}">
                     <a href="{{ route('view.backend.index') }}"><i class="fa fa-book"></i> <span>สถิติการเข้าชม</span> <i class="fa fa-angle-left pull-right"></i></a>
@@ -13,6 +14,7 @@
                     </ul>
                 </li>
             @endcan
+            --}}
             <li class="treeview {{ $viewHelper->isActivePath(["backend/dashboard/register", "backend/dashboard/overview"]) }}">
                 <a href="{{ route('view.backend.index') }}"><i class="fa fa-book"></i> <span>ภาพรวม</span> <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
@@ -40,6 +42,9 @@
                         @endcan
                     </ul>
                 </li>
+            @endcan
+            @can('select_applicant', \App\User::class)
+                <li class="{{ $viewHelper->isActivePath(["backend/select"]) }}"><a href="{{ route('view.backend.applicant.select') }}"><i class="fa fa-book"></i> <span>คัดเลือกผู้สมัคร</span></a></li>
             @endcan
             <li class="header">SYSTEM</li>
             <li><a href="{{ route('backend.auth.logout') }}"><i class="fa fa-circle-o text-red"></i> <span>ออกจากระบบ</span></a></li>

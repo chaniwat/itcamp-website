@@ -1,0 +1,7 @@
+{
+    "login_incorrect_detail": "danger",
+    "login_reserve": "warning",
+    "login_disclaim": "danger",
+    "logout_successful": "success"
+}
+

@@ -54,7 +54,7 @@
         </header>
 
         <section class="body">
-            <form id="registerForm" action="{{ route('frontend.register', ['camp' => $camp]) }}" method="POST" enctype="multipart/form-data" novalidate>
+            <form id="registerForm" action="@if(!isset($secret)) {{ route('frontend.register', ['camp' => $camp]) }} @else {{ route('frontend.s.register', ['camp' => $camp]) }} @endif" method="POST" enctype="multipart/form-data" novalidate>
                 {{ csrf_field() }}
 
                 <h2>ส่วนที่ 1 : ข้อมูลทั่วไปของผู้สมัคร</h2>

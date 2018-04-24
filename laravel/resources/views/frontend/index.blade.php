@@ -29,6 +29,16 @@
     <link rel="stylesheet" href="assets/frontend/css/app.css?v={{ (int)microtime(true) }}">
   </head>
 
+  <style>
+    section.supporter-block .content .supporters-list {
+      margin-bottom: 0 !important;
+    }
+
+    section.supporter-block .content .supporters-list .supporter-img {
+      margin-bottom: 1rem !important;
+    }
+  </style>
+
   <body>
     <!-- Loading Screen -->
     <div class="loading-overlay" id="loadingScreen">
@@ -51,7 +61,7 @@
           <div class="nav-linker active" data-target="home-block">เริ่มต้น</div>
           <div class="nav-linker" data-target="detail-block">รายละเอียด</div>
           <div class="nav-linker" data-target="supporter-block">ผู้สนับสนุน</div>
-          <div class="nav-linker" data-target="camp-block">ค่ายย่อย</div>
+          <div class="nav-linker" data-target="camp-block">ประกาศผล</div>
         </div>
         <div class="logo">
           <img src="{{ $lazyModeDir }}/assets/frontend/images/logo-only-text.png" />
@@ -80,7 +90,7 @@
         <div class="nav-linker active" data-target="home-block">เริ่มต้น</div>
         <div class="nav-linker" data-target="detail-block">รายละเอียด</div>
         <div class="nav-linker" data-target="supporter-block">ผู้สนับสนุน</div>
-        <div class="nav-linker" data-target="camp-block">ค่ายย่อย</div>
+        <div class="nav-linker" data-target="camp-block">ประกาศผล</div>
         <div class="nav-linker" data-target="timeline-block">กำหนดการ</div>
         <div class="nav-linker" data-target="gallery-block">ภาพกิจกรรม</div>
         <div class="nav-linker" data-target="recommend-block">คำนิยม</div>
@@ -247,7 +257,7 @@
               @if(!$registrationEnd)
                 (กดที่ตัวไวรัสเพื่อดูรายละเอียดค่ายและสมัครเข้าค่าย~)
               @else
-                (กดที่ตัวไวรัสเพื่อดูรายละเอียดค่าย~)
+                (กดที่ตัวไวรัสเพื่อดูประกาศผลของแต่ละค่าย~)
               @endif
             </div>
           </div>
@@ -270,7 +280,7 @@
                   @if(!$registrationEnd)
                     <a href="{{ route('view.frontend.register', ['camp' => 'app']) }}" class="btn btn-regis-app">สมัครค่ายนี้</a>
                   @else
-                    <a class="btn btn-regis-app disabled">รอประกาศผลเร็วๆนี้</a>
+                    <a href="{{ route('view.frontend.announce', ['camp' => 'app']) }}" class="btn btn-regis-app">ดูประกาศผล</a>
                   @endif
                 </div>
               </div>
@@ -295,7 +305,7 @@
                   @if(!$registrationEnd)
                     <a href="{{ route('view.frontend.register', ['camp' => 'game']) }}" class="btn btn-regis-game">สมัครค่ายนี้</a>
                   @else
-                    <a class="btn btn-regis-game disabled">รอประกาศผลเร็วๆนี้</a>
+                    <a href="{{ route('view.frontend.announce', ['camp' => 'game']) }}" class="btn btn-regis-game">ดูประกาศผล</a>
                   @endif
                 </div>
               </div>
@@ -320,7 +330,7 @@
                   @if(!$registrationEnd)
                     <a href="{{ route('view.frontend.register', ['camp' => 'network']) }}" class="btn btn-regis-network">สมัครค่ายนี้</a>
                   @else
-                    <a class="btn btn-regis-network disabled">รอประกาศผลเร็วๆนี้</a>
+                    <a href="{{ route('view.frontend.announce', ['camp' => 'network']) }}" class="btn btn-regis-network">ดูประกาศผล</a>
                   @endif
                 </div>
               </div>
@@ -345,7 +355,7 @@
                   @if(!$registrationEnd)
                     <a href="{{ route('view.frontend.register', ['camp' => 'iot']) }}" class="btn btn-regis-iot">สมัครค่ายนี้</a>
                   @else
-                    <a class="btn btn-regis-iot disabled">รอประกาศผลเร็วๆนี้</a>
+                    <a href="{{ route('view.frontend.announce', ['camp' => 'iot']) }}" class="btn btn-regis-iot">ดูประกาศผล</a>
                   @endif
                 </div>
               </div>
@@ -370,7 +380,7 @@
                   @if(!$registrationEnd)
                     <a href="{{ route('view.frontend.register', ['camp' => 'datasci']) }}" class="btn btn-regis-datasci">สมัครค่ายนี้</a>
                   @else
-                    <a class="btn btn-regis-datasci disabled">รอประกาศผลเร็วๆนี้</a>
+                    <a href="{{ route('view.frontend.announce', ['camp' => 'datasci']) }}" class="btn btn-regis-datasci">ดูประกาศผล</a>
                   @endif
                 </div>
               </div>

@@ -5,6 +5,18 @@ namespace App\Services\View;
 class StatusViewService
 {
 
+    /**
+     * Frontend status-level translator
+     * @var array
+     */
+    private $frontend_translates;
+
+    public function __construct()
+    {
+        // Read translator from json file
+        $this->frontend_translates = json_decode(file_get_contents(resource_path('vendor/alert_builder/frontend.json')), true);
+    }
+
     private $setting_alertTitle = [
         'info' => 'Info!',
         'success' => 'Success!',
@@ -27,6 +39,7 @@ class StatusViewService
     ];
 
     private $codeLevelTranslate = [
+        'backend_active_applicant_account_complete' => 'success', // activated account success
         'backend_add_account_success' => 'success', // add staff account
         'backend_add_applicant_question_success' => 'success', // add applicant question
         'backend_add_question_success' => 'success', // add camp question
@@ -35,9 +48,11 @@ class StatusViewService
         'backend_applicant_question_id_already_used' => 'warning', // applicant question field_id already used
         'backend_applicant_question_not_found' => 'warning', // applicant question not found
         'backend_applicant_state_updated' => 'success', // Applicant state updated
+        'backend_applicant_user_created' => 'success', // Applicant user created
         'backend_answer_score_not_complete' => 'danger', // Score not complete to all answer
         'backend_answer_check_score_saved' => 'success', // Score answer saved
         'backend_camp_not_have_question' => 'danger', // camp not have question
+        'backend_deactive_applicant_account_complete' => 'success', // deactivated account success
         'backend_form_field_type_not_accept' => 'danger', // field type not accept (incorrect field type)
         'backend_incorrect_format_in_field_value' => 'danger', // incorrect format in field value setting of its type
         'backend_no_applicant_to_check' => 'info', // no applicant left to check answer
@@ -72,6 +87,11 @@ class StatusViewService
         'username_already_used' => 'warning', // username already used
     ];
 
+    /**
+     * @param $code
+     * @return mixed
+     * @deprecated remove soon (refactor for more genetically)
+     */
     private function convertToAlertTitle($code) {
         if(array_key_exists($code, $this->codeLevelTranslate)) {
             return $this->setting_alertTitle[$this->codeLevelTranslate[$code]];
@@ -80,6 +100,11 @@ class StatusViewService
         return $this->setting_alertTitle['info'];
     }
 
+    /**
+     * @param $code
+     * @return mixed
+     * @deprecated remove soon (refactor for more genetically)
+     */
     private function convertToAlertClass($code) {
         if(array_key_exists($code, $this->codeLevelTranslate)) {
             return $this->setting_alertClass[$this->codeLevelTranslate[$code]];
@@ -88,6 +113,11 @@ class StatusViewService
         return $this->setting_alertClass['info'];
     }
 
+    /**
+     * @param $code
+     * @return mixed
+     * @deprecated remove soon (refactor for more genetically)
+     */
     private function convertToIconClass($code) {
         if(array_key_exists($code, $this->codeLevelTranslate)) {
             return $this->setting_iconClass[$this->codeLevelTranslate[$code]];
@@ -99,22 +129,56 @@ class StatusViewService
     /**
      * Make alert if have status (in session)
      * @param $blade blade component to show alert
+     * @param null|mixed $mode alert mode
      * @return mixed
      */
-    public function makeAlertStatus($blade) {
+    public function makeAlertStatus($blade, $mode = null) {
         if(session('status')) {
             $status = session('status');
 
-            $alert = [
-                'class' => $this->convertToAlertClass($status),
-                'icon' => $this->convertToIconClass($status),
-                'title' => $this->convertToAlertTitle($status),
-                'message' => __('alert_status.'.$status)
-            ];
+            if($mode == 'frontend') {
+                $alert = $this->constructAlertData($status, $this->frontend_translates, 'frontend_alert');
+            } else {
+                $alert = [
+                    'class' => $this->convertToAlertClass($status),
+                    'icon' => $this->convertToIconClass($status),
+                    'title' => $this->convertToAlertTitle($status),
+                    'message' => __('alert_status.'.$status)
+                ];
+            }
 
             return view($blade)->with(['alert' => $alert]);
         }
 
         return "";
+    }
+
+    /**
+     * Make alert data from specifics translator
+     * @param $status Current status
+     * @param $translator For status-level translate (see in constructor for more custom translator status-level)
+     * @param $lang For message translate (input as file name in lang)
+     * @return array
+     */
+    private function constructAlertData($status, $translator, $lang) {
+        $alert = [
+            'message' => __($lang.'.'.$status)
+        ];
+
+        if(array_key_exists($status, $translator)) {
+            $alert = array_merge($alert, [
+                'class' => $this->setting_alertClass[$translator[$status]],
+                'icon' => $this->setting_iconClass[$translator[$status]],
+                'title' => $this->setting_alertTitle[$translator[$status]]
+            ]);
+        } else {
+            $alert = array_merge($alert, [
+                'class' => $this->setting_alertClass['info'],
+                'icon' => $this->setting_iconClass['info'],
+                'title' => $this->setting_alertTitle['info']
+            ]);
+        }
+
+        return $alert;
     }
 }

@@ -22,6 +22,27 @@ Route::group(['namespace' => 'Frontend'], function () {
 
     if(env('APP_OPEN')) {
 
+        Route::group(['prefix' => 'announce'], function () {
+            Route::get('/{camp}', 'AnnounceApplicantController@showAnnounce')->name('view.frontend.announce');
+        });
+
+        Route::group(['prefix' => 'applicant', 'namespace' => 'Applicant'], function () {
+
+            Route::group(['middleware' => 'auth'], function () {
+                Route::get('/', 'HomeController@showIndex')->name('view.frontend.applicant.index');
+                Route::post('/disclaim', 'HomeController@disclaimCamp')->name('frontend.applicant.disclaim');
+                Route::post('/upload/evidence', 'HomeController@uploadEvidenceSlip')->name('frontend.applicant.upload_evidence');
+            });
+
+            Route::group(['middleware' => 'guest'], function () {
+                Route::get('/login', 'AuthController@showLogin')->name('view.frontend.applicant.login');
+            });
+
+            Route::post('login', 'AuthController@login')->name('frontend.applicant.auth.login');
+            Route::get('logout', 'AuthController@logout')->name('frontend.applicant.auth.logout');
+
+        });
+
         Route::group(['prefix' => 'advertise'], function () {
             Route::get('/', 'AdvertiseController@showForm')->name('view.frontend.advertise');
             Route::get('/complete', 'AdvertiseController@showComplete')->name('view.frontend.advertise.complete');
@@ -29,12 +50,17 @@ Route::group(['namespace' => 'Frontend'], function () {
         });
 
         Route::group(['prefix' => 'register', 'middleware' => 'web.registration'], function () {
-
             Route::get('/complete', 'RegisterController@showComplete')->name('view.frontend.register.complete');
             Route::get('/close', 'RegisterController@showClose')->name('view.frontend.register.close');
 
             Route::get('/{camp}', 'RegisterController@showRegister')->name('view.frontend.register');
             Route::post('/{camp}', 'RegisterController@register')->name('frontend.register');
+        });
+
+        Route::group(['prefix' => '/s/register'], function () {
+            Route::get('/complete', 'RegisterController@secretShowComplete')->name('view.frontend.s.register.complete');
+            Route::get('/{camp}', 'RegisterController@secretShowRegister')->name('view.frontend.s.register');
+            Route::post('/{camp}', 'RegisterController@secretRegister')->name('frontend.s.register');
         });
     }
 
@@ -83,10 +109,12 @@ Route::group(['prefix' => 'backend', 'namespace' => 'Backend'], function () {
             Route::get('/{id}', 'ApplicantController@showApplicantDetail')->name('view.backend.applicants.detail');
 
             Route::post('/', 'ApplicantController@goToApplicantID')->name('backend.applicants.go_to_id');
-            Route::post('/{id}/status', 'ApplicantController@approvingApplicant')->name('backend.applicants.update.state');
+            Route::post('/{id}/status', 'ApplicantController@updateApplicantState')->name('backend.applicants.update.state');
+            Route::post('/{id}/evidence/status', 'ApplicantController@approvingApplicantEvidence')->name('backend.applicants.evidence.update.state');
 
         });
 
+        /*
         Route::group(['prefix' => 'stats'], function () {
 
             Route::get('/', 'StatsController@showOverview')->name('view.backend.stats');
@@ -94,6 +122,7 @@ Route::group(['prefix' => 'backend', 'namespace' => 'Backend'], function () {
             Route::get('/error', 'StatsController@showError')->name('view.backend.stats.error');
 
         });
+        */
 
         Route::group(['prefix' => 'answer'], function () {
 
@@ -132,10 +161,16 @@ Route::group(['prefix' => 'backend', 'namespace' => 'Backend'], function () {
         Route::group(['prefix' => 'account'], function () {
 
             Route::group(['prefix' => 'applicant'], function () {
-                // TODO Applicant Account Management (For applicant to login into system when have been selected)
-                Route::get('/', function () {
-                    abort(404);
-                })->name('view.backend.account.applicant');
+                Route::get('/', 'AccountApplicantController@showApplicant')->name('view.backend.account.applicant');
+                Route::get('/{id}/update', 'AccountApplicantController@showUpdateApplicant')->name('view.backend.account.applicant.update');
+
+                Route::get('/{id}/active', 'AccountApplicantController@activeAccount')->name('backend.account.applicant.active');
+                Route::get('/{id}/deactive', 'AccountApplicantController@deactiveAccount')->name('backend.account.applicant.deactive');
+
+                Route::get('/{id}/new', 'AccountApplicantController@generateNewAccount')->name('backend.account.applicant.new');
+
+                Route::post('/{id}/update', 'AccountApplicantController@updateApplicant')->name('backend.account.applicant.update');
+                Route::post('{id}/update/password', 'AccountApplicantController@updateApplicantPassword')->name('backend.account.applicant.update.password');
             });
 
             Route::group(['prefix' => 'staff'], function () {
@@ -147,6 +182,13 @@ Route::group(['prefix' => 'backend', 'namespace' => 'Backend'], function () {
                 Route::post('{id}/update', 'AccountStaffController@updateStaff')->name('backend.account.staff.update');
                 Route::post('{id}/update/password', 'AccountStaffController@updateStaffPassword')->name('backend.account.staff.update.password');
             });
+
+        });
+
+        Route::group(['prefix' => '/select'], function () {
+
+            Route::get('/', 'SelectApplicantController@showIndex')->name('view.backend.applicant.select');
+            Route::post('/{id}/state', 'SelectApplicantController@saveSelectState')->name('backend.applicant.select.state');
 
         });
 
